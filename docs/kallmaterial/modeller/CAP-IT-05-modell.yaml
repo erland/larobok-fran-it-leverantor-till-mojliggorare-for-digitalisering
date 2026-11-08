@@ -1,0 +1,972 @@
+id: CAP-IT-05
+namn: Analys, sökning och intelligent informationsbearbetning
+version: '2.0'
+datum: '2026-11-07'
+status: Kritiskt granskad faktaboksversion; inte en organisations nulägesmätning
+kallmodell: Baseline v1.1; CAP/PLS/PLT-identiteter bevarade från fördjupningsanalysen
+kallor:
+  ursprung:
+  - Förmågeöversikt – tekniska IT-förmågor
+  - Plattformsöversikt – konceptuella plattformar
+  - Från systemdrift till digital självständighet
+  kompletterande:
+  - https://www.nist.gov/itl/ai-risk-management-framework
+  - https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
+  - https://cloud.google.com/discover/what-is-data-lineage
+  - https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators
+  - https://sre.google/workbook/data-processing/
+  - https://genai.owasp.org/llm-top-10/
+definition: Förmåga att erbjuda återanvändbart stöd för att hitta, sammanställa, analysera, klassificera, prediktera
+  och generera information med ändamålsenliga kvalitets- och kontrollmekanismer.
+avgransning:
+- Deterministiska verksamhetsregler (CAP-IT-03)
+- Ägarskap av underliggande verksamhetsdata (CAP-IT-04 och verksamhetsägare)
+- Domänspecifika beslut enbart för att AI används
+- Generell agentorkestrering och utvecklingsramverk (CAP-IT-10)
+- Åtkomst- och identitetsmekanismer (CAP-IT-07)
+bedomningsprincip:
+  skilj:
+  - funktionskritikalitet för faktiskt användningsfall
+  - behov av gemensamt förvaltat erbjudande
+  - behov av automation
+  notering: Tjänster, produkter och ML-teknik är inte obligatoriska per generation; G4 är scenario. Prioriteringar
+    ska prövas lokalt. Kritisk analysverksamhet innebär inte i sig att semantiskt lager, egen ML-plattform eller
+    GPU behövs.
+generationer:
+  G1:
+    roll: Kort kontext
+    risk: Lokala rapporter, personberoende definitioner och bristande spårbarhet.
+  G2:
+    roll: Huvudperspektiv
+    generationsarv:
+    - Flera kopior av samma data och olika definitioner av nyckeltal
+    - Sena, felaktiga eller överhoppade transformationer
+    - Inaktuella sökindex eller otillåtna sökträffar
+    - Analysmodeller utan verifierad verksamhetsnytta eller säker användning
+    - Händelsetid och registreringstid sammanblandas; sena rättelser ändrar tidigare rapporter utan spårbarhet
+    - Otillförlitlig AI-utvärdering på grund av data- eller framtidsläckage
+    forbattringsspar:
+      A: Rätta definitioner, dataägarskap, versionsspårbarhet, kvalitetskontroll och faktisk åtkomst redan i G2.
+      B: Mät flera teams återkommande behov och förvaltningskostnad innan en gemensam tjänst införs.
+  G3:
+    roll: Produktifierade självbetjänade tjänster där återkommande behov finns
+    fungerande_stod:
+    - Godkända datakontrakt och tydlig måttförvaltning
+    - Självbetjäning även vid ändring, uppgradering och avveckling
+    - Separata konsumentprov och kostnadskontroll
+    - Budget- och livscykelkontroller även vid hög belastning och avslutade arbetsytor
+    - Spårbar rättelse av tidigare publicerade analysresultat; kodrollback är inte verksamhetsrättelse
+    teknikvarningar:
+    - En gemensam produkt gör rapporter mindre tillförlitliga
+    - Konsumenter kan inte uppgradera eller avsluta användningen utan specialprojekt
+  G4:
+    roll: Framåtblickande verksamhetsnära analys med AI som valfri komplettering
+    fungerande_stod:
+    - Rätt källversion och källåtkomst
+    - Separata evals för retrieval och svar
+    - Riskbaserat mandat och publiceringskontroll
+    teknikvarningar:
+    - AI-svar får myndighet utan stöd i källor eller verksamhetsansvar
+    - Verktyg kan inte stoppas eller granskas vid riskfylld användning
+    - Obetrodda källdokument kan påverka verktygsanrop eller leda till informationsläckage
+diagnostiskt_scenario:
+  namn: Tre motstridiga rapporter och en AI-sammanfattning
+  prov:
+  - Enas om ett mätbegrepp, population och tidsregler
+  - Följ varje rapport genom källversion och transformering
+  - Reproducera en sen korrigering och en återpublicering
+  - Testa sökindexets inaktuella dokument och återkallad behörighet
+  - Prova genererat svar från fel rapportversion
+  - Mät om en ny plattform alls behövs efter grundfelsrättningen
+  - Ändra historiskt mått med tidsgräns; jämför vad vi visste då mot vad vi vet nu
+  - Lägg skadlig instruktion i återfunnet dokument; kontrollera att ingen otillåten data eller åtgärd läcker
+  - Jämför reproducerbar förklaring med faktiskt möjlig exakt återkörning
+beslutsordning:
+- Verifiera frågan och verksamhetsdefinitionen
+- Undersök källdata, transformationer och behörighet
+- Rätta generationsarv utan att vänta på plattform
+- Mät återkommande behov hos flera team
+- Jämför behålla, komplettera, ändra användning/ansvar eller ersätta
+plattformstjanster:
+- id: PLS-017
+  namn: Förvaltad LLM-tjänst
+  plattform:
+    id: PLT-004
+    namn: AI- och ML-plattform
+  grunduppdrag_enligt_kallmodell: Styrd modellåtkomst med modellgateway, routing, kvoter och kostnadskontroll
+  tillamplighet: När generativa modeller behöver användas i produktion
+  avgransning: Ger modellåtkomst – inte agentramverk, retrieval eller godkännande av verksamhetsbeslut
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Ingen generell LLM-funktion krävs; enskilda experiment bör hållas åtskilda från produktionsbeslut
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Verifiera leverantörs- och informationsvillkor för ett konkret LLM-pilotfall; ingen allmän
+        LLM-funktion förutsätts.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Kontrollerade piloter med informationsklassning, leverantörsvillkor och tokenbudget per applikation
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Använd en syntetisk testprompt avsedd för pilotmiljön; kontrollera informationspolicy, leverantörsvillkor,
+        datalagring och budget utan att skicka verkliga hemligheter.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Gemensam gateway med tillåtna modeller, autentisering, kvoter, versionsbyte, loggning och isolerade
+        konsumenter
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Byt godkänd modellversion hos två team och jämför kvalitet, kvot, datalagringsvillkor, kostnad
+        och hur tidigare publicerade svar skulle rättas vid fel.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Riskstyrd modellåtkomst för verksamhetsappar/agenter med verktygsbegränsningar, utvärdering
+        och återkallelse
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Spärra en modell och ett mandat för verksamhetsnära konsument; kontrollera att nya anrop
+        stoppas, inte att tidigare svar kan göras ogjorda.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-099
+  namn: ML feature- och dataserving
+  plattform:
+    id: PLT-004
+    namn: AI- och ML-plattform
+  grunduppdrag_enligt_kallmodell: Återanvändbara och tidskorrekta modellfeatures för träning och inferens
+  tillamplighet: Återkommande prediktiva modeller med delade features
+  avgransning: Inte ett generellt semantiskt lager eller datafederation
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Lokalt beräknade features kan räcka; undvik delad feature store utan modeller i produktion
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Kartlägg manuellt beräknade modellfeatures endast om prediktiva modeller finns.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Definitioner och tränings-/inferenskonsistens vid flera prediktiva modeller
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Bygg en tidsuppdelad testmängd och visa att träningsrad aldrig innehåller framtida värden
+        eller kopior av testexempel; jämför mot realistisk baslinje.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Versionerade features med point-in-time-korrekt retrieval, batch/online-paritet och styrd åtkomst
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Jämför samma feature-definition i träning och drift, med versionsbyte och två konsumenter.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Skalbar feature-serving för många modeller med driftövervakning, driftspårning och snabb återkallelse
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Prova att självbetjänade modeller inte kan läsa otillåtna features och att förändrade definitioner
+        upptäcks.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-096
+  namn: ML-träning och modellfinjustering
+  plattform:
+    id: PLT-004
+    namn: AI- och ML-plattform
+  grunduppdrag_enligt_kallmodell: Livscykel för modellerings- och träningsjobb inklusive acceleratorer
+  tillamplighet: Organisationen tränar eller finjusterar egna ML-modeller
+  avgransning: Inte generell batchruntime, modellserving eller dataägarskap
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Fristående analys eller manuell modellträning där risk och volym medger
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Dokumentera träningsdata och experiment endast där egen modellutveckling förekommer.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Reproducerbara träningskörningar med registrerat dataset, kod, parametrar och resurser
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Reproducera experimentbeskrivning med dataversion, kod, beroenden och slumpfrö; dokumentera
+        kvarvarande icke-determinism och möjlig jämförelsenivå.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Förvaltade träningsjobb med köer, kvoter, experimenttracking och miljöversionering
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Sätt kvot och uppgraderingsfönster på två teams träningsjobb; jämför reproducerbarhet och
+        kostnad.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Kontrollerad finjustering och storskalig träning med datalinje, kostnadstak, skydd för träningsdata
+        och godkända modeller
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Stoppa ett otillåtet finjusteringsjobb före datakonsumtion och rensa tillfälliga arbetsytor
+        enligt policy.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-016
+  namn: Modellserving och ML-inferens
+  plattform:
+    id: PLT-004
+    namn: AI- och ML-plattform
+  grunduppdrag_enligt_kallmodell: Driftsättning och konsumtion av prediktiva modeller
+  tillamplighet: Prediktiva modeller integreras i IT-stöd
+  avgransning: Inte modellträning eller generisk LLM-gateway
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Specialiserad lokal modellkörning endast vid konkret behov
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Spåra modellversion och indata där inferens används; inga generella ML-modeller förutsätts.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Tjänstegränssnitt, versionshantering, in-/utdataschema och övervakning av fel
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Byt inferensversion; följ modell, input, osäkerhet och beslutskonsekvens; kontrollera att
+        tidigare automatiserade utfall inte antas återställda vid rollback.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Standardiserad modellserving med skalning, canary/rollback, latensmål och mått på modellbeteende
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Låt två tjänster uppgradera modellserver med tillåtna svarstider, driftkostnad och rollbackplan.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Riskstyrd serving med automatiska evals, drift-/biaslarm och återtagbara versioner för många
+        konsumenter
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Testa en driftande modell och blockera automatiserade beslut vid överskriden riskgräns.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-019
+  namn: Modellutvärdering och AI-regressionstest
+  plattform:
+    id: PLT-004
+    namn: AI- och ML-plattform
+  grunduppdrag_enligt_kallmodell: Tester och uppföljning av modeller, prompts, retrievalkedjor och agentbeteenden
+  tillamplighet: AI används för analys, generering eller stöd till konsekvensfyllda beslut
+  avgransning: Mäter/validerar – äger inte modellåtkomst, agentorkestrering eller domänbeslut
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Statistisk validering och dokumenterade acceptansgränser vid faktisk modellbeslutsanvändning
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Dokumentera manuella kvalitetsexempel för de modeller som faktiskt används.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Mätningar mot representativa testdata, feltyper, robusthet och versionsjämförelser
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Testa ett representativt kvalitetsfall före och efter modelländring och upptäck en försämring.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Gemensam evalpipeline och kvalitetströsklar före AI-release, inklusive säkerhets- och integritetstest
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Kör representativa negativa och positiva fall hos två konsumenter; mät retrieval, källstöd,
+        sanningshalt, säkerhet och kritiska delgrupper separat före release.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Kontinuerliga regressions- och agenttester med mänsklig eskalering, adversarial fall och produktionsuppföljning
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Försämra ett kritiskt evalfall vid modell- eller promptbyte; blockera riskfylld publicering
+        och verifiera dokumenterad ansvarig godkännandekedja.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-064
+  namn: Analytisk datahantering
+  plattform:
+    id: PLT-020
+    namn: Analytisk data- och data engineering-plattform
+  grunduppdrag_enligt_kallmodell: Historisk analytisk lagring och compute för större datamängder
+  tillamplighet: Analytisk last och historik motiverar separat bearbetningsmiljö
+  avgransning: Tar inte över verksamhetsdataägarskap eller federerade frågor
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Rapportdatabas eller separata utdrag kan räcka med få källor
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Stäm av en äldre rapport med godkänd källperiod och bevarad metod.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Samordnade historiska dataområden, partitionering, refresh och hanterbar belastning
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Fördröj en delmängd data och korrigera tidigare period; mät fullständighet, färskhet och
+        om återpublicering syns för konsumenten.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Självbetjänad warehouse/lakehouse-profil med säker dataseparering, kostnadskontroll och datalivscykel
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Provisionera och avveckla två isolerade analysarbetsytor; kontrollera kostnad, åtkomst och
+        schemaändring.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Styrda återanvändbara analysdata för AI och verksamhetsanalys med lineage, åtkomstpolicy och
+        kvalitetsnivåer
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Neka otillåten analysfråga; avsluta en temporär arbetsyta och verifiera gallring enligt
+        beslutad bevarande- och säkerhetskopieringspolicy utan att lova omedelbar totalradering.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-065
+  namn: Dataflöden och datapipelines
+  plattform:
+    id: PLT-020
+    namn: Analytisk data- och data engineering-plattform
+  grunduppdrag_enligt_kallmodell: Kontrollerad ingestion och transformation för analys
+  tillamplighet: Flera återkommande dataflöden behövs för analys
+  avgransning: Inte operativ integrationsorkestrering (CAP-IT-06)
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Schemalagda exporter och manuella kontrollpunkter kan fungera
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Identifiera manuella extrakt och vilka källversioner de använder.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Reproducerbar ETL/ELT med felhantering, datakvalitetskontroller och körlogg
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Inför källschemaändring, dubblett och sena händelser; prova idempotent omkörning, avstämning
+        med källan och larm vid ofullständigt dataset.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Versionshanterade pipelines som tjänst med automatiska tester, driftschema, lineage och återkörning
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Låt två konsumenter uppgradera pipelineversion, återköra en period och bekräfta samma dataavtal,
+        kostnadsgränser och hantering av fördröjda händelser.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Datapipelines för kontinuerliga AI- och analysflöden med policy, ändringsupptäckt och kostnadsövervakning
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Prova automatiskt skapad pipeline med otillåten källa och verifiera policykontroll före
+        dataläsning.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-015
+  namn: BI och rapportering
+  plattform:
+    id: PLT-013
+    namn: BI- och semantikplattform
+  grunduppdrag_enligt_kallmodell: Visualisering och rapportering av godkända informationskällor
+  tillamplighet: Verksamheten behöver regelbunden analys eller rapportering
+  avgransning: Äger inte datatransformation eller verksamhetens tolkning av nyckeltal
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Stabila standardrapporter med dokumenterade mått och behörigheter
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Återberäkna en systemnära rapport med synlig definition och källa.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Tvärsystemrapporter med drill-down, schemalagda rapporter och källspårbarhet
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Jämför samma nyckeltal i två rapporter med olika händelse-/registreringsdatum och en sen
+        rättelse; följ skillnaden till godkänd definition och rättelsepolicy.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Självbetjänad BI med certifierade dataset, styrda behörigheter och standardiserat måttlager
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Publicera en rapportmall för två team; ändra måttversion och kontrollera behörighet och
+        migrering.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Verksamhetsnära fråge- och analysstöd med AI-assistans utan att kringgå auktoritativa mått
+        eller källbehörigheter
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Stoppa en AI-genererad rapport som bygger på felaktigt eller otillåtet mått.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-098
+  namn: Semantiskt data- och måttlager
+  plattform:
+    id: PLT-013
+    namn: BI- och semantikplattform
+  grunduppdrag_enligt_kallmodell: Återanvändbara mått, dimensioner och begreppskontrakt
+  tillamplighet: Återkommande oenighet om nyckeltal eller många datakonsumenter
+  avgransning: Verksamheten äger betydelsen; plattformen verkställer den tekniskt
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: 'Situationsberoende: gemensamma definitioner kan vara kritiska, men separat semantiskt
+        lager är valfritt'
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Definitioner kan dokumenteras i rapporter eller datamodell
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Dokumentera lokala måttdefinitioner där de används.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: 'Situationsberoende: gemensamma definitioner kan vara kritiska, men separat semantiskt
+        lager är valfritt'
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Delade definitioner och versionering när flera system gör samma beräkningar
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Låt två verksamheter tolka samma mått för samma population och tidsperiod; dokumentera ansvarig
+        definition och visa om en enkel styrd måttkatalog räcker.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: 'Situationsberoende: gemensamma definitioner kan vara kritiska, men separat semantiskt
+        lager är valfritt'
+      behov_av_gemensam_plattform: Viktig endast när flera konsumenter behöver gemensamt versionsstyrt måttlager;
+        annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Certifierade semantiska kontrakt som används av BI och dataappar med ansvariga dataägare
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Ändra ett gemensamt mått med giltighetsdatum och inför sent registrerad rättelse; säkerställ
+        att äldre och nya rapporter kan särskiljas hos två konsumenter.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: 'Situationsberoende: gemensamma definitioner kan vara kritiska, men separat semantiskt
+        lager är valfritt'
+      behov_av_gemensam_plattform: Viktig endast när flera konsumenter behöver gemensamt versionsstyrt måttlager;
+        annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Samma semantiska lager konsumeras av AI-agenter och mänskliga analytiker med behörighet och
+        versionsspårbarhet
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Låt AI-fråga godkända mått och kontrollera att den inte uppfinner ny definition vid oklar
+        fråga.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-082
+  namn: Datakvalitet och datavalidering
+  plattform:
+    id: PLT-021
+    namn: Data governance- och kvalitetsplattform
+  grunduppdrag_enligt_kallmodell: Profilering och datakvalitetsregler för data/dataset
+  tillamplighet: Data används för rapporter, automatiserade beslut eller AI
+  avgransning: Inte kontrakts-/meddelandeschemavalidering PLS-080
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Grundläggande rimlighetskontroll vid import och rapportering
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Visa vilka manuella datakontroller rapporten bygger på.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Kvalitetsmått, ägda regler och avvikelsehantering över dataflöden
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Inför fel enhet, fel kodlista, saknad undergrupp och sen rättelse; verifiera inte bara larm
+        utan ansvarig rättning och publiceringsbeslut.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Standardiserade datakvalitetskontrakt med automatiska tester, avvikelselarm och katalogkoppling
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Kör samma godkända datakvalitetsregel i två pipelines och verifiera hantering av undantag.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Kvalitetsgrindar före modellträning, retrieval och agentanvändning; löpande kontroll av källdata
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Stoppa publicering av automatgenererad analys när kritisk datakvalitetsregel bryts.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-083
+  namn: Förvaltad grafdatabas
+  plattform:
+    id: PLT-003
+    namn: Databas- och persistensplattform
+  grunduppdrag_enligt_kallmodell: Grafpersistens och traversering av relationer
+  tillamplighet: Relationer och traversering är centrala för behovet
+  avgransning: Inte ett generellt krav för AI eller all dataanalys
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Projektlokal grafrepresentation kan räcka eller helt saknas
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Verifiera behov av graftraversering i ett faktiskt relationsfall, annars ej tillämplig.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Styrd grafdatabas vid genuina frågor om relationskedjor
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Jämför en relevant grafanalys med ett alternativ och dokumentera kostnad och åtkomst.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Förvaltad grafprofil med åtkomst, backupintegration, prestanda och schemalivscykel
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Låt två team skapa och avveckla grafresurser med åtkomst, prestanda och migreringsprov.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Grafbaserad kunskapsrepresentation för avancerad analys/AI när effekt verifierats mot enklare
+        alternativ
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Förhindra att verksamhetsnära grafanalys binder samman otillåtna personrelationer.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-074
+  namn: Geospatial informations- och karttjänst
+  plattform:
+    id: PLT-015
+    namn: Geospatial plattform
+  grunduppdrag_enligt_kallmodell: Kartlager, geokodning och spatiala frågor
+  tillamplighet: Verksamhetsprocesser kräver geografisk analys
+  avgransning: Plattformen övertar inte ägarskap av geografisk verksamhetsinformation
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Specialiserat GIS där rumsliga frågor faktiskt finns
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Kontrollera relevant kartfråga och dokumentera koordinatkälla där plats används.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Gemensamma koordinatsystem, kartlager och API-kontrakt för flera applikationer
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Prova precision och behörighet för geografiska data vid verkligt användningsfall.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Återanvändbara geotjänster med kvalitetsmått, licensvillkor och standardiserad åtkomst
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Uppgradera en gemensam geospatial komponent hos två konsumenter med verifierade licensvillkor.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Geodata i verksamhetsnära analys och AI med skydd för känsliga positioner och kontrollerad
+        härledning
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Testa en geografisk aggregationsfråga som kan återidentifiera skyddad position vid litet
+        urval; verifiera kompletterande skydd som aggregeringsgräns.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-090
+  namn: Mediaanalys och innehållsextraktion
+  plattform:
+    id: PLT-036
+    namn: Mediaanalys- och innehållsextraktionsplattform
+  grunduppdrag_enligt_kallmodell: OCR, tal-till-text, scen-/objektanalys och maskinell mediemetadata
+  tillamplighet: Stora mängder bild, ljud eller video behöver bli sökbara
+  avgransning: Inte medielagring, transkodning, verksamhetsklassificering eller formell records management
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Manuell registrering eller punktvis extraktion kan räcka
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Bedöm ett relevant dokument/ljudfall manuellt; ingen generell media-AI-funktion krävs.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Standardiserad extraktion med mätning av fel och manuellt efterarbete
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Jämför mediaextraktion mot representativt facit för språk, dialekter och dokumentkvalitet;
+        redovisa fel per grupp samt när mänsklig kontroll behövs.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Självbetjänad OCR/transkribering med styrd datalagring, kvalitetsmått och versionshantering
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Prova versionsuppgradering, köhantering och kvalitet i två mediaextraktionskonsumenter.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: AI-baserad multimodal extraktion med riskklassning, mänsklig verifiering och skydd för känsligt
+        innehåll
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Hindra automatisk registrering av osäkert extraktionsresultat utan avtalad granskning.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-088
+  namn: Mediebearbetning och transkodning
+  plattform:
+    id: PLT-016
+    namn: Mediebearbetnings- och distributionsplattform
+  grunduppdrag_enligt_kallmodell: Teknisk transformation av medieobjekt till användbara format
+  tillamplighet: Organisationen bearbetar stora mängder media
+  avgransning: Inte själva AI-innehållsanalysen eller medieoriginalets lagring
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Manuell filkonvertering vid få medier
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Kontrollera verkligt transkoderingsbehov innan tekniken tillämpas.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Köbaserad formatkonvertering med standardrenditions och spårning
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Bearbeta ett skyddat medieobjekt och verifiera tidskod, metadata och kvalitet.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Förvaltad transkodningstjänst med skalning, formatprofiler och automatiska returer
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Ändra godkänd formatprofil hos två konsumenter och kontrollera arkivoriginal och kostnad.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Automatiserad produktion av AI-anpassade mediarepresentationer med källkoppling och kostnadskontroller
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Prova mediebearbetning med skyddat original och en misslyckad process; kontrollera behörighet,
+        kvarvarande mellanresultat och gallring enligt avtalad policy.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-018
+  namn: Kunskapsretrieval och grounding
+  plattform:
+    id: PLT-014
+    namn: Sök- och kunskapsplattform
+  grunduppdrag_enligt_kallmodell: Retrieval och grounding från godkända kunskapskällor inklusive strukturerad data
+  tillamplighet: Generativ AI behöver svar med organisationsspecifika, uppdaterade källor
+  avgransning: Inte generellt datafederationslager, semantiska mått eller agentorkestrering
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Traditionell sökning och källhänvisning; RAG behövs normalt inte
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Identifiera vilka källor användaren verkligen får använda; RAG behövs inte generellt.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Pilot med retrieval, åtkomstfiltrering, källproveniens och verifiering av relevans
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Testa två källversioner, obehörig källa och en instruktionsliknande text i hämtat dokument;
+        kontrollera källval och att dokumenttext inte blir ett mandat.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Förvaltad retrievalpipeline med chunkning, embedding/index och dokumentbaserade ACL-kontroller
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Uppdatera retriever/index hos två konsumenter och mät retrieval-relevans, korrekt källa,
+        referensstöd och auktorisationskontroll var för sig.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Riskstyrd grounding för agent- och AI-appar med källtrogenhet, färskhetskontroller och skydd
+        mot promptinjektion i källinnehåll
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Försök få assistenten att citera förbjudet dokument, följa injicerad instruktion eller använda
+        gammal version; kontrollera retrieval, svar, verktygsmandat och eventuella läckor separat.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+- id: PLS-014
+  namn: Sökning och indexering
+  plattform:
+    id: PLT-014
+    namn: Sök- och kunskapsplattform
+  grunduppdrag_enligt_kallmodell: Fulltext-/semantisk sökning och relevansstyrning
+  tillamplighet: Stor mängd information måste kunna hittas
+  avgransning: Äger inte den auktoritativa källan eller groundingkedjans kvalitet
+  generationer:
+    G1:
+      generationsroll: Systemnära analys och sökning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Inte ett generationskrav; automatisera endast där verklig nytta finns
+      tekniskt_stod: Enklare metadata- eller fulltextsökning med styrd åtkomst
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Mät en faktisk sökfrågas täckning och relevans med angiven källa.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G2:
+      generationsroll: Distribuerade källor – spårbar och säker analys
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Styrs av volym, risk och behov; inte enbart generation
+      tekniskt_stod: Gemensamma sökindex för flera informationskällor med relevansmätning
+      ansvar: Ansvarig verksamhets-/informationsägare definierar användningen; tekniskt team verkställer och förvaltar.
+      verifieringsprov: Återkalla åtkomst och skärp sekretess; kontrollera att även träffrubrik, utdrag, förhandsvisning,
+        cache och källdokument inte röjer uppgifter via ett gammalt index.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G3:
+      generationsroll: Förvaltade, självbetjänade analys- och AI-erbjudanden
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Självbetjänad indexering, skalbar sökprofil, ACL-synk och livscykel
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Uppgradera sökindex hos två team och mät relevans, latens, ACL-kontroll och avveckling.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+    G4:
+      generationsroll: Riskstyrd verksamhetsnära informationsbearbetning
+      funktionens_kritikalitet: Viktig när analysen eller sökningen är verksamhetskritisk; annars situationsberoende
+      behov_av_gemensam_plattform: Viktig vid upprepade, likartade behov hos flera team; annars situationsberoende
+      automationsbehov: Automatisera återkommande provisionering, policyprov, ändring och avveckling där tjänsten
+        används
+      tekniskt_stod: Hybrid/semantisk sökning till både mänskliga användare och AI, med behörighets- och aktualitetskontroller
+      ansvar: Plattformsteam äger tjänstens livscykel; data- och verksamhetsägare äger betydelse och tillåtna användningar.
+      verifieringsprov: Testa sökning med gamla ACL-fält och föråldrad cache, även genom AI-ansluten klient; verifiera
+        att otillåtna utdrag och metadata inte röjs.
+      forutsattning: Endast när användningsfall och dataförutsättningar motiverar tjänsten.
+      tolkning: Verifikation av teknisk funktion är inte ensam en verifiering av korrekt verksamhetsutfall.
+granskningsresultat:
+  kontrollerat:
+  - 16 ursprungliga tjänster och nio plattformar bevarade
+  - G1–G4 för samtliga tjänster
+  - Situationsberoende behov för ML, generativ AI, graf och medier
+  - Separata prov för källa, semantik, sökbehörighet och modellkvalitet
+  kvarstar:
+  - Extern sakgranskning av bransch- och dataskyddskrav
+  - Slutlig harmonisering av prioriteringsvokabulär och begreppsregister med hela boken
+kvalitetsmatning:
+  skilda_dimensioner:
+  - verksamhetsmässig korrekthet och måttdefinition
+  - datakvalitet, färskhet och fullständighet
+  - sökrelevans och auktoriserad åtkomst
+  - AI-svarens korrekthet och stöd i källor
+  - faktisk verksamhetseffekt, kostnad och felkonsekvens
+  varning: En grön pipeline eller bra modellpoäng verifierar inte ensam dessa övriga dimensioner.

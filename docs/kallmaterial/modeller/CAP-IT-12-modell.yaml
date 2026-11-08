@@ -1,0 +1,959 @@
+schema_version: factbook-capability-1.0
+capability:
+  id: CAP-IT-12
+  name: Cybersäkerhet och tekniskt skydd
+  source_definition: Gemensamma tekniska mekanismer för att förebygga, upptäcka, analysera och begränsa cyberhot
+    samt skydda digitala resurser.
+  source_boundary: Äger inte verksamhetens risk- och informationsklassning, IAM-livscykel, nätets topologi,
+    secure SDLC, generell observability eller dataägarens beslut om skyddsvärde.
+editorial:
+  title: Cybersäkerhet och tekniskt skydd
+  version: '2.0'
+  date: '2026-11-07'
+  audience: IT-ledning, arkitekter, säkerhets-, drift- och utvecklingsansvariga
+  baseline: Organisationen befinner sig arkitektoniskt i G2; tidigare generationsarv kan kvarstå.
+  source_boundary: PLS-ID och förmågekoppplingar är hämtade ur modellbaseline v1.1; generationstillämpning
+    och prioriteringar är bedömningar.
+  review_status: internt_kritiskt_granskad
+  criticality_rule: Kritisk funktion betyder inte att särskild produkt eller gemensam plattform är obligatorisk.
+    Prioriteter gäller bara när applicability uppfylls.
+generation_overview:
+  G1:
+    summary: 'Skydd per sammanhållet system och klient: dokumenterad härdning, tillgångs- och sårbarhetsöverblick,
+      manuell kontroll och incidentvägar.'
+    delivery: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+    responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister implementerar tekniska
+      kontroller.
+    risk: Lokala skydd och loggar kan skapa blinda fläckar; förbättringar bygger på individer.
+  G2:
+    summary: 'Försvar av många sammanhängande tjänster: korrelerade säkerhetshändelser, sårbarheter över kedjor,
+      starka workload-/API-skydd och kontrollerad extern anslutning.'
+    delivery: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+    responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget skydds-/åtgärdsansvar.
+    risk: Fragmenterade verktyg och manuella regler hindrar skala; delat ansvar lämnar luckor.
+  G3:
+    summary: 'Säkerhet integrerad i plattformarnas standarderbjudanden: policy-as-code, automatiska kontroller,
+      kontinuerlig exponering och förberedda incidentflöden.'
+    delivery: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara undantag.
+    responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion anger principer;
+      tjänsteägare rättar risker.
+    risk: Central policy kan bli blockerande och falsklarm höga om användbarhet och feedback inte designas.
+  G4:
+    summary: 'Riskklassad säkerhet för snabb AI-assisterad och verksamhetsnära utveckling: agenter, prompt-/verktygskedjor,
+      dataåtkomst, kortlivade resurser och nödstopp.'
+    delivery: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver explicit
+      mandat och ibland mänsklig kontroll.
+    responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller; säkerhet övervakar
+      och styr principer; domänsystem verkställer sin auktorisation.
+    risk: Agentdrivet missbruk, oavsiktlig informationsspridning och stora privilegier kan skala snabbare än
+      manuell granskning.
+generation_2_diagnosis:
+  legacy_gaps:
+  - Oinventerade tjänster och beroenden
+  - Fynd och larm utan utsedd åtgärdsansvarig
+  - Skydd endast på server- eller nätverksnivå
+  - Säkerhetsskanning som sällanhändelse
+  stabilize_g2:
+  - Bygg tjänste- och exponeringsöverblick
+  - Fastställ ansvar och åtgärdskedja
+  - Testa detektion och begränsning
+  - Koppla säkerhetsanalys till leverans
+  move_toward_g3:
+  - Standardisera återkommande skyddsprofiler
+  - Inför automatiserade säkerhetsguardrails
+  - Förvalta undantag och policyversioner
+  - Automatisera även ändring och avveckling
+transitions:
+  G1_G2:
+    purpose: Kort historisk orientering, inte obligatorisk checklista
+    signals:
+    - Större antal tjänster och exponerade gränssnitt
+    - Komponentorienterade skydd skapar blinda fläckar
+  G2_G3:
+    purpose: Säkra återkommande kontroller blir konsumerbara plattformserbjudanden
+    readiness:
+    - Tydliga ägare
+    - Tillämpliga riskprofiler
+    - Mätbar skyddseffekt
+    - Förvaltningskapacitet för policy och undantag
+  G3_G4:
+    purpose: Riskstyrda skydd tillgängliga även för verksamhetsnära och AI-assisterade lösningar
+    readiness:
+    - Riskklassning
+    - Säkra utvecklings- och körvägar
+    - Mandatkontroller vid resursen
+    - Incident- och stoppfunktioner
+indicators:
+  need:
+  - Exponerade tjänster och betydande informations- eller verksamhetsrisk
+  - Många ändrade beroenden och externa integrationsflöden
+  functioning_G2:
+  - Väsentliga tjänster kan knytas till ägare och risk
+  - Sårbarhetsfynd får ansvarig och verifierad åtgärd
+  - Detektion provas med simulerad händelse
+  - Säkerhetsfynd återförs till utvecklingsteam
+  unsuitable_technology_G2:
+  - Bristande täckning av faktiskt använda arbetslaster
+  - Saknade möjligheter till korrelation
+  - Höga falsklarm och okontrollerad kostnad
+  - Ingen fungerande säkerhetsuppdatering eller livscykel
+  functioning_G3:
+  - Förvald skyddsprofil vid standardleverans
+  - Tidsbundna och spårbara undantag
+  - Kontrollerad policyändring och avveckling
+  unsuitable_technology_G3:
+  - Ingen automatiserbar policy- eller livscykelhantering
+  - Alltför många felaktiga blockeringar utan feedback
+  - Centralt team måste manuellt utföra varje normalfall
+  functioning_G4:
+  - Agentmandat verkställs vid resursen
+  - Misstänkt agentaktivitet kan upptäckas och stoppas framåt i tiden
+  - Skyddet kan riskdifferentieras
+  unsuitable_technology_G4:
+  - Otillräcklig kontroll av verktygsanrop
+  - Ingen utredningsbar spårbarhet
+  - Bristande riskdifferentiering
+remedy_options:
+- Behåll
+- Komplettera
+- Ändra användning och ansvar
+- Ersätt
+platform_services:
+- id: PLS-079
+  name: Säker extern system- och myndighetsanslutning
+  platform:
+    id: PLT-035
+    name: B2B- och filutbytesplattform
+  source_mission_summary: Sammansatt anslutningsprofil för externa parter; återanvänder IAM, nätverk och integration.
+  applicability: Externa myndighets-, leverantörs- eller partnerintegrationer
+  capability_dependencies:
+  - CAP-IT-07
+  - CAP-IT-06
+  - CAP-IT-13
+  generation_profiles:
+    G1:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Dokumenterad avtalad motpart, godkända protokoll och krypterad anslutning per system.
+      verification: En obehörig motpart kan inte etablera anslutning; ägare och utgående dataflöde kan pekas
+        ut.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När externa partner- eller myndighetsanslutningar finns och kräver säkra kommunikationsprofiler.
+    G2:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Separata säkra profiler per partner, central registrering av certifikat, incidentkontakt
+        och avveckling.
+      verification: Rotera partnercertifikat och visa att anslutningen kan spärras utan att öppna andra partnerflöden.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När externa partner- eller myndighetsanslutningar finns och kräver säkra kommunikationsprofiler.
+    G3:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Självbetjänad onboarding med förgodkända profiler, policykontroller och spårbar anslutningslivscykel.
+      verification: Team onboardar testmotpart i godkänd profil, avvikelse blockeras och avveckling stänger
+        alla vägar.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När externa partner- eller myndighetsanslutningar finns och kräver säkra kommunikationsprofiler.
+    G4:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Tids- och ändamålsbegränsade agent-/verksamhetsanrop via samma kontrollerade partnerkanal;
+        minimala scopes.
+      verification: Agent nekas motpart eller datapost utanför deklarerat mandat; logg och nödstopp fungerar.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När externa partner- eller myndighetsanslutningar finns och kräver säkra kommunikationsprofiler.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Externa myndighets-, leverantörs- eller partnerintegrationer
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-069
+  name: Informationsskydd och Data Loss Prevention
+  platform:
+    id: PLT-017
+    name: Informationsskyddsplattform
+  source_mission_summary: Tillämpa informationsskydd och motverka oönskad dataexfiltration; klassning ägs av
+    verksamheten.
+  applicability: Känsliga data, e-post, samarbetsytor, export och AI-kontekst
+  capability_dependencies:
+  - CAP-IT-04
+  - CAP-IT-11
+  - CAP-IT-07
+  generation_profiles:
+    G1:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Regelstyrd lagring och delning, enkel märkning och kontroll av känslig export där
+        behov finns.
+      verification: Försök att sända klassad testfil via otillåten kanal identifieras och hanteras.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När skyddsvärda data kan lämna organisationen genom kanaler där teknisk läckagekontroll
+        är proportionerlig och möjlig.
+    G2:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: DLP-kontroller samordnas över endpoint, e-post och molntjänster och får tydligt ägarskap.
+      verification: Samma testdata upptäcks vid två olika utgående kanaler; falsklarm kan följas upp.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När skyddsvärda data kan lämna organisationen genom kanaler där teknisk läckagekontroll
+        är proportionerlig och möjlig.
+    G3:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Informationspolicy kopplas till tekniska guardrails och klassningsmetadata i standardprofiler;
+        godkända undantag spåras.
+      verification: En policyändring slår igenom i flera kanaler och ger begriplig återkoppling till användaren.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När skyddsvärda data kan lämna organisationen genom kanaler där teknisk läckagekontroll
+        är proportionerlig och möjlig.
+    G4:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Gränser även för promptar, retrieval, verktygsutdata och AI-agenters export; sanering
+        och förhindrande av överdelning.
+      verification: Testa utvalda informationsflöden med syntetiskt klassad data via prompt, retrieval och
+        verktyg; verifiera både tekniska spärrar och begränsningar där full DLP-täckning saknas.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När skyddsvärda data kan lämna organisationen genom kanaler där teknisk läckagekontroll
+        är proportionerlig och möjlig.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Känsliga data, e-post, samarbetsytor, export och AI-kontekst
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-052
+  name: Kryptografisk nyckel- och HSM-tjänst
+  platform:
+    id: PLT-026
+    name: Maskinidentitets- och kryptografiplattform
+  source_mission_summary: Förvaltade kryptografiska nycklar och skyddad nyckelanvändning; inte certifikatlifecycle
+    eller generell secrets management.
+  applicability: System med krypterings-, signerings- eller hårdvarunyckelkrav
+  capability_dependencies:
+  - CAP-IT-07
+  - CAP-IT-04
+  generation_profiles:
+    G1:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Dokumenterad nyckelförvaring, åtkomst och återställning för skyddsvärda system.
+      verification: Endast utsedd operatör kan nyttja nyckeln och komprometterad nyckel kan ersättas.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: Nyckelskydd och nyckellivscykel behövs när kryptografi används; HSM bara vid särskilda
+        skydds- och assurancekrav.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Central kontroll av nyckelåtkomst och rotation för fler tjänster; separata nycklar
+        per skyddsdomän.
+      verification: Rotera en nyckel utan att annan tjänsts dataåtkomst påverkas.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: Nyckelskydd och nyckellivscykel behövs när kryptografi används; HSM bara vid särskilda
+        skydds- och assurancekrav.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: API-baserad key management med roller, loggning, automatisk rotation där möjligt och
+        profiler för HSM vid behov.
+      verification: Team får godkänd nyckelprofil genom standardflöde; obehörig decrypt nekas.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: Nyckelskydd och nyckellivscykel behövs när kryptografi används; HSM bara vid särskilda
+        skydds- och assurancekrav.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Korta användningsmandat för agentarbetsflöden, isolerade nyckeloperationer och skydd
+        mot massdekryptering.
+      verification: Verifiera att otillåten nyckelanvändning nekas och loggas; testa spärr av framtida åtkomst
+        med realistiska token-/sessionstider, inte antagande om omedelbar global återkallelse.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: Nyckelskydd och nyckellivscykel behövs när kryptografi används; HSM bara vid särskilda
+        skydds- och assurancekrav.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: System med krypterings-, signerings- eller hårdvarunyckelkrav
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-077
+  name: Endpointskydd
+  platform:
+    id: PLT-011
+    name: Security Operations- och skyddsplattform
+  source_mission_summary: Skydd av slutanvändarenheter via EDR/anti-malware, lokal policy och detektion.
+  applicability: Hanterade klienter, arbetsstationer och mobila enheter
+  capability_dependencies:
+  - CAP-IT-11
+  - CAP-IT-07
+  generation_profiles:
+    G1:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Antimalware, uppdateringar och baspolicy på anslutna klienter; isolering vid konstaterad
+        infektion.
+      verification: Testklient rapporterar skyddsstatus och kan isoleras.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När organisationen ansvarar för klienter eller klientåtkomst med risker som motiverar
+        tekniskt endpointskydd.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Central EDR-telemetri och enhetspolicy för klienter som når distribuerade tjänster.
+      verification: Misstänkt aktivitet på klient korreleras till konto och ansluten applikation.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När organisationen ansvarar för klienter eller klientåtkomst med risker som motiverar
+        tekniskt endpointskydd.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Skydd aktiveras automatiskt vid enhetsregistrering; avvikande enhet spärras från skyddsvärda
+        resurser.
+      verification: Verifiera registrering, skyddsstatus och åtkomstbeslut genom samverkan mellan endpointskydd,
+        UEM och IAM; endpointprodukten ensam avgör inte all resursåtkomst.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När organisationen ansvarar för klienter eller klientåtkomst med risker som motiverar
+        tekniskt endpointskydd.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Skydd vid AI-assisterat arbete, lokal dataåtkomst och kodgenerering samt agentens
+        klientbehörigheter.
+      verification: Oauktoriserat försök att läsa lokala hemligheter genererar blockering och spårbar incident.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När organisationen ansvarar för klienter eller klientåtkomst med risker som motiverar
+        tekniskt endpointskydd.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Hanterade klienter, arbetsstationer och mobila enheter
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-050
+  name: Säkerhetsdetektion och analys
+  platform:
+    id: PLT-011
+    name: Security Operations- och skyddsplattform
+  source_mission_summary: Insamling, korrelation, detektion och analys av säkerhetshändelser.
+  applicability: Alla exponerade eller skyddsvärda digitala resurser
+  capability_dependencies:
+  - CAP-IT-09
+  - CAP-IT-07
+  - CAP-IT-08
+  generation_profiles:
+    G1:
+      function_priority: Viktig
+      shared_platform_priority: Viktig
+      required_offering: Identifierade loggkällor, grundläggande angreppsindikatorer och ansvar för eskalering.
+      verification: Simulerad obehörig inloggning skapar larm till namngiven mottagare.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Korrelation av identitets-, nät-, workload- och apphändelser; dokumenterade use cases.
+      verification: Testangrepp över två tjänster kan följas i en tidslinje.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Standardiserade detektionspaket vid onboarding, täckningsmätning och prioriterad incidenttriage.
+      verification: Ny tjänst får basdetektion utan särskild beställning; testfall mäter larmkvalitet.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Detektion av agentmissbruk, promptinjektionens effekter, massverktygsanrop och dataexfiltration.
+      verification: Simulerat agentmissbruk genererar ett begripligt larm med användare, agent och verktygskedja.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Alla exponerade eller skyddsvärda digitala resurser
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-051
+  name: Säkerhetsforensik och teknisk incidentanalys
+  platform:
+    id: PLT-011
+    name: Security Operations- och skyddsplattform
+  source_mission_summary: Teknisk bevisinsamling, analys och containment; ersätter inte ITSM eller övergripande
+    incidentledning.
+  applicability: Incidenter med krav på bevisvärde, orsak och teknisk begränsning
+  capability_dependencies:
+  - CAP-IT-09
+  - CAP-IT-12
+  generation_profiles:
+    G1:
+      function_priority: Viktig
+      shared_platform_priority: Situationsberoende
+      required_offering: Rutiner för säkrade loggar, tidsstämpling, isolering och kontaktvägar vid incident.
+      verification: Incidentövning bevarar originalspår och dokumenterar chain of custody.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Korrelation och tidslinje över tjänstegränser; kontrollerade förfaranden för forensiska
+        kopior.
+      verification: Simulerad incident kan härledas genom två tjänster utan att bevis förstörs.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Förberedda playbooks för workloadisolering, forensisk export och specialisteskalering.
+      verification: En komprometterad testworkload isoleras och artefakter säkras med spårbar behörighet.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Situationsberoende
+      required_offering: Teknisk analys av agentens kontext, verktygsbeslut, prompt-/modellversion och delegering
+        med integritetsskydd.
+      verification: Övning kan återskapa vilka verktyg agenten anropade utan att exponera onödiga personuppgifter.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Incidenter med krav på bevisvärde, orsak och teknisk begränsning
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-048
+  name: Sårbarhets- och exponeringshantering
+  platform:
+    id: PLT-011
+    name: Security Operations- och skyddsplattform
+  source_mission_summary: Samlad inventering, prioritering och uppföljning av exponeringar; analys i kod/pipeline
+    ligger i PLS-086.
+  applicability: Systemportfölj, externa ytor, workloads och tekniska beroenden
+  capability_dependencies:
+  - CAP-IT-08
+  - CAP-IT-10
+  - CAP-IT-13
+  generation_profiles:
+    G1:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Inventering och plan för säkerhetsuppdateringar med riskbaserad prioritering.
+      verification: En känd sårbar server får ägare, riskklass och åtgärdsdatum.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Sårbarheter sätts i sammanhang med exponering och berörda tjänstekedjor.
+      verification: Sårbar komponent kan följas till samtliga berörda körmiljöer.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Kontinuerlig inventering med automatisk tillgångsägare och integrerade fynd från PLS-086.
+      verification: Nytt workload registreras, findings dedupliceras och åtgärdstid kan mätas.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Upptäck även kortlivade verksamhetsappar, AI-komponenter och agenters exponerade verktyg.
+      verification: En tillfällig AI-tjänst syns i inventeringen och avvecklas när mandatet löper ut.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Systemportfölj, externa ytor, workloads och tekniska beroenden
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-078
+  name: Workloadskydd
+  platform:
+    id: PLT-011
+    name: Security Operations- och skyddsplattform
+  source_mission_summary: Skydd av VM/server/container/workload med runtime prevention och detektion.
+  applicability: Körmiljöer med exponerade eller kritiska arbetslaster
+  capability_dependencies:
+  - CAP-IT-08
+  - CAP-IT-09
+  generation_profiles:
+    G1:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Härdade basavbilder, servernära skydd och minimala tjänstekonton.
+      verification: Avvikande process på provserver upptäcks eller blockeras.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Separat skydd per tjänst samt kontroll av lateral rörelse och runtimebeteende.
+      verification: Verifiera att en testworkload omfattas av runtime-policy och att ett kontrollerat avvikande
+        processteg upptäcks eller blockeras; testa separat isolering och secrets-åtkomst genom CAP-IT-08/07.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Policyprofiler och standardiserat runtime-skydd integreras med provisionering av containers
+        och VM.
+      verification: Ny workload får skydd utan manuell agentinstallation; otillåten privilegiering blockeras.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Kortlivade AI-workloads, isolerad exekvering av agentkod samt detektion av avvikande
+        resurs- och verktygsanvändning.
+      verification: Testagent kan inte exekvera otillåten kod utanför sandbox och försöket loggas.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Körmiljöer med exponerade eller kritiska arbetslaster
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-086
+  name: Programvarusäkerhetsanalys
+  platform:
+    id: PLT-009
+    name: Utvecklings- och leveransplattform
+  source_mission_summary: SAST, beroende-, secret-, container- och IaC-kontroller i leveransflödet; findings
+    till PLS-048.
+  applicability: Egenutvecklad och underhållen programvara
+  capability_dependencies:
+  - CAP-IT-10
+  - CAP-IT-08
+  generation_profiles:
+    G1:
+      function_priority: Viktig
+      shared_platform_priority: Situationsberoende
+      required_offering: Kodgranskning och riktade säkerhetstester inför större releaser; kontroll av använda
+        bibliotek.
+      verification: Testprojekt med avsiktligt hårdkodad hemlighet flaggas innan release.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Kritisk
+      shared_platform_priority: Viktig
+      required_offering: Automatisk SAST/SCA och secrets-scan i olika tjänsters pipelines samt triageansvar.
+      verification: Sårbart beroende upptäcks i byggpipeline och hamnar hos namngiven ägare.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Paved-road-scanning av kod, IaC, images och SBOM; riskbaserade grindar, undantag och
+        spårbarhet.
+      verification: Ny app är skyddad från första commit; blockerande fynd hindrar promotion till produktion.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Analysera AI-genererad kod, agentverktyg, prompt-/konfigurationsartefakter och modellberoenden
+        med relevant specialiserad utvärdering.
+      verification: Låt AI-genererad kod genomgå vanliga kod- och beroendekontroller; utvärdera agentens verktygsbeteende
+        separat med lämplig AI-testförmåga, inte enbart statisk kodanalys.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Egenutvecklad och underhållen programvara
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-053
+  name: Tekniska säkerhetsguardrails och policy enforcement
+  platform:
+    id: PLT-009
+    name: Utvecklings- och leveransplattform
+  source_mission_summary: Maskinellt verkställda säkerhetsregler i plattform och leverans; organisatorisk policy
+    och riskägarskap ligger utanför.
+  applicability: Självbetjänade plattformar och automatiska leveransvägar
+  capability_dependencies:
+  - CAP-IT-10
+  - CAP-IT-08
+  - CAP-IT-07
+  generation_profiles:
+    G1:
+      function_priority: Viktig
+      shared_platform_priority: Situationsberoende
+      required_offering: Dokumenterade tekniska basregler och ändringskontroll; manuellt verifierade avvikelser.
+      verification: Driftsättning med osäker standardkonfiguration stoppas vid granskning.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G2:
+      function_priority: Viktig
+      shared_platform_priority: Viktig
+      required_offering: Gemensamma policykontroller i CI/CD och körmiljö med separata ägare för undantag.
+      verification: Otillåten publik exponering upptäcks före produktion i två tekniska miljöer.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G3:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Policy-as-code i golden paths med automatisk enforcement, tidsbestämda undantag samt
+        kontrollerad policyändring och återgång där det är tekniskt möjligt.
+      verification: Otillåtet nät- eller IAM-privilegium nekas via självbetjäning utan supportärende.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+    G4:
+      function_priority: Kritisk
+      shared_platform_priority: Kritisk
+      required_offering: Riskklasser styr vilka AI-/agentverktyg, dataåtkomster och åtgärder som får nyttjas;
+        maskinell avveckling.
+      verification: Agent kan inte eskalera mandat; riskhöjning kräver godkännande och tidbegränsas.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Självbetjänade plattformar och automatiska leveransvägar
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+- id: PLS-087
+  name: Webb- och API-skydd
+  platform:
+    id: PLT-018
+    name: Webb- och API-skyddsplattform
+  source_mission_summary: WAF, API-attackskydd, botkontroll och L7-policy; inte ingress (PLS-057) eller API
+    management (PLS-020).
+  applicability: Internetexponerade webb- och API-tjänster
+  capability_dependencies:
+  - CAP-IT-13
+  - CAP-IT-06
+  - CAP-IT-07
+  generation_profiles:
+    G1:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Grundläggande TLS och skydd mot vanliga webbangrepp för exponerade system.
+      verification: Test med känt skadligt mönster ger blockering eller definierad detektion.
+      delivery_model: Specialiststyrd eller systemlokal installation, explicit granskning av undantag.
+      organizational_responsibility: Systemägare beslutar risk och dataskydd; drift-/säkerhetsspecialister
+        implementerar tekniska kontroller.
+      maturity_expectation: Dokumenterad basnivå
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När webbapplikationer eller API:er exponeras för relevant hotbild; WAF är inte universellt
+        nödvändig.
+    G2:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: API-specifika skyddsregler, rate limit och botdetektion över tjänstekedjor.
+      verification: Simulerad automatisk massbegäran begränsas utan att legitimt flöde avbryts.
+      delivery_model: Delvis central teknik och återkommande integrations-/granskningsbeställningar.
+      organizational_responsibility: Gemensam säkerhetsdetektion och koordination; applikationsteam bär eget
+        skydds-/åtgärdsansvar.
+      maturity_expectation: Korrelerat över tjänster
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När webbapplikationer eller API:er exponeras för relevant hotbild; WAF är inte universellt
+        nödvändig.
+    G3:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Standardprofiler för WAF/API-skydd vid onboarding, riskstyrd tuning och mätning av
+        falskpositiva.
+      verification: Ny publik API får skydd med standardprofil; undantag kan följas och tidsbegränsas.
+      delivery_model: Versionerade skyddsprofiler, API och självbetjäning med säkra standardval samt mätbara
+        undantag.
+      organizational_responsibility: Plattformsproduktteam äger teknisk kontroll och adoption; säkerhetsfunktion
+        anger principer; tjänsteägare rättar risker.
+      maturity_expectation: Standardiserat och självbetjänat
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När webbapplikationer eller API:er exponeras för relevant hotbild; WAF är inte universellt
+        nödvändig.
+    G4:
+      function_priority: Situationsberoende
+      shared_platform_priority: Situationsberoende
+      required_offering: Skydd av agentexponerade API:er, schema-/verktygskontroll och begränsning av automatiserad
+        överanvändning.
+      verification: Verifiera API-kvot och otillåtna anropsmönster vid gateway/WAF; kontrollera separat att
+        resursnära auktorisation stoppar anrop utan mandat.
+      delivery_model: Säkra mallar och automatiska skydd även för icke-specialister; högriskåtgärder kräver
+        explicit mandat och ibland mänsklig kontroll.
+      organizational_responsibility: Verksamhetsägare äger användningsrisk; IT/plattform erbjuder kontroller;
+        säkerhet övervakar och styr principer; domänsystem verkställer sin auktorisation.
+      maturity_expectation: Riskstyrt och automatiserat även för AI
+      priority_note: Kritikalitet gäller när den beskrivna risken och tillämpningen finns; är inte ett generellt
+        krav för alla organisationer.
+      evidence_class: Arkitekturbedömning, grundad i källmodellens tjänstedefinition och extern vägledning.
+      priority_condition: När webbapplikationer eller API:er exponeras för relevant hotbild; WAF är inte universellt
+        nödvändig.
+  decision_guidance:
+    function_vs_platform: Funktionskrav och behov av gemensamt tjänsteerbjudande bedöms separat.
+    applicability_rule: Internetexponerade webb- och API-tjänster
+    assessment: Verifiera tillämplighet och risk innan gemensam tjänst etableras eller befintlig teknik ersätts.
+sources:
+- id: SRC-01
+  name: Från systemdrift till digital självständighet
+  kind: uppladdad bok
+- id: SRC-02
+  name: Förmågeöversikt – tekniska IT-förmågor v1.1
+  kind: uppladdad modell
+- id: SRC-03
+  name: Plattformsöversikt – konceptuella plattformar v1.1
+  kind: uppladdad modell
+- id: EXT-01
+  name: NIST CSF 2.0
+  url: https://www.nist.gov/cyberframework
+- id: EXT-02
+  name: NIST SP 800-218 SSDF
+  url: https://csrc.nist.gov/pubs/sp/800/218/final
+- id: EXT-03
+  name: CISA Secure by Demand
+  url: https://www.cisa.gov/sites/default/files/2024-08/SecureByDemandGuide_080624_508c.pdf
+- id: EXT-04
+  name: OWASP GenAI Security Project
+  url: https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/
+- id: EXT-05
+  name: OWASP GenAI LLM Top 10 2026 canonical repository
+  url: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10
+  note: Publicerad augusti 2026; kvalitativ riskvägledning, inte kravkatalog.
+assessment_principles:
+  priority_scale:
+  - Kritisk
+  - Viktig
+  - Situationsberoende
+  separate_dimensions:
+  - function_priority
+  - shared_platform_priority
+  interpretation: Prioriteterna är konditionella och inte krav på specifik produkt. Bedöm alltid faktisk risk,
+    tillämplighet, alternativa kontroller och organisationsstorlek.
+  root_cause_categories:
+  - produkt
+  - konfiguration
+  - integration
+  - arkitektur
+  - ansvar
+  - kompetens_och_kapacitet
+  verification_safety: Genomför endast godkända, isolerade, skadefria tester med syntetiska data.

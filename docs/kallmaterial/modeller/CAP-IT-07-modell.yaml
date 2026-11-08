@@ -1,0 +1,547 @@
+metadata:
+  id: CAP-IT-07
+  titel: Identitet och tillit
+  version: '2.0'
+  datum: '2026-11-07'
+  utgangspunkt: G2
+  status: Kritiskt reviderat faktaboksunderlag; ej extern sakgranskning
+  modellbaseline: v1.1
+kallavgransning:
+  ursprung:
+  - Från systemdrift till digital självständighet
+  - Förmågeöversikt – tekniska IT-förmågor CAP-IT-07
+  - Plattformsöversikt – konceptuella plattformar baseline v1.1
+  externa:
+  - namn: NIST SP 800-63-4
+    url: https://csrc.nist.gov/pubs/sp/800/63/4/final
+    omfattning: Mänsklig identitet, autentisering och federation
+  - namn: NIST SP 800-207
+    url: https://csrc.nist.gov/pubs/sp/800/207/final
+    omfattning: Zero Trust-principer
+  - namn: OWASP Non-Human Identities Top 10 2025
+    url: https://owasp.github.io/www-project-non-human-identities-top-10/2025/top-10-2025/
+    omfattning: Risker för icke-mänskliga identiteter
+  - namn: RFC 9700 (2025)
+    url: https://www.rfc-editor.org/rfc/rfc9700
+    omfattning: OAuth 2.0-säkerhet för klienter och resursservrar
+  analytiskt: Alla generationsindikatorer, prioriteringar, teknikvarningar, prov och åtgärdsval är rekommendationer.
+definition: Etablera och förvalta digitala identiteter samt explicita, begränsade och avvecklingsbara tillitsrelationer
+  och tekniska underlag för auktorisation.
+avgransning: Domänens behörighetssemantik och skyddad resurs ägs nära verksamhetssystemet; central tjänst får stödja
+  besluten men inte överta domänägarskapet.
+generationer:
+  G1:
+    roll: Kort historisk tillbakablick
+    stod: Systemnära användar- och administrationsidentiteter med tydlig behörighetskontroll.
+    fungerande_stod:
+    - Åtkomst kan begränsas och avslutas
+    - Administrativa konton har ägare
+    teknikvarningar:
+    - Osupporterade autentiseringskomponenter
+    - Delade konton utan spårbarhet
+  G2:
+    roll: Nulägesdiagnos och huvudperspektiv
+    stod: Federerad mänsklig identitet, separata tekniska identiteter, token- och tillitshantering samt resursnära
+      auktorisation.
+    behovsindikatorer:
+    - Många samverkande tjänster
+    - Människor och tjänster med åtkomst över flera system
+    - Externa partners eller varierande privilegier
+    fungerande_stod:
+    - Korrekt autentiserad aktör med otillräcklig rätt nekas
+    - Avslut slår igenom enligt riskbaserat mål
+    - Tekniska identiteter har ägare och kan återkallas
+    - Rotation av certifikat och hemligheter fungerar
+    generationsarv:
+    - Delade servicekonton
+    - Manuella lokala behörighetslistor
+    - Långlivade hemligheter och certifikat utan ägare
+    teknikvarningar:
+    - Otillräcklig federationsfunktion
+    - Ingen säker rotation eller avveckling
+    - Ohanterligt växande manuellt arbete
+    - Utvecklarkopplingar till produktspecifik behörighetsmodell
+    forbattringsspar:
+      A: Åtgärda autentiserings-, behörighets- och tillitsbrister i den distribuerade miljön
+      B: Gör återkommande livscykelärenden standardiserade och automatiserbara
+    diagnostiskt_prov:
+    - Stäng ett verkligt uppdrag och följ effekter i identitetskälla, katalog och två skyddade resurser
+    - Skilj spärr av nya inloggningar från existerande token och sessioner
+    - Rotera ett certifikat och dokumentera påverkan på beroende tjänster
+  G3:
+    roll: Förvaltade, självbetjänade erbjudanden
+    stod: Standardprofiler för inloggning, workloadidentitet, certifikat, hemligheter och privilegier; automatiserad
+      skapning, ändring och avveckling.
+    behovsindikatorer:
+    - Många likartade identitetsbehov
+    - Långa väntetider på onboarding och rotation
+    fungerande_stod:
+    - Nya tjänster får godkända identitetsprofiler via standardväg
+    - Rotation och avveckling är mätbar och prövad
+    - Policy och undantag kan spåras
+    teknikvarningar:
+    - Portal över manuell ärendekö
+    - Inga tillförlitliga livscykelgränssnitt
+    - Central motor tar över verksamhetens behörighetssemantik
+  G4:
+    roll: Framåtblickande verksamhets- och AI-användning
+    stod: Identifierbara agentkörningar, avgränsad delegering och resursnära kontroll, med kortlivade behörighetsbevis
+      när lämpligt.
+    behovsindikatorer:
+    - AI-agenter agerar i verksamhetssystem
+    - Kortlivade verksamhetslösningar och automatiseringar
+    fungerande_stod:
+    - En agentkörning kan bara utföra åtgärder som dess uttryckliga mandat medger
+    - Återkallelse testas separat för nya anrop och existerande token/sessioner
+    - Uppdragsgivare, körning, verktygsanrop och skyddad resurs kan följas där kontrollen kräver det
+    teknikvarningar:
+    - Agenten får breda användarrättigheter utan separat mandatkontroll
+    - Ingen testad modell för begränsning eller återkallelse
+    - Permanenta nycklar används för kortlivade uppdrag
+overgangar:
+  G1_G2:
+    syfte: Igenkänning av kvarvarande generationsarv, inte en fullständig historisk implementationsplan
+  G2_G3:
+    syfte: Från projektspecifik tillit till standardiserade och förvaltade livscykeltjänster
+    beredskapsindikatorer:
+    - Inventerade ägare och beroenden
+    - Testade standardprofiler
+    - Mätbara ledtider och manuell belastning
+    - Produktägarskap och säker undantagshantering
+    - Säkra återkallelse- och tokenlivscykler har testats i representativa konsumenter
+  G3_G4:
+    syfte: Från tillit för människa och tjänst till kontrollerad agentdelegering
+    beredskapsindikatorer:
+    - Tydlig verkställighet av rättigheter vid resursen
+    - Spårbar uppdrags- och agentägare
+    - Tidsbegränsade credentials och effektiv återkallelse
+    - Delegering kan begränsas per uppdrag utan att förutsätta separat kontotyp för varje agent
+plattformstjanster:
+- id: PLS-025
+  namn: Autentisering och federation
+  plattform:
+    id: PLT-006
+    namn: Identitets- och åtkomstplattform
+  grunduppdrag_enligt_kallmodell: Autentisering, federation och tokenbaserad identitetsförmedling
+  tillamplighet: Mänsklig autentisering där den krävs; anonym publik åtkomst kan vara tillåten
+  generationer:
+    G1:
+      funktionellt_stod: Autentisering, tillitskedja och federationskopplingar hanteras som dokumenterade kontrakt.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Användare från flera kanaler och organisationer måste logga in och använda federerade identiteter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Testa ogiltig utfärdare, mottagare och spärrad användare; mät separat nya anrop och befintliga
+        sessioner.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Identitetsfederation ges med standardprofiler, versionshanterade integrationer och mätbar
+        avveckling.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Testa ogiltig utfärdare, mottagare och spärrad användare; mät separat nya anrop och befintliga
+        sessioner.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Även verksamhetsnära appar och agentinitierade flöden behöver korrekt användaridentitet;
+        användarens autentisering innebär inte obegränsad agentdelegation.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Testa ogiltig utfärdare, mottagare och spärrad användare; mät separat nya anrop och befintliga
+        sessioner.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: En central inloggning löser inte domänbehörighet. Ett delat sessionslager kan också bli en gemensam
+    felkälla.
+  beroenden:
+  - CAP-IT-11
+  - CAP-IT-12
+- id: PLS-085
+  namn: Identitetskatalog och katalogtjänst
+  plattform:
+    id: PLT-006
+    namn: Identitets- och åtkomstplattform
+  grunduppdrag_enligt_kallmodell: Teknikneutral katalog av identiteter, attribut, grupper och katalogrelationer
+  tillamplighet: Anställda, konsulter och andra identitetskategorier
+  generationer:
+    G1:
+      funktionellt_stod: Systemnära kataloger och synkronisering behöver definierade källor och felhantering.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Många tjänster behöver konsekventa uppgifter om personer, grupper och organisatoriska relationer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      verifieringsprov: Byt en persons enhet eller avsluta ett uppdrag och kontrollera lagg, felhantering och kvarvarande
+        åtkomst.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Standardiserade kataloggränssnitt, tydlig källhierarki och automatiserad synk/avveckling.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov, annars situationsberoende
+      verifieringsprov: Byt en persons enhet eller avsluta ett uppdrag och kontrollera lagg, felhantering och kvarvarande
+        åtkomst.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Fler verktyg och agenter behöver korrekta attribut med tydlig proveniens och aktualitet.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov, annars situationsberoende
+      verifieringsprov: Byt en persons enhet eller avsluta ett uppdrag och kontrollera lagg, felhantering och kvarvarande
+        åtkomst.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: En katalog är inte nödvändigtvis auktoritativ källa för alla attribut, och gruppmedlemskap är
+    inte detsamma som ett verksamhetsbeslut.
+  beroenden:
+  - CAP-IT-11
+  - CAP-IT-12
+- id: PLS-026
+  namn: Identity Governance och entitlement-livscykel
+  plattform:
+    id: PLT-006
+    namn: Identitets- och åtkomstplattform
+  grunduppdrag_enligt_kallmodell: Identitetslivscykel, access requests, entitlements och periodiska access reviews
+  tillamplighet: Organisationer med flera system och livscykel-/revisionkrav
+  generationer:
+    G1:
+      funktionellt_stod: Rättigheter inventeras och beställnings-/avslutsrutiner fungerar för människor och tjänstekonton.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Organisationen behöver kunna begära, tilldela, ompröva och dra tillbaka åtkomster.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Avsluta en användare eller agentdelegation och kontrollera kvarvarande rättigheter i minst
+        två nedströms system.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Standardiserade åtkomstpaket, återkommande attest och koppling till källor för person-
+        och uppdragslivscykel.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Avsluta en användare eller agentdelegation och kontrollera kvarvarande rättigheter i minst
+        två nedströms system.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Tidsbundna agentmandat och explicit koppling till uppdrag och ansvarig person.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Avsluta en användare eller agentdelegation och kontrollera kvarvarande rättigheter i minst
+        två nedströms system.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: Centrala behörighetsadministratörer kan inte tolka alla verksamhetsspecifika rättigheter.
+  beroenden:
+  - CAP-IT-12
+  - CAP-IT-10
+- id: PLS-030
+  namn: Auktorisationsbeslut och policyexekvering
+  plattform:
+    id: PLT-006
+    namn: Identitets- och åtkomstplattform
+  grunduppdrag_enligt_kallmodell: Tekniskt beslutstöd för relations-, attribut- eller policybaserad auktorisation
+    utan domänägarskap
+  tillamplighet: System med komplexa eller återanvändbara åtkomstpolicyer
+  generationer:
+    G1:
+      funktionellt_stod: Varje system verkställer kontroller vid skyddade resurser; central beslutsmotor är valfri.
+      funktionsprioritet_i_tillampligt_fall: Kritisk kontroll i tillämpligt system; gemensam beslutsmotor inte obligatorisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende; viktig vid många återkommande policybehov
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Flera tjänster behöver konsekvent pröva om en åtgärd tillåts i en viss resurskontext.
+      funktionsprioritet_i_tillampligt_fall: Kritisk kontroll i tillämpligt system; gemensam beslutsmotor inte obligatorisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende; viktig vid många återkommande policybehov
+      verifieringsprov: Anropa skyddat API direkt med giltig identitet men utan domänmandat; verifiera nekande vid
+        resursen och policyversion.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Återanvändbart tekniskt beslutsstöd när policykomplexitet och återkommande behov motiverar
+        det.
+      funktionsprioritet_i_tillampligt_fall: Kritisk kontroll i tillämpligt system; gemensam beslutsmotor inte obligatorisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende; viktig vid många återkommande policybehov
+      verifieringsprov: Anropa skyddat API direkt med giltig identitet men utan domänmandat; verifiera nekande vid
+        resursen och policyversion.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Agentverktyg ska kontrollera ändamål, tidsfönster och delegerad rätt vid varje känslig
+        operation.
+      funktionsprioritet_i_tillampligt_fall: Kritisk kontroll i tillämpligt system; gemensam beslutsmotor inte obligatorisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende; viktig vid många återkommande policybehov
+      verifieringsprov: Anropa skyddat API direkt med giltig identitet men utan domänmandat; verifiera nekande vid
+        resursen och policyversion.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: En generell policysmotor får inte bli ägare till verksamhetens regler eller ersätta kontroller
+    vid resursen.
+  beroenden:
+  - CAP-IT-06
+  - CAP-IT-12
+- id: PLS-063
+  namn: Privileged Access Management
+  plattform:
+    id: PLT-006
+    namn: Identitets- och åtkomstplattform
+  grunduppdrag_enligt_kallmodell: Privilegierad åtkomst med JIT/JEA, elevation, skyddade sessioner och administrationslivscykel
+  tillamplighet: Administratörer, operatörer och privilegierade automationsflöden
+  generationer:
+    G1:
+      funktionellt_stod: Separera administrativa roller, använd stark autentisering och dokumenterade nödrutiner.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Drift- och säkerhetspersonal behöver höga rättigheter utan att de blir permanenta och delade.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Ge tillfällig adminåtkomst, kontrollera utgångstid och verifiera loggning samt break-glass-procedur.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Tidsbegränsad privilegiering, sessionsskydd och standardiserad attest i relevanta miljöer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Ge tillfällig adminåtkomst, kontrollera utgångstid och verifiera loggning samt break-glass-procedur.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Automatiserade agenter ska inte ärva stående administratörsprivilegier; högriskåtgärder
+        kräver separat kontroll.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Ge tillfällig adminåtkomst, kontrollera utgångstid och verifiera loggning samt break-glass-procedur.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: För många permanenta administratörskonton eller otillräckligt provade nödrutiner skapar koncentrerad
+    risk.
+  beroenden:
+  - CAP-IT-12
+  - CAP-IT-09
+- id: PLS-027
+  namn: Service- och workloadidentitet
+  plattform:
+    id: PLT-026
+    namn: Maskinidentitets- och kryptografiplattform
+  grunduppdrag_enligt_kallmodell: Tekniska identiteter och kortlivade credentials för workloads och komponenter
+  tillamplighet: Distribuerade tjänster, pipelines, maskiner och AI-agenter
+  generationer:
+    G1:
+      funktionellt_stod: Namngivna och ägda tekniska identiteter kan hanteras manuellt i liten skala.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Tjänst-till-tjänst-kommunikation kräver identifierbara maskinaktörer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Testa unik workloadidentitet, miljöisolering, livscykel samt verklig giltighetstid efter
+        avveckling.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Automatisk workloadidentitet, kortlivade intyg och livscykelkoppling till körmiljön.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Testa unik workloadidentitet, miljöisolering, livscykel samt verklig giltighetstid efter
+        avveckling.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Tillfälliga agenter och arbetsflöden behöver separata, begränsade identiteter – inte användarens
+        huvudtoken.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Testa unik workloadidentitet, miljöisolering, livscykel samt verklig giltighetstid efter
+        avveckling.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: Delade och långlivade servicekonton gör senare återkallelse och spårbarhet svåra.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-10
+  - CAP-IT-12
+- id: PLS-028
+  namn: PKI och certifikattjänst
+  plattform:
+    id: PLT-026
+    namn: Maskinidentitets- och kryptografiplattform
+  grunduppdrag_enligt_kallmodell: Certifikatutfärdande, certifikatlivscykel och trust anchors
+  tillamplighet: TLS, mTLS, signerings- och certifikatbaserad tillit
+  generationer:
+    G1:
+      funktionellt_stod: Inventera certifikat och ansvar; styr övervakad förnyelse.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Certifikat och trust-ankare behövs för vissa krypterade och autentiserade kopplingar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      verifieringsprov: Öva certifikatförnyelse och incident med komprometterad tillit; kontrollera faktisk klientvalidering
+        och återkallelsefördröjning.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Automatiserad provisionering, förnyelse och kontrollerad separation mellan tillitsdomäner.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov, annars situationsberoende
+      verifieringsprov: Öva certifikatförnyelse och incident med komprometterad tillit; kontrollera faktisk klientvalidering
+        och återkallelsefördröjning.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Kortlivade tjänster behöver kortlivad tillit med rimliga spärr- och utgångstider.
+      funktionsprioritet_i_tillampligt_fall: Kritisk när tjänstens säkerhetsbehov är tillämpligt
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov, annars situationsberoende
+      verifieringsprov: Öva certifikatförnyelse och incident med komprometterad tillit; kontrollera faktisk klientvalidering
+        och återkallelsefördröjning.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: Det är inte realistiskt att lova omedelbar global återkallelse av redan utfärdade och cachade
+    intyg.
+  beroenden:
+  - CAP-IT-12
+  - CAP-IT-13
+- id: PLS-029
+  namn: Secrets Management
+  plattform:
+    id: PLT-026
+    namn: Maskinidentitets- och kryptografiplattform
+  grunduppdrag_enligt_kallmodell: Säker lagring, distribution och rotation av tekniska hemligheter och credentials
+  tillamplighet: System som behöver lösenord, token, API-nycklar eller andra hemligheter
+  generationer:
+    G1:
+      funktionellt_stod: Kontrollerad lagring, åtkomst och planerad rotation av återstående hemligheter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Lösenord, API-nycklar och andra hemligheter behöver hanteras utan att spridas i kod och
+        loggar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende till viktig
+      verifieringsprov: Rotera en nyckel i ett testflöde; gammal nyckel ska sluta fungera inom definierat fönster
+        och nyckeln får inte loggas.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Automatisk hämtning, kort livslängd och uppföljning av vilka tjänster som konsumerar hemligheter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Rotera en nyckel i ett testflöde; gammal nyckel ska sluta fungera inom definierat fönster
+        och nyckeln får inte loggas.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Agenters tillgång till verktygsnycklar avgränsas per uppdrag och auditförs.
+      funktionsprioritet_i_tillampligt_fall: Kritisk för relevant identitet/åtkomst med proportionerliga krav
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; kan även vara externt hanterad
+      verifieringsprov: Rotera en nyckel i ett testflöde; gammal nyckel ska sluta fungera inom definierat fönster
+        och nyckeln får inte loggas.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: Ett hemlighetsvalv hjälper inte om kopior av hemligheten ligger i CI-loggar eller statiska konfigurationsfiler.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-10
+  - CAP-IT-12
+- id: PLS-068
+  namn: Elektronisk signering, stämpel och tidsstämpling
+  plattform:
+    id: PLT-027
+    namn: Elektronisk tillits- och signeringsplattform
+  grunduppdrag_enligt_kallmodell: Elektroniska underskrifter, stämplar och betrodda tidsstämplar med spårbar tillitskedja
+  tillamplighet: När rättsligt eller verksamhetsmässigt signerings-, stämpel- eller tidsstämplingsbehov finns
+  generationer:
+    G1:
+      funktionellt_stod: Vald signeringsmekanism fungerar med bevis- och bevarandekrav där behovet finns.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Formella elektroniska handlingar kan behöva signatur, stämpel och tillförlitlig tidsangivelse.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Prova signering, signaturverifikation efter tid och hantering av återkallat certifikat;
+        kontrollera regelverk för användningsfall.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Förvaltad signeringstjänst med integration och bevarandemetadata vid upprepade behov.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Prova signering, signaturverifikation efter tid och hantering av återkallat certifikat;
+        kontrollera regelverk för användningsfall.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: Automatiserad upprättande av handlingar kan kräva explicit mandat för signering och mänsklig
+        kontroll av rättsliga effekter.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Prova signering, signaturverifikation efter tid och hantering av återkallat certifikat;
+        kontrollera regelverk för användningsfall.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: En elektronisk signatur är inte samma sak som autentisering, godkännande i workflow eller datakryptering.
+  beroenden:
+  - CAP-IT-02
+  - CAP-IT-04
+  - CAP-IT-12
+- id: PLS-079
+  namn: Säker extern system- och myndighetsanslutning
+  plattform:
+    id: PLT-035
+    namn: B2B- och filutbytesplattform
+  grunduppdrag_enligt_kallmodell: Kontrollerad extern onboarding, trust, konnektivitet och informationsutbyte utan
+    att ersätta bakomliggande tekniker
+  tillamplighet: När externa system- eller myndighetsanslutningar kräver explicit teknisk tillit
+  generationer:
+    G1:
+      funktionellt_stod: Dokumenterat förtroende och kontrollerad anslutning i relevanta externa flöden.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Kontrollera ägarskap, faktisk behörighetskontroll och möjlighet att avsluta tillgång.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G2:
+      funktionellt_stod: Extern samverkan med myndigheter och partners kräver verifierbar tillit och livscykel för
+        anslutningar.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Byt extern parts certifikat, neka obehörig motpart och kontrollera att avslutad anslutning
+        inte längre fungerar.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G3:
+      funktionellt_stod: Återanvändbara onboardingprofiler, kontraktsstyrd anslutning och spårbar avveckling.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Byt extern parts certifikat, neka obehörig motpart och kontrollera att avslutad anslutning
+        inte längre fungerar.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+    G4:
+      funktionellt_stod: AI-stödda verksamhetsflöden får endast använda godkända motpartskanaler och begränsade
+        mandat.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende; kritisk endast när det konkreta verksamhets-/regelkravet
+        finns
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende även i G3–G4
+      verifieringsprov: Byt extern parts certifikat, neka obehörig motpart och kontrollera att avslutad anslutning
+        inte längre fungerar.
+      kalltyp: Analytisk generationsbedömning, inte direkt krav från källmodellen
+  varningssignal: Krypterad transport i sig säkrar varken rätt motpart, innehållets riktighet eller avtalade behörigheter.
+  beroenden:
+  - CAP-IT-06
+  - CAP-IT-12
+  - CAP-IT-13
+analysprinciper:
+  tolkning_av_generationskrav: Generationsprofiler är analytiska scenarier, inte universella krav eller mognadscertifiering.
+  kritikalitet: Funktionsbehov, behov av central tjänst och tillämplighet bedöms separat.
+  aterkallelse: Skilj ny autentisering, existerande sessioner, giltiga token och systemlokala rättigheter; verifiera
+    faktisk effekt.
+  agentdelegering: Spårbar körning, mandat och resursnära kontroll krävs; separat kontoform är inte alltid obligatorisk.
+  atgardsval:
+  - behåll
+  - komplettera
+  - ändra arbetssätt och ansvar
+  - ersätt efter verifierad produktbegränsning

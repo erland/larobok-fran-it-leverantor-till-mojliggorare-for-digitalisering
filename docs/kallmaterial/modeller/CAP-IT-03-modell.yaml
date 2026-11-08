@@ -1,0 +1,239 @@
+id: CAP-IT-03
+namn: Regler och beslut
+version: '2.0'
+datum: '2026-11-07'
+status: analytiskt faktaboksunderlag; inte nulägesbedömning
+kallmodell: baseline v1.1
+kallor:
+  ursprung:
+  - Förmågeöversikt – tekniska IT-förmågor
+  - Plattformsöversikt – konceptuella plattformar
+  - Från systemdrift till digital självständighet
+  kompletterande:
+  - https://www.omg.org/spec/DMN/1.6/
+  - https://docs.camunda.io/docs/components/best-practices/modeling/choosing-the-dmn-hit-policy/
+  - https://www.nist.gov/itl/ai-risk-management-framework
+  - https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
+definition: Förmåga att uttrycka, exekvera, testa, förändra, versionshantera, återanvända och spåra explicita verksamhetsbeslut
+  och regler som har självständig betydelse och livscykel.
+avgransning: Endast explicita regler/beslut med egen livscykel; inte all domänlogik, CAP-IT-02 processkoordination,
+  CAP-IT-06 integration, CAP-IT-04 datalagring eller CAP-IT-07 autentisering.
+bedomningsprincip:
+  separera:
+  - funktionskritikalitet vid faktiskt verksamhetsbehov
+  - behov av gemensam förvaltad plattform
+  - behov av automation
+  notering: Bedömningarna är situationsberoende och normerar inte teknik eller en central motor.
+generationer:
+  G1:
+    roll: Historisk kontext
+    risk: Lokala och dolda regler kan inte eftergranskas efter ändring.
+  G2:
+    roll: Huvudperspektiv
+    generationsarv:
+    - Regler dupliceras i tjänster och kanaler
+    - Giltighetsdatum och begrepp tolkas olika
+    - Beslutsversion och indatareferens saknas
+    - Beslutets historiska indata eller externa uppslag kan ha ändrats utan att beslutsbevis bevarats
+    forbattringsspar:
+      A: Rätta regelägarskap, semantiska kontrakt, giltighet, test och beslutsförklaring i befintlig arkitektur.
+      B: Mät återkommande behov av modellering, regression, audit och regelkörning innan gemensam plattform väljs.
+    fungerande_stod:
+    - Samma fall ger förväntat likvärdigt beslut eller förklarad avsiktlig skillnad
+    - Historiska beslut kan förklaras med tillämplig version och relevanta indata
+    - Regeländring har konsekvens- och konsumentanalys
+    - Övergångsbestämmelser prövas separat från tekniska publiceringsdatum och serverklocka
+    teknikvarningar:
+    - Oväntad regelversion används trots tekniskt korrekt API-svar
+    - Modell saknar explicit beteende för luckor och överlapp
+    - Historiskt omkörningsprov visar bara dagens källdata, trots påstående om exakt reproduktion
+  G3:
+    roll: Självbetjänade och förvaltade tjänster vid återkommande behov
+    behovsindikatorer:
+    - Många team reproducerar samma regelverktyg och testkedjor
+    - Specialistbeställning krävs för varje rutinmässig modelländring
+    fungerande_stod:
+    - Versioner, tester, attest, publicering och avveckling hanteras enligt tydlig livscykel
+    - Plattformsdrift och verksamhetens regelmandat hålls åtskilda
+    teknikvarningar:
+    - En gemensam motor blir flaskhals eller koncentrerad felkälla
+    - Domänlogik förs över utan motiverat återanvändningsbehov
+  G4:
+    roll: Möjlig AI-assisterad, riskstyrd regelförvaltning
+    fungerande_stod:
+    - AI-förslag hålls åtskilda från godkänd exekvering
+    - Publicering nekas utan mandat vid betrodd kontrollpunkt
+    - Uppföljning av redan fattade beslut görs även efter spärrad modell
+    teknikvarningar:
+    - Agent publicerar direkt från ostrukturerat förslag
+    - Simulering förväxlas med bevis på rättslig eller verksamhetsmässig korrekthet
+diagnostiskt_scenario:
+  titel: Olika utfall i tre kanaler
+  steg:
+  - Identifiera beslutsversion, verksamhetsgiltighet, relevant indata och kontrakt per kanal
+  - Pröva semantiska och datamässiga orsaker före teknikbyte
+  - Kör gamla och nya regler parallellt med gränsvärden och undantag
+  - Besluta om korrigerat G2-arbete eller återanvändbar plattform utifrån återkommande behov
+  - Testa ikraftträdande och övergångsregel med ansöknings- och beslutsdatum på varsin sida om brytpunkten
+  - Markera extern information som inte längre kan rekonstrueras; kräv inte otillåten eller obegränsad datalagring
+beslutsordning:
+- Verifiera faktisk regelbetydelse och rättsligt mandat
+- Rätta grundbrister i G2
+- Mät återkommande modell- och driftbehov
+- Jämför behålla, komplettera, ändra ansvar/användning och ersätta
+plattformstjanster:
+- id: PLS-008
+  namn: Besluts- och regelkörning
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Funktionalitet för att exekvera explicita beslut och regler med versions- och
+    spårbarhetsstöd.
+  tillamplighet: Regler är explicit formulerade och har egen ändringstakt, riskprofil eller flera konsumenter.
+  avgransning: Inte generell if/else i domänkod, ingen processorkestrering och inget ägarskap över regelns rättsliga/verksamhetsmässiga
+    innehåll.
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-10
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk för regelstyrda verksamhetsbeslut; annars situationsberoende
+      gemensamt_plattformsbehov: Bra att ha
+      tekniskt_stod: Reproducerbara och dokumenterade beslut med tydliga indata, utdata, regler, giltighetsdatum
+        och felsvar; lokal kod eller tabell kan räcka.
+      ansvar_och_leverans: Regelägare godkänner ändring; systemteamet håller tester och versionsreferenser tillsammans
+        med koden.
+      verifiering: Förklara ett tidigare besluts regelgrund och tillåtet bevarade indata. Kräv identisk omkörning
+        endast när historisk kod, indata och externa beroenden faktiskt finns bevarade och får användas.
+      felbild: Förändrad kod gör att det historiska beslutet inte längre kan förklaras.
+    G2:
+      funktionskritikalitet: Kritisk vid tvärsystem- och rättsverkande beslut
+      gemensamt_plattformsbehov: Viktig vid flera konsumenter
+      tekniskt_stod: Separera regel-API från intern implementation; explicit datakontrakt, giltighetstid, idempotenta
+        anrop där relevant, regelversion och beslutskorrelation.
+      ansvar_och_leverans: Domänteam publicerar kontrakt och kontrollerad versionsmigrering; avstämning mellan konsumenter
+        prioriteras.
+      verifiering: Kör identiskt indatafall mot två explicit valda regelversioner i två kanaler. Skilj avsiktlig
+        tidsstyrd olikhet från ett verkligt fel och bevara beslutskorrelation utan onödig persondata. Testa även
+        övergångsbestämmelse med ansökan före ikraftträdandet och beslut därefter, samt historisk extern källa som
+        senare ändrats.
+      felbild: Samma kund får motstridiga svar från två tjänster.
+    G3:
+      funktionskritikalitet: Kritisk vid omfattande regelåteranvändning
+      gemensamt_plattformsbehov: Viktig vid många regelportföljer
+      tekniskt_stod: Självbetjänad runtime med versionspinning, isolerade beslutsdefinitioner, godkänd dataåtkomst,
+        telemetri, säker rollback och definierad driftsprofil. Inkludera uppmätta kapacitetsmål, export av modell
+        och jämförande godkända referensfall vid modell- eller motorbyte.
+      ansvar_och_leverans: Plattformsteam erbjuder API/SDK och standardpipeline; domänteam äger beslutsmodeller
+        och verksamhetskonsekvenser.
+      verifiering: Publicera en godkänd version självbetjänat och stoppa framtida körningar med felaktig version.
+        Visa att historiska beslutsreferenser och påverkade konsumenter finns kvar. Mät dessutom latency/fel vid
+        realistisk last och verifiera att oavsiktligt modellbyte inte påverkar andra domäner.
+      felbild: Plattformsuppgradering ändrar resultatet för många verksamhetssystem samtidigt.
+    G4:
+      funktionskritikalitet: Kritisk för verksamhetskritiska explicita regelbeslut när AI medverkar; annars situationsberoende
+      gemensamt_plattformsbehov: Viktig vid bred verksamhetsautomation
+      tekniskt_stod: AI-förslag får endast aktiveras via explicit attest, deterministisk regelkörning, tillåten
+        verktygsåtkomst och spårbar proveniens för regel/indata/beslut.
+      ansvar_och_leverans: Separera AI-genererad rekommendation från exekvering; verksamhetsregelägaren godkänner
+        och kontrollerar publicering.
+      verifiering: 'Låt en AI-agent begära aktivering utan behörig attest: publicering ska nekas vid betrodd kontrollpunkt;
+        redan fattade beslut ska kunna identifieras för möjlig rättelse. Pröva också att AI-rekommendation inte
+        förväxlas med ett formellt beslut.'
+      felbild: Promptinjektion eller felaktigt AI-förslag ändrar ett bindande beslut.
+- id: PLS-009
+  namn: Beslutsmodellering och simulering
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Konsumerbart tekniskt stöd för att modellera, testa och simulera explicita beslut
+    och beslutstabeller; verksamhetens regelägarskap ligger hos konsumenten.
+  tillamplighet: Regler ändras ofta, behöver granskas av verksamhetsexperter eller få konsekvenser som måste jämföras
+    före publicering.
+  avgransning: Inte generell AI-prediktion, inte en universell processmotor, inte rättslig beslutsdelegation; DMN
+    kan vara ett format, inget produktkrav.
+  beroenden:
+  - CAP-IT-03
+  - CAP-IT-04
+  - CAP-IT-10
+  - CAP-IT-05
+  - CAP-IT-07
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig för omfattande/rättskänsliga regelverk
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Spårbar specifikation, beslutstabeller och testfall; kalkylark eller dokument kan fungera om
+        styrning och versionshistorik finns.
+      ansvar_och_leverans: Regelägare och systemteam granskar fall, randvärden och konfliktande regler vid systemrelease.
+      verifiering: Pröva randvärden, saknade värden, överlapp och undantag i dokumenterad tabell; ansvarig regelägare
+        granskar resultatet. Dokumentera när simuleringsunderlag inte längre finns tillgängligt.
+      felbild: Otydlig regelprioritet ger olika tolkningar i kod och verksamhetsdokument.
+    G2:
+      funktionskritikalitet: Viktig för regelverk som delas av flera tjänster
+      gemensamt_plattformsbehov: Viktig vid delat beslutsbehov
+      tekniskt_stod: Formella regler och versionerade testuppsättningar för flera konsumenter, beslutstabeller,
+        täckningsanalys och konsekvensjämförelse mellan versioner.
+      ansvar_och_leverans: Gemensam begreppsmodell, kontrollerad regelreview och test mot verkliga gränsfall utan
+        att sprida känsliga data.
+      verifiering: Jämför gammal och ny modell mot representativ testkorpus inklusive tidsgränser och överlapp;
+        redovisa alla förändrade utfall och oavgjorda fall. Inkludera explicit övergångsregel och retroaktivt scenario
+        endast där tillämpligt, samt hantera bristande historiska källvärden utan att påstå exakt rekonstruktion.
+      felbild: Regeländring påverkar flera kanaler oväntat.
+    G3:
+      funktionskritikalitet: Viktig vid föränderliga regelportföljer
+      gemensamt_plattformsbehov: Viktig vid återkommande modellbehov
+      tekniskt_stod: Självbetjänad modelleringsmiljö med återanvändbara mallar, simulering, versionsdiff, semantisk
+        validering, tester, attester och publiceringsgrindar.
+      ansvar_och_leverans: Verksamhetsexperter kan föreslå ändringar; domänteam och beslutsägare granskar och godkänner;
+        plattformen underhåller verktygen.
+      verifiering: Låt behörigt team skapa, simulera, attestera, publicera och avveckla modell via standardflöde;
+        pröva också fel och oplanerade versionsbyten. Exportera och importera en representativ beslutsmodell och
+        jämför beslutsexekvering och hit policy mot en fast referenssvit innan motorbyte.
+      felbild: Lättillgänglig modellering förbigår ett obligatoriskt beslutsmandat.
+    G4:
+      funktionskritikalitet: 'Situationsberoende: viktig vid faktisk AI-assisterad modellering av betydelsefulla
+        regler, annars inte ett generellt G4-krav'
+      gemensamt_plattformsbehov: Viktig vid utbredd verksamhetssjälvständighet
+      tekniskt_stod: AI kan skapa modellutkast och testfall men dessa måste valideras syntaktiskt och semantiskt;
+        utför kontrafaktisk simulering, bias- och konsekvenstester samt spårbar manuell attest.
+      ansvar_och_leverans: Riskklassade publiceringsrättigheter, separata skapare/granskare och låsta testuppsättningar
+        för högriskbeslut.
+      verifiering: Låt AI föreslå regel med missat undantag; visa att test, semantisk granskning och behörig attest
+        krävs innan publicering. Mät falskt godkända regeländringar i en kontrollerad provmängd och redovisa osäkerheten;
+        stoppa obehörig publicering.
+      felbild: AI-genererad tabell saknar ett undantag och godkänner ärenden felaktigt.
+kallstatus: Identifierare och uppdrag från källmodell, generationsbedömningar och tester är arkitekturanalys med
+  externa tekniska referenser.
+begrepp_och_tid:
+  regelversion: Oföränderlig referens till den exekverade eller tillämpade regeldefinitionen.
+  beslutsversion: Versionsreferens till verksamhetsbeslutets struktur eller beslutsprocess; inte alltid samma sak
+    som regelversion.
+  verksamhetsgiltig_tid: Den tidpunkt eller period som enligt tillämplig verksamhetsregel avgör regelns giltighet.
+  registreringstid: När organisationen registrerade eller fick kännedom om informationen.
+  beslutskorrelation: Referens som binder ihop utvärdering, underlag och beslutshändelse utan att exponera mer data
+    än nödvändigt.
+  reproduktion_och_forklaring: Exakt omkörning är villkorad av tillgängliga versioner, källvärden och rättsligt
+    tillåtet bevarande.
+beslutstyper:
+- typ: deterministisk regelutvärdering
+  prov: Versionsbundna indata, randvärden, överlapp och förväntade utfall.
+- typ: mänsklig bedömning
+  prov: Behörig beslutsfattare, dokumenterad motivering och korrekt process för ändring eller överprövning.
+- typ: statistisk eller generativ AI-rekommendation
+  prov: Riskbaserad kvalitet, data- och biasprövning, källkritik och spärr mot otillåten automatisk publicering.
+kontrollfall_vid_revision:
+- id: HIST-01
+  scenario: Externt registervärde har ändrats
+  forvantat: Visa den kända historiska grunden eller markera begränsning; ingen falsk identisk reproduktion
+- id: TID-01
+  scenario: Ansökan före regelbyte, beslut efter
+  forvantat: Tillämpa den uttryckliga övergångsregeln; inte systemklockans standardvärde
+- id: AUT-01
+  scenario: AI förslår beslutsmodell utan publiceringsmandat
+  forvantat: Nekad publicering vid betrodd grind och loggad behörighetskontroll
+- id: PORT-01
+  scenario: Flytta modell till annan regelmotor
+  forvantat: Redovisa avvikelser på referenstester, modellstöd, hit policy och prestanda

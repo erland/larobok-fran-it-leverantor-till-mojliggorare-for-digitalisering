@@ -1,0 +1,719 @@
+{
+  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0061-projekt.zip",
+  "chapters": {
+    "count": 18,
+    "hashes": {
+      "chapters/01-nar-it-blir-en-broms.md": "334c7047c5820d069ff6847612641faef69663aa48ae82e92ae6115bbaa1cae0",
+      "chapters/02-fyra-generationer.md": "5c15d6e049030259e71aa944ee6ff3cde896d67a2167677947cc3ba8e768bfb1",
+      "chapters/03-it-formagor.md": "239668e6536ee3d044b6698bda8a53c3243746cfd58ab4e41274504fb9877fe9",
+      "chapters/04-interaktion-kanaler.md": "a4058f7671a8dec76b74064720a7a28142e95a3091764d3f6fac475ec0b84e4f",
+      "chapters/05-process-workflow.md": "99d2652bba323c974f28ef4728458cf7493e02bd860eb634235cd6489b23fc9e",
+      "chapters/06-regler-beslut.md": "0580bba569a9f7e35558475109d1ca201bebf6aa2b2f0a03ae75ed69cd0e0174",
+      "chapters/07-datahantering.md": "d33056ceb54c3e9507dc8c266263b1c5beb7de1c3178243d92bff1911432eddf",
+      "chapters/08-analys-ai.md": "e772e613b4dde2fe365ce789e08ddb1073aa6e4d2a9892f6e36310a04e116249",
+      "chapters/09-integration.md": "332109ccc39cccf0f83e7a472ff0f46619278b6744ce3796955cae1ce1867896",
+      "chapters/10-identitet-tillit.md": "8a975da83980362fbb125cd74a72184e35dcdba16181af63c9a43a736e5539f0",
+      "chapters/11-slutanvandarmiljo.md": "6e34ccd6c61a093fc38baa91720e80f0adea5b8cb2a2963bf5959d51de5b5d64",
+      "chapters/12-cybersakerhet.md": "1950c5cc145598f1e42067aaee4b4c0b0b0bbd8edbf638ad478483d5dbac7e3a",
+      "chapters/13-utveckling-leverans.md": "d95bafadade55fa6abe86b6fa2c09d6da17e748d106c204f905179f028333df3",
+      "chapters/14-kormiljo.md": "c2c362c5d2fd7d37ec3fe30d3ef64d456a4f44808adde5797ded6277ba964022",
+      "chapters/15-natverk.md": "2fe710fe8161763b8896507b9d7a68e951fe3925b896d9676b9c0796a4a1a9bb",
+      "chapters/16-driftbarhet.md": "904b0c91169c238fefe3cf0b3f07b9473af23710a666ac52e564338672454392",
+      "chapters/17-it-nya-roll.md": "a7a8901f745bd1a2ff35f365370cebc4fb404b4f6583a25a7c42578064cb349c",
+      "chapters/99-kallor.md": "471dd61ae8d9bbe3d12e174059cf284372849e3b7caefee682d43703faa4808b"
+    },
+    "latest": 99
+  },
+  "created_at": "2026-11-07T16:40:51Z",
+  "last_operation": {
+    "changed_files": [
+      "assets/cover/README.md",
+      "assets/cover/omslag.png",
+      "book.yaml",
+      "project-index.md"
+    ],
+    "operation": "Införde godkänt omslag och kopplade till PDF- och EPUB-export",
+    "source_revision": 60
+  },
+  "parent_revision": 60,
+  "project_id": "53325f2b-cd60-482e-8a13-eca9c53e79ec",
+  "project_slug": "fran-it-leverantor-till-mojliggorare",
+  "revision": 61,
+  "schema_version": 1,
+  "template": false,
+  "tracked_files": {
+    ".github/workflows/01-validate.yml": {
+      "bytes": 292,
+      "sha256": "56c504376f59ec4a5a7ab59ab29be43784f636f832af5c6e98f14b694c15afb7"
+    },
+    ".github/workflows/02-build-preview.yml": {
+      "bytes": 1196,
+      "sha256": "e88aaffff011c8cde3a28299a22064a8ead0606ee966fde0c45ce613673e0047"
+    },
+    ".github/workflows/03-release.yml": {
+      "bytes": 1699,
+      "sha256": "16f1070e5823afacd170e026de6b297354526066a42639c70cd26362408903d3"
+    },
+    "README.md": {
+      "bytes": 1010,
+      "sha256": "06d72077fef64b9f314e90cb9c5c6d831d7dd900a49974ed2c8a2ae5e5806314"
+    },
+    "assets/cover/README.md": {
+      "bytes": 297,
+      "sha256": "a2288e3d9944e2057ca3a990a78d5c9bae6af3e3fe6dac587af6fe00fc7e6482"
+    },
+    "assets/cover/omslag.png": {
+      "bytes": 2009725,
+      "sha256": "06076c0db96027d88e8955e151027298647adadda6190db806e2cb158c40eb1c"
+    },
+    "assets/image-prompts/README.md": {
+      "bytes": 71,
+      "sha256": "b50a8f92cd321ad174fb2991e1d2e9f931ae67bcd5a84b94957dea4fcef2cf9a"
+    },
+    "assets/images/README.md": {
+      "bytes": 91,
+      "sha256": "3ca661eed049895bf1314529400eb0e2719817b82569f15b58aeb794a7966fa3"
+    },
+    "book.yaml": {
+      "bytes": 1561,
+      "sha256": "4087a185cffc03b9810d9d50494393fc54835fadbfafdef17ac43115572fcdc8"
+    },
+    "chapters/00-inledning.md": {
+      "bytes": 3373,
+      "sha256": "d316b88cb960de723394545e94ffd9b6c5fb99e2375a9578171740b37bf934ef"
+    },
+    "chapters/01-nar-it-blir-en-broms.md": {
+      "bytes": 3965,
+      "sha256": "334c7047c5820d069ff6847612641faef69663aa48ae82e92ae6115bbaa1cae0"
+    },
+    "chapters/02-fyra-generationer.md": {
+      "bytes": 16654,
+      "sha256": "5c15d6e049030259e71aa944ee6ff3cde896d67a2167677947cc3ba8e768bfb1"
+    },
+    "chapters/03-it-formagor.md": {
+      "bytes": 7508,
+      "sha256": "239668e6536ee3d044b6698bda8a53c3243746cfd58ab4e41274504fb9877fe9"
+    },
+    "chapters/04-interaktion-kanaler.md": {
+      "bytes": 7561,
+      "sha256": "a4058f7671a8dec76b74064720a7a28142e95a3091764d3f6fac475ec0b84e4f"
+    },
+    "chapters/05-process-workflow.md": {
+      "bytes": 9776,
+      "sha256": "99d2652bba323c974f28ef4728458cf7493e02bd860eb634235cd6489b23fc9e"
+    },
+    "chapters/06-regler-beslut.md": {
+      "bytes": 7947,
+      "sha256": "0580bba569a9f7e35558475109d1ca201bebf6aa2b2f0a03ae75ed69cd0e0174"
+    },
+    "chapters/07-datahantering.md": {
+      "bytes": 8337,
+      "sha256": "d33056ceb54c3e9507dc8c266263b1c5beb7de1c3178243d92bff1911432eddf"
+    },
+    "chapters/08-analys-ai.md": {
+      "bytes": 8192,
+      "sha256": "e772e613b4dde2fe365ce789e08ddb1073aa6e4d2a9892f6e36310a04e116249"
+    },
+    "chapters/09-integration.md": {
+      "bytes": 7929,
+      "sha256": "332109ccc39cccf0f83e7a472ff0f46619278b6744ce3796955cae1ce1867896"
+    },
+    "chapters/10-identitet-tillit.md": {
+      "bytes": 4836,
+      "sha256": "8a975da83980362fbb125cd74a72184e35dcdba16181af63c9a43a736e5539f0"
+    },
+    "chapters/11-slutanvandarmiljo.md": {
+      "bytes": 7902,
+      "sha256": "6e34ccd6c61a093fc38baa91720e80f0adea5b8cb2a2963bf5959d51de5b5d64"
+    },
+    "chapters/12-cybersakerhet.md": {
+      "bytes": 7101,
+      "sha256": "1950c5cc145598f1e42067aaee4b4c0b0b0bbd8edbf638ad478483d5dbac7e3a"
+    },
+    "chapters/13-utveckling-leverans.md": {
+      "bytes": 7219,
+      "sha256": "d95bafadade55fa6abe86b6fa2c09d6da17e748d106c204f905179f028333df3"
+    },
+    "chapters/14-kormiljo.md": {
+      "bytes": 7710,
+      "sha256": "c2c362c5d2fd7d37ec3fe30d3ef64d456a4f44808adde5797ded6277ba964022"
+    },
+    "chapters/15-natverk.md": {
+      "bytes": 7202,
+      "sha256": "2fe710fe8161763b8896507b9d7a68e951fe3925b896d9676b9c0796a4a1a9bb"
+    },
+    "chapters/16-driftbarhet.md": {
+      "bytes": 7007,
+      "sha256": "904b0c91169c238fefe3cf0b3f07b9473af23710a666ac52e564338672454392"
+    },
+    "chapters/17-it-nya-roll.md": {
+      "bytes": 17957,
+      "sha256": "a7a8901f745bd1a2ff35f365370cebc4fb404b4f6583a25a7c42578064cb349c"
+    },
+    "chapters/99-kallor.md": {
+      "bytes": 2912,
+      "sha256": "471dd61ae8d9bbe3d12e174059cf284372849e3b7caefee682d43703faa4808b"
+    },
+    "chapters/kapitelmall-faktabok.md": {
+      "bytes": 337,
+      "sha256": "66f5e412396793af328b5fb1b5bbd4dec3412a62b3db4f4fdb00b97639d5f53c"
+    },
+    "chapters/kapitelmall-larobok.md": {
+      "bytes": 291,
+      "sha256": "84280ff1d5ca1f3743a8103d6e3342030e7055293ef947c7b2d07002287a7957"
+    },
+    "code/README.md": {
+      "bytes": 56,
+      "sha256": "6e24dcdfa47615f15207b592e216103956f6511dcdb64c4be75c2c191dc3b5e7"
+    },
+    "docs/bokbeslut.md": {
+      "bytes": 634,
+      "sha256": "846ceff802d7cfa315482cd0f0b44863aaf20720853e8a84a1d479282308a4d3"
+    },
+    "docs/bokplan-godkand.md": {
+      "bytes": 26268,
+      "sha256": "c0567f8d2bcf058ffb6880c7456d79800f00991d13c8b3e864c6f10acc1dec7c"
+    },
+    "docs/bokspecifikation.md": {
+      "bytes": 1639,
+      "sha256": "c5e60f2afd75714f7f9cfa0d1cd2db90466a177f634a3ac3947605d3868c6bd2"
+    },
+    "docs/export-guide.md": {
+      "bytes": 2170,
+      "sha256": "2ffa8dded09f00bca0216a6ed3e708585785b65f88a3cc48d1ab091e2f750327"
+    },
+    "docs/faktakontroll.md": {
+      "bytes": 4417,
+      "sha256": "56f4ea3145d1350ea04f9e79ca28e3718ca502a2a80b9369384f4139de6d8eb5"
+    },
+    "docs/illustration-plan.md": {
+      "bytes": 141,
+      "sha256": "9c5035f60aad7be899e4c55b9c8edc03a98f66300e359f0c577da7533e39769f"
+    },
+    "docs/innehalls-canon.md": {
+      "bytes": 18814,
+      "sha256": "f2358cc8e13e5de2402eb6b69d1edcafe93640cb2f71b502a400e19771a074b7"
+    },
+    "docs/kallmaterial-manifest.json": {
+      "bytes": 14895,
+      "sha256": "cdfac50253d02e689d0cf9d05652dfd54bb701534976d39433767c0a5018076a"
+    },
+    "docs/kallmaterial/generationer/overgang-g1-g2.md": {
+      "bytes": 23868,
+      "sha256": "24a8a253a8b83c6fd8701810f019cab17d9dad19176e1ea889a19ff3ca560195"
+    },
+    "docs/kallmaterial/generationer/overgang-g2-g3.md": {
+      "bytes": 25458,
+      "sha256": "120ebbb4e4402177bb860ac6d52810a36adbe1aeff8af6b3302ab8a4f15ece69"
+    },
+    "docs/kallmaterial/generationer/overgang-g3-g4.md": {
+      "bytes": 27046,
+      "sha256": "bfd6117553ce65fa899337a9d9ec62add38715a21cbb4eb7b24530bb56bfc7a5"
+    },
+    "docs/kallmaterial/generationer/samlad-modell.yaml": {
+      "bytes": 204025,
+      "sha256": "4576e666d8bb7128b497a5ac471d1a87bb7d14f520cc0287b6172fffe2318732"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-01-granskning.md": {
+      "bytes": 4122,
+      "sha256": "434c5591c14c7322110f0824b7efeeea154232864d1996f92ea6ed71fa522a4d"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-02-granskning.md": {
+      "bytes": 3991,
+      "sha256": "84219848951135203b62675cfebc79d912d9e558950f7406038b2c63509b7f2f"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-03-granskning.md": {
+      "bytes": 3955,
+      "sha256": "1383c979ecc4401cbf251633bb203dd45a312eb87fa68008158281554e3dee30"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-04-granskning.md": {
+      "bytes": 3533,
+      "sha256": "9434a1efb5738c77cdf1af6094bc4b60f0583843b61e38315158a2f6854ec4c1"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-05-granskning.md": {
+      "bytes": 4654,
+      "sha256": "262891873dc4e47040656c4f28ac549bffa2aae4aaec5db11217f218d8ee68e2"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-06-granskning.md": {
+      "bytes": 4988,
+      "sha256": "adc83dc41ed8f5721dc1910116d72c48cc6e4c3c08510de6a5f5948cfa489dfa"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-07-granskning.md": {
+      "bytes": 3264,
+      "sha256": "e2e50a1f95edd6542a66ce6a6fb3b115aa44b31b12bd6e99495bc0c20bf4e669"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-08-granskning.md": {
+      "bytes": 3517,
+      "sha256": "0002f5fbba2981ddc9dec508187c17aa55e8d3c0d79bc33e3fab5db1796123ec"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-09-granskning.md": {
+      "bytes": 3621,
+      "sha256": "03299dfb5cb005d013dc5caccabf4b5e8d105a1cd63d47f437a1af6575e0d29d"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-10-granskning.md": {
+      "bytes": 3320,
+      "sha256": "e3f323c2c78878d4c9c5e2087dfb1c305f836bac8dfef63cdc5f3de55ace712f"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-11-granskning.md": {
+      "bytes": 4563,
+      "sha256": "7a5d32ed0a4232baf6f8d2d902239cb141b881432edf448e6c6f9a1f006a6382"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-12-granskning.md": {
+      "bytes": 2794,
+      "sha256": "ca866ae5203a7fdd44a5c79b8426ee313574d35dbefb14793ac87cc6b6488068"
+    },
+    "docs/kallmaterial/granskningar/CAP-IT-13-granskning.md": {
+      "bytes": 4145,
+      "sha256": "90f567a699436c4987fdc9c382b8b29f4a121e0a848e09dce112c920d058ea49"
+    },
+    "docs/kallmaterial/helhetsgranskning/helhetsgranskning-13-formagor.md": {
+      "bytes": 26907,
+      "sha256": "7a8f790d70d84b452ee2c44477b3e811dbcad7b9561c8ad1e87a921cd033c18d"
+    },
+    "docs/kallmaterial/helhetsgranskning/inventering-13-kapitel.md": {
+      "bytes": 1669,
+      "sha256": "33be7f7c186d0daae3c3fce0efd4b136c975fafb467a3c167a825259d21f9682"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-01-kapitel.md": {
+      "bytes": 26949,
+      "sha256": "08d028f93699aaa7c31357dd165ef5f3cb6ed8a7bb683938e82fcfa694929510"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-02-kapitel.md": {
+      "bytes": 26284,
+      "sha256": "b9542049eb22643057a51253b094b834d7f53ead80c0ed4eae18834e373b89f9"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-03-kapitel.md": {
+      "bytes": 29882,
+      "sha256": "6585c8b6d3addc11eaa4ec51f1e9b53ddff09351203b651eeb42d77e378b3d5e"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-04-kapitel.md": {
+      "bytes": 27251,
+      "sha256": "ab75154d10d5d3b8958847c114818f8716c1e6458adde00f75922967e08c4e42"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-05-kapitel.md": {
+      "bytes": 33407,
+      "sha256": "da1aa5d53a4cca7cef6305aea65cf45a5c07be01993662e696bb0988e44f2e77"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-06-kapitel.md": {
+      "bytes": 31338,
+      "sha256": "dc751be18da981070be4a22fba34bc2c5737a7f1b73ebd7193562ca23773698b"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-07-kapitel.md": {
+      "bytes": 28880,
+      "sha256": "ad9b272281b21fdf107e824792423b4ec1871caf8470e97f285dc549e0c125a8"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-08-kapitel.md": {
+      "bytes": 30846,
+      "sha256": "22fbc14bfb109146d404fe38e96f4cb7d393c6f3e7240acebdc54c12e0ff6cc0"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-09-kapitel.md": {
+      "bytes": 31065,
+      "sha256": "a00779c66352c805b2137a9435a756ab5308b46dc3f7419adbeabf73bcf90741"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-10-kapitel.md": {
+      "bytes": 28637,
+      "sha256": "6bdb988be0b5153c0c5571a0a6552867bc8ee45dba817b74f5f2c725c7ab467c"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-11-kapitel.md": {
+      "bytes": 29127,
+      "sha256": "d7e3283cf2074e46c671e1f9b9642521441d7ff50bb16ca6d0fe48b24167e7e5"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-12-kapitel.md": {
+      "bytes": 26672,
+      "sha256": "b242a10ae5fc778e8ab7844885b7e70109a33b9465fb666cf7f93729749a851d"
+    },
+    "docs/kallmaterial/kapitel/CAP-IT-13-kapitel.md": {
+      "bytes": 25762,
+      "sha256": "72c1f558c2e9cdec8828d54f09d664267069355eb332f299c0351abdf03358e5"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-01-modell.yaml": {
+      "bytes": 39217,
+      "sha256": "2a923a0df49a7d85222e60927da231f0e62efad92dceb6dfb261f753564611b1"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-02-modell.yaml": {
+      "bytes": 23414,
+      "sha256": "29b680ef4312405c2aba505d5972d1b35e21d6957224b3e4fc8b0129e4e9c651"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-03-modell.yaml": {
+      "bytes": 15081,
+      "sha256": "98e88c2a9de2d66320f92a82c5b5901ea3588978e83e545ae141c1d7baf1bba6"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-04-modell.yaml": {
+      "bytes": 61249,
+      "sha256": "44f2179c98c0d156b1823da8b31840036679a3d7875583595596d7eb47d97276"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-05-modell.yaml": {
+      "bytes": 71054,
+      "sha256": "4b6d8ab29bbf08ab036872ae57fa4a88b7c3596b59b238ac5edf61e09c8bf419"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-06-modell.yaml": {
+      "bytes": 30887,
+      "sha256": "26f48ec561fbd559f3207071650d76657a5d682398112d390a19d8e6f2f6be0f"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-07-modell.yaml": {
+      "bytes": 34164,
+      "sha256": "108864f11a884cb9cf2db03e86cf369f17a09ed661a5c7997b3794937341a400"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-08-modell.yaml": {
+      "bytes": 16647,
+      "sha256": "c85cb1e83dd22720676066db72db2b619e19c9b2c6707c455a2c8bf5324d3fe2"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-09-modell.yaml": {
+      "bytes": 22855,
+      "sha256": "a81213d1aa3d6f9d6d1e9c5f285336b6a20de4daaf8fa8994586795bc0606df6"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-10-modell.yaml": {
+      "bytes": 26937,
+      "sha256": "840703bfdff60355824710a82b2bdc3d48e226e3e29d8222cb6f26417b227e8c"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-11-modell.yaml": {
+      "bytes": 31000,
+      "sha256": "12743fc95092efb182300e0af8c31ece79c550ece635c2410d63903ec313d022"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-12-modell.yaml": {
+      "bytes": 60635,
+      "sha256": "6058618f8163a441ad1f3816cd5b7361e5ae828000514233b22e8658933400d9"
+    },
+    "docs/kallmaterial/modeller/CAP-IT-13-modell.yaml": {
+      "bytes": 41141,
+      "sha256": "412f0993dce3209c73a54eabb6e5931898cdadc2885f4eb57a98d707aa4fcf37"
+    },
+    "docs/kallpolicy.md": {
+      "bytes": 726,
+      "sha256": "4198b1fc44a68aa000988d1b5aaa294befe93d56c3a1ebc3f1b85f7091a28f3f"
+    },
+    "docs/kallregister-arbetsutkast.md": {
+      "bytes": 4388,
+      "sha256": "083b62bd42e73a41080e8fbbfa6838038b97453db60dbd8de661d11e3fcb55cc"
+    },
+    "docs/kallregister.md": {
+      "bytes": 2966,
+      "sha256": "4178b754b97bf8deb763736810423da6418809f70e1cbe6ae59c26270408969a"
+    },
+    "docs/kapitelplan.md": {
+      "bytes": 12392,
+      "sha256": "25458844976e9007f117ae2e6feccc10c03ab8ab392aa3c7d86fb2aaa6c2124d"
+    },
+    "docs/projektstatus.md": {
+      "bytes": 17206,
+      "sha256": "7def69006642961e1fa74894a09a8066b3b7a18fb13c54020cef51256b83cf89"
+    },
+    "docs/quality-checklist.md": {
+      "bytes": 1797,
+      "sha256": "f19c9f193f5658c317a41f34e2f0de598b42f646fdd9fbf7145fd4211e2ce7f1"
+    },
+    "docs/redaktionell-granskning-kapitel-01-02-r0004.md": {
+      "bytes": 2685,
+      "sha256": "0a7d5ad316624c6589bbc5e0cef3efb0a41526fad0f715a55a2ba48cb82e6da4"
+    },
+    "docs/reviews/00-03-slutredigering-r0054.md": {
+      "bytes": 2071,
+      "sha256": "6e16d508e04142a21af014dfa5343a61b2caf73a60b7e1b3297200aeb435f078"
+    },
+    "docs/reviews/01-03-17-harmonisering-r0055.md": {
+      "bytes": 2543,
+      "sha256": "aad29a4c3f131121823ba27e56f8e6d7238408bf011a565686538d04fb994c5f"
+    },
+    "docs/reviews/03-redaktionell-arbetsgranskning.md": {
+      "bytes": 2148,
+      "sha256": "76c53467b55d7d6a451b75d80a5c7e606b6568b3734e3fc9c1d32891d570a0ef"
+    },
+    "docs/reviews/03-tre-former-av-sjalvstandighet-r0048.md": {
+      "bytes": 1077,
+      "sha256": "46e0a8223b90d62339b73d4f7b095b6bd053e7ed00966b83464b8e32a0fe69c5"
+    },
+    "docs/reviews/04-05-06-kritisk-samgranskning-r0045.md": {
+      "bytes": 3418,
+      "sha256": "263669fcc51bb384c6ace6b6fd7494ae3b4df621b5b99fbe66e926567cb0fe5f"
+    },
+    "docs/reviews/04-redaktionell-granskning-r0044.md": {
+      "bytes": 2168,
+      "sha256": "faffd8ea339daaed078aa0e63a9b6f4282cc3d6afbe03b488150850357ee41a0"
+    },
+    "docs/reviews/05-06-kritisk-samgranskning-r0043.md": {
+      "bytes": 3010,
+      "sha256": "cc1a84d5cb95dd8049f18c4c381b595c10586100a552ff3f77bf4ce12b5a8f24"
+    },
+    "docs/reviews/05-09-kritisk-samgranskning-r0038.md": {
+      "bytes": 4294,
+      "sha256": "98816a9ddf8481a99d8907fca6a51929cdcd1e58e18bef333b70cce864300a2a"
+    },
+    "docs/reviews/05-kritisk-granskning-r0041.md": {
+      "bytes": 2691,
+      "sha256": "a5a3f5edd47454c7ba08f88010a3fe8d3a10f786de987cb78c6b1213334eb2b3"
+    },
+    "docs/reviews/05-redaktionell-granskning-r0037.md": {
+      "bytes": 2805,
+      "sha256": "3738d6ddad430b7a2c3894da6e66172e29c598dbd7390b26ee13fbdba9808f44"
+    },
+    "docs/reviews/05-redaktionell-revision-r0039.md": {
+      "bytes": 1759,
+      "sha256": "7f3ad8d1b0456d00fad2bb26f44780dde3d162701d0b71c3d6b4e10a14012770"
+    },
+    "docs/reviews/05-redaktionell-revision-r0040.md": {
+      "bytes": 1912,
+      "sha256": "f6426ea5c16f2102d2a68bf10bdac7896f2ba5dbf8e5d9fdad90e7451f541a15"
+    },
+    "docs/reviews/06-redaktionell-granskning-r0042.md": {
+      "bytes": 2032,
+      "sha256": "3b1df9aaedcad5c351b98e5f9ccd440d3c52a1ff6a681963123d10b4610c43f2"
+    },
+    "docs/reviews/07-08-09-13-kritisk-samgranskning-r0025.md": {
+      "bytes": 4600,
+      "sha256": "3a2bbaf91e75ea77d54d3db276297b0b0dc0c53e61f1b58bd0612675d2c72c3e"
+    },
+    "docs/reviews/07-08-kritisk-samgranskning-r0020.md": {
+      "bytes": 2611,
+      "sha256": "cd42bded2fa352bfa1e867a601f148a6bf99919dbcf15b944398fdc737294a6d"
+    },
+    "docs/reviews/07-09-kritisk-samgranskning-utvecklingsplattform-r0022.md": {
+      "bytes": 4859,
+      "sha256": "4f42b0fbbc68aaecfd074d07b67ba3cd70d39fed9f5412bdff325e79f0d9a82d"
+    },
+    "docs/reviews/07-behovsstyrd-lagring-r0019.md": {
+      "bytes": 1408,
+      "sha256": "9b877412ce43491f635f68d417e07d6573ee0983633749274c6528230e3a2b3a"
+    },
+    "docs/reviews/07-redaktionell-granskning-r0016.md": {
+      "bytes": 1624,
+      "sha256": "69b918ec7a16f4286c27c33997c3e32108eb2f8fd24a9e89c507fd44eb9340d4"
+    },
+    "docs/reviews/07-redaktionell-granskning-r0017.md": {
+      "bytes": 2503,
+      "sha256": "3d6063125348d1c5b713806fd729b16d1c70e52dc453b061122ebcdd4034e374"
+    },
+    "docs/reviews/08-formagehanvisningar-r0015.md": {
+      "bytes": 744,
+      "sha256": "185628ba1ea1d807371e1a217d739f8704f2a78e95501dc3eafb60468e5a498e"
+    },
+    "docs/reviews/08-generationsfordjupning-r0013.md": {
+      "bytes": 1198,
+      "sha256": "8f55bda2370d7e8b0db04058398fec49deb4d661b885287a1f8e11965b28c71d"
+    },
+    "docs/reviews/08-gransdragning-data-bi-r0010.md": {
+      "bytes": 3222,
+      "sha256": "502a0448ff3ab36b950a6e4170494e451eb3b2366f9904fa7e4fb297c5b1ee0e"
+    },
+    "docs/reviews/08-kallgrund-generationer-sokning-analys-ai.md": {
+      "bytes": 12551,
+      "sha256": "56d3d379c4eb55ca8e04819d971226c20b02b3ce9bd69e57532d2c56d1907c0f"
+    },
+    "docs/reviews/08-kritisk-helhetsgranskning-r0014.md": {
+      "bytes": 2158,
+      "sha256": "6210d9a71539f7f17750b779ca0dcef8412b645d40ff29ad4a049b97715e5f23"
+    },
+    "docs/reviews/08-redaktionell-omprovning-r0011.md": {
+      "bytes": 1998,
+      "sha256": "fa4d31ac3b4a954fbfbeb0f975641173e06d2101025aa0988d27ab7c58464b75"
+    },
+    "docs/reviews/08-redaktionell-pilotgranskning-r0009.md": {
+      "bytes": 3113,
+      "sha256": "c56c1344a925d81d17eb8aaf6d6a259eb233f50518d98800a7df35cb38029791"
+    },
+    "docs/reviews/08-redaktionell-pilotgranskning.md": {
+      "bytes": 1868,
+      "sha256": "b4146557a515f361ddc4cb4b95ac510863ffe087b4e1fb502d2a8802388a2308"
+    },
+    "docs/reviews/08-tjansteerbjudande-r0012.md": {
+      "bytes": 1705,
+      "sha256": "dbc0079938124a58dc33743ef827db988abdb53bc1e4c3e4546440bd96c1e522"
+    },
+    "docs/reviews/09-10-12-15-kritisk-samgranskning-r0036.md": {
+      "bytes": 4923,
+      "sha256": "a39cc7b6cf2219df13577ea31d8b71e4c29813fc1f9e24f2f6adb736abc414f8"
+    },
+    "docs/reviews/09-redaktionell-granskning-r0021.md": {
+      "bytes": 2092,
+      "sha256": "1e045a0b7814e23c480f63c45f4b7cd66dc31dcffdecc9af63e779c16a205456"
+    },
+    "docs/reviews/10-12-09-13-kritisk-samgranskning-r0034.md": {
+      "bytes": 4286,
+      "sha256": "920ce00b454b1019811e5fb0cf0e11e095cf9870ce22e84442bb084c4be30eee"
+    },
+    "docs/reviews/10-kritisk-granskning-r0032.md": {
+      "bytes": 2000,
+      "sha256": "8f0251c4daa3c572f0ed43d66f482c0c41fe37384e108e19656dd037cc424438"
+    },
+    "docs/reviews/10-redaktionell-granskning-r0031.md": {
+      "bytes": 2212,
+      "sha256": "0027f6967538bd4c8fcd10781aec9143b32bf3b96e511b61c23b9f0f2a995e3a"
+    },
+    "docs/reviews/11-13-14-saker-korning-r0050.md": {
+      "bytes": 2083,
+      "sha256": "3feac0dbd09a8651942aa4d9ac5bdb5ec34db9db81a09971f3f44d034a3bce01"
+    },
+    "docs/reviews/11-16-konkreta-g4-exempel-r0049.md": {
+      "bytes": 1405,
+      "sha256": "280f580b4a89b95e3c4c7d91d891e69ce5abc7912e2b5a6eecf71a6bc2997109"
+    },
+    "docs/reviews/11-redaktionell-granskning-r0046.md": {
+      "bytes": 2624,
+      "sha256": "da724cc040559f40a64bc423ed42c3eb59183c9e5780acee6ed3de62993fe721"
+    },
+    "docs/reviews/12-redaktionell-granskning-r0033.md": {
+      "bytes": 1881,
+      "sha256": "2c6cea5b28a98330685226cc36b27af786473dbbe29cd1bdad313bd3967e9d7c"
+    },
+    "docs/reviews/13-14-16-kritisk-samgranskning-r0030.md": {
+      "bytes": 2486,
+      "sha256": "bf9aee7d8cfd8642c0966e2acd73e6a8cdae6b9ac8d555b877fee941e943b3c0"
+    },
+    "docs/reviews/13-formagekapitel-harmonisering-r0047.md": {
+      "bytes": 7656,
+      "sha256": "aeba2103edd15b5707074ae46eb40ec2e7e728144feac418de314fb71cbe5105"
+    },
+    "docs/reviews/13-kritisk-granskning-r0024.md": {
+      "bytes": 2860,
+      "sha256": "a0b67e016653b1e8064bc3f0d8eb0fe8b69b4efd8eb23cb771659099d9ed4be6"
+    },
+    "docs/reviews/13-redaktionell-granskning-r0023.md": {
+      "bytes": 1675,
+      "sha256": "1bd6fe94018f25ffbc6814764845b019209f4f8200fd61f801404eca70643d79"
+    },
+    "docs/reviews/14-kritisk-granskning-r0027.md": {
+      "bytes": 2089,
+      "sha256": "8d55b668150836b32c8fd48ed42c137f0cf9ff1e88c9cec52d61d59fa5e01d37"
+    },
+    "docs/reviews/14-kritisk-granskning-r0029.md": {
+      "bytes": 1500,
+      "sha256": "a95a87f2d03538165d48a06c0cde900f5620d4695201bf466131f709e7d4ee8b"
+    },
+    "docs/reviews/14-redaktionell-granskning-r0026.md": {
+      "bytes": 2510,
+      "sha256": "e2cd71d620e5e24e94dcc3fac5eb89bbc73033926bf6be6318978dd1e5b2a9a3"
+    },
+    "docs/reviews/15-redaktionell-granskning-r0035.md": {
+      "bytes": 2472,
+      "sha256": "f3c73d2e373b8ea6b40e2312f60db96bc08a139ccf371ee7491960e135e4b4b3"
+    },
+    "docs/reviews/16-redaktionell-granskning-r0028.md": {
+      "bytes": 1876,
+      "sha256": "0673ae4d3611b023a3b96947390ae40db54ad374179a9abf1f0dc256553a0c71"
+    },
+    "docs/reviews/17-kritisk-granskning-r0053.md": {
+      "bytes": 2705,
+      "sha256": "753346b4b96a64a89fac2fdcf214b77eda055579f950a3fa8e4ca03a256bcaab"
+    },
+    "docs/reviews/17-redaktionell-granskning-r0052.md": {
+      "bytes": 2013,
+      "sha256": "e8a1ea4cc0eb77aebbe2d611c72dc5832fbda99fdf79243f8db25614052092e9"
+    },
+    "docs/reviews/README.md": {
+      "bytes": 772,
+      "sha256": "5840e53d4df2e7685240bbdbaeee7d0e1e852e730bc22745182f2a64a5daaee4"
+    },
+    "docs/reviews/faktakontroll-och-kallhantering-r0056.md": {
+      "bytes": 10147,
+      "sha256": "1443b396a4a1eac6e5501b88b271566ad472b93042906e0fac4c68641823ba98"
+    },
+    "docs/reviews/helhetsgranskning-lasarkvalitet-r0058.md": {
+      "bytes": 2703,
+      "sha256": "1b794b4177268d8f4e53be2f5fafe48ae0c2129ea64485a51207e0b0cc802063"
+    },
+    "docs/reviews/kallhanvisningar-och-kallforteckning-r0057.md": {
+      "bytes": 3239,
+      "sha256": "9a526ef805fc51170c40b9e9643ac62b24da8ff05512f4d72d36ee004ae10fcb"
+    },
+    "docs/reviews/kritisk-sakgranskning-r0059.md": {
+      "bytes": 4197,
+      "sha256": "6f14daed2cce37ed3183e6012aebf2b4b444c5668be7bfe0f171b82c1d19d5ae"
+    },
+    "docs/reviews/licens-ekonomi-g4-r0051.md": {
+      "bytes": 2426,
+      "sha256": "ef903dd6349359aa7fe28e38eef38a2e07989ebdae190a7ba08daf4470c55704"
+    },
+    "docs/reviews/typografisk-granskning-r0018.md": {
+      "bytes": 519,
+      "sha256": "3a41313e23fb47df4d5bdd8db2c4a99a1d657dcd3870c0350eb878c09686302f"
+    },
+    "docs/skrivlogg-del-i.md": {
+      "bytes": 3178,
+      "sha256": "c0b3d8cbfaa9aab9cfd7ab2e18cde04f7b04c376a457fefc29fce53bc810b60b"
+    },
+    "docs/terminologi.md": {
+      "bytes": 887,
+      "sha256": "37b73d4152ef911179f38e47e9898099b1eba1e050b6e9718b98e3b90b17cbf6"
+    },
+    "examples/README.md": {
+      "bytes": 71,
+      "sha256": "3f3e5d2ac0800028ddb7bf134d332ed4b5ff3b629246b221606a014c05d5f550"
+    },
+    "exercises/README.md": {
+      "bytes": 85,
+      "sha256": "ba26bddfad8c4db99c5c8dd518f96af7dcf1c4a6264dd355f5d227940e55ec6b"
+    },
+    "exports/README.md": {
+      "bytes": 105,
+      "sha256": "abaaec6a496f86407595ef68af33ab4abe94a9a03c7f4410d1a0c51815db0c89"
+    },
+    "exports/exportlogg.md": {
+      "bytes": 93,
+      "sha256": "f46cb68df4c310e24d7ceb62ba1f6c4eed5c6bb9ff11c7c5ff85dd33b3094d58"
+    },
+    "project-index.md": {
+      "bytes": 8374,
+      "sha256": "60340016fb180666e24d78845b3e18c3c16550dc13679393312f573e885eb68a"
+    },
+    "publishing/build-notes.md": {
+      "bytes": 439,
+      "sha256": "41ea9b200a768f1f55a5fd86ee6a278907f994274ca548cf742225579e50202c"
+    },
+    "publishing/epub.css": {
+      "bytes": 569,
+      "sha256": "aee9b81d1a7fab1d266527b0cfd80675ff5b7bd8bca83ddae2c98bb86d2badef"
+    },
+    "publishing/fix-epub-after-pandoc.py": {
+      "bytes": 4105,
+      "sha256": "ccd52f3320b809eccc24d0e314893f7ec70681e145c4bfd94d3b23424451b0b3"
+    },
+    "publishing/pdf-filter.lua": {
+      "bytes": 2187,
+      "sha256": "d1386495705a3f519f872f9e355869341e78b5bc0d47b6ed6137f86cc6229a65"
+    },
+    "publishing/pdf-template.tex": {
+      "bytes": 3006,
+      "sha256": "4fe482d302430c7962bc619147bf8d388e4466171e988db61fcf4664456241ec"
+    },
+    "revision-log.md": {
+      "bytes": 25351,
+      "sha256": "02e9e0ee243967bf20a6c78ecb31186b12abc4c416ecb0dd52fde05e399e796d"
+    },
+    "scripts/book_references.py": {
+      "bytes": 4622,
+      "sha256": "28b5176acb62d07b16c5a2136044d432009acc8e57373abf9d82ac567e9e4bb6"
+    },
+    "scripts/build_book.py": {
+      "bytes": 1498,
+      "sha256": "1a9e00d2fff97e27ab6841b15fc6c37139a5a8a1a1bf04b59b3a62531f81e973"
+    },
+    "scripts/chapter_review.py": {
+      "bytes": 5940,
+      "sha256": "418e285884f0a8ea4a5c31aa2619a2b402a740e680fe4c8a96bab6347602e5d3"
+    },
+    "scripts/export-book.py": {
+      "bytes": 9202,
+      "sha256": "b3fce47d4a715f664bae465fe769761009e44596751abba941492c474a8c5497"
+    },
+    "scripts/export-book.sh": {
+      "bytes": 89,
+      "sha256": "cfb607edff8c8da14ec86e89352efabe27a06807666fc722ea4594e19de62b31"
+    },
+    "scripts/project_integrity.py": {
+      "bytes": 6443,
+      "sha256": "97f26bb87bf257e431128c520e00f21005ca81b7ba719c14a56e6325a0926170"
+    },
+    "scripts/render_diagrams.py": {
+      "bytes": 4993,
+      "sha256": "ee5306ab35f78d5ab0baef4b5225bd92ae74b370cbc6d2586aee892dac7406c8"
+    },
+    "scripts/validate_exports.py": {
+      "bytes": 4467,
+      "sha256": "2bed75c2b92cd913908b0cd0c7e38924bde53ca153feebf8dd6f88ad4714dbb7"
+    },
+    "scripts/validate_project.py": {
+      "bytes": 7832,
+      "sha256": "7bfc4efda9947a855c979019864423f80d47e531d92855d02f64643a0887208a"
+    }
+  },
+  "updated_at": "2026-11-08T11:55:15Z"
+}

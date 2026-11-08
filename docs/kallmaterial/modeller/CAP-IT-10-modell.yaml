@@ -1,0 +1,504 @@
+metadata:
+  id: CAP-IT-10
+  titel: Utveckling och teknisk leverans
+  typ: faktaboksunderlag
+  version: '2.0'
+  datum: '2026-11-07'
+  modellbaseline: v1.1
+  utgangspunkt: G2
+  status: referensbedomning, ej organisationsspecifik inventering
+  granskning: intern kritisk sak- och redaktionsgranskning; ej extern publiceringsgranskning
+kallavgransning:
+  primarkallor:
+  - Från systemdrift till digital självständighet
+  - Förmågeöversikt – tekniska IT-förmågor, CAP-IT-10
+  - Plattformsöversikt – konceptuella plattformar, PLT-009 och PLT-004
+  kompletteringar:
+  - NIST SP 800-218
+  - SLSA v1.2
+  - DORA AI-assisted Software Development 2025
+  - OpenSSF Scorecard
+  bedomningar: Behov, generationer, kritikalitet och verifieringsprov är analytiska rekommendationer,
+    ej explicit kravtext i primärkällorna.
+  versionsnotering: NIST SP 800-218 v1.1 är publicerad; revidering har funnits som utkast. SLSA v1.2 är
+    aktuell godkänd version vid granskningen.
+definition: Förmåga att utveckla, verifiera och leverera versionshanterade tekniska förändringar på ett
+  reproducerbart, spårbart och kontrollerat sätt.
+avgransning: Äger leverans- och förändringsmekanism men inte arkitekturansvar för målområdet; inte generell
+  processautomation, driftadministration, observability eller recovery.
+generationer:
+  G1:
+    namn: Traditionell systemdrift
+    stod: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+    fungerande_stod:
+    - Version går att härleda till källkod och byggsteg
+    fallgropar:
+    - Personberoende bygg och release
+    teknikvarningar:
+    - Byggverktyg utan leverantörsstöd
+  G2:
+    namn: Distribuerade IT-stöd
+    stod: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+    fungerande_stod:
+    - Inkompatibla kontrakt upptäcks före release
+    - Relevanta artefakter och releaser kan spåras
+    - Byggartefakters ursprung kan kontrolleras mot en skyddad byggkedja; reproducerbarhet förväxlas inte
+      med proveniens
+    fallgropar:
+    - Lokalt snabba team men långsam helhetsleverans
+    - Sena integrations- och säkerhetskontroller
+    teknikvarningar:
+    - Pipelines saknar spårbara artefakter och kontraktstest
+  G3:
+    namn: Plattformsorienterad IT
+    stod: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+    fungerande_stod:
+    - Team kan leverera standardfall utan specialistinsatser
+    - Mallar och kontroller uppgraderas och avvecklas
+    - Undantagsväg och plattformsuppgraderingar fungerar även efter projektstart
+    fallgropar:
+    - Portal utan automatiserad livscykel
+    - Stela standardvägar
+    teknikvarningar:
+    - Standardvägar kan inte uppgraderas eller konsumeras via gränssnitt
+  G4:
+    namn: Verksamhetsnära och AI-stödd utveckling
+    stod: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+    fungerande_stod:
+    - AI-ändringar är identifierbara, testade och riskklassade
+    - Agentmandat och mänskliga beslut är spårbara
+    - Verksamhetsutvecklade lösningar har dokumenterat ägarskap, riskklass och avvecklingsväg
+    - AI-agenters verktygsrättigheter kan begränsas och återkallas
+    fallgropar:
+    - AI-kod behandlas som testad per automatik
+    - Agenter får för breda rättigheter
+    teknikvarningar:
+    - Agentverktyg kan inte begränsas eller granskas
+    - Det går inte att skilja modell-, prompt- och verktygsändringars effekter eller kontrollera farliga
+      anrop
+overgangar:
+  G1_G2:
+    syfte: Synliggör kvarstående brister efter uppdelning av applikationer i tjänster
+    indikatorer:
+    - Skilda byggprocesser utan versionsspårbarhet
+    - Integrationstester först inför gemensam produktionssättning
+    - Personliga konton eller hemligheter i byggkedja
+    beslut: Rätta leveransgrund före eller parallellt med vidare plattformsarbete
+  G2_G3:
+    syfte: Omvandla återkommande utvecklings- och leveransmoment till produktifierad självbetjäning
+    forandringstryck:
+    - Många team duplicerar pipelines
+    - Likartade beställningar skapar köer
+    - Återkommande säkerhetsavvikelser i mallar
+    beredskap:
+    - Identifierad standardiserbar volym
+    - Produktansvar och support
+    - Versionshanterade mallar med uppgraderingsstrategi
+    - Möjlighet att mäta användning och utfall
+  G3_G4:
+    syfte: Skala kontrollerad verksamhetsnära och AI-assisterad utveckling
+    forandringstryck:
+    - Mer AI-kod än verifieringskapacitet
+    - Oregistrerade verksamhetsapplikationer
+    - Ospårade agentändringar
+    beredskap:
+    - Automatiska test- och säkerhetsgrindar
+    - Riskklassning och mandat
+    - Ägarskap och avvecklingsprocess även för små lösningar
+forbattringsspar_g2:
+  A: Åtgärda versions-, kontrakts-, test-, artefakt- och rättighetsbrister utan krav på nytt plattformsprogram
+  B: Utveckla återanvändbara självbetjänade leveransvägar för återkommande behov
+indikatorkategorier:
+- behov
+- fungerande_stod
+- kvarvarande_arv
+- olampligt_teknik_plattformsval
+- forandringstryck
+- beredskap
+plattformstjanster:
+- id: PLS-039
+  namn: Source Code Management
+  plattform: PLT-009
+  definition_fran_kallmodell: Versionshantering, kodgranskning och spårbar teknisk förändring.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Visa hur den aktuella versionens källa, ändringshistorik och ansvarig kan fastställas;
+        kodgranskning anpassas efter risk
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Verifiera branchskydd och åtkomst per team
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Prova policy- och malluppgradering utan att kringgå granskning
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Spåra mänsklig respektive agentinitierad förändring
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-040
+  namn: CI/CD Pipeline
+  plattform: PLT-009
+  definition_fran_kallmodell: Automatiserade pipelines för bygg, test, verifiering, promotion och driftsättning.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Återskapa build och dokumentera release
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Introducera inkompatibelt tjänstekontrakt; verifiera att pipeline stoppar förändringen
+        före produktion
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Leverera, uppgradera och avveckla standardtjänst via självbetjäning
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Kontrollera riskklassad agentändring och mänskligt godkännande
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-041
+  namn: Artefakt- och paketregister
+  plattform: PLT-009
+  definition_fran_kallmodell: Versionssatta och spårbara binärer, paket, containerimages och andra leveransartefakter.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Hämta rätt versionsbestämt paket
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Kontrollera artefaktdigest, ursprung och att bygginformation härrör från tillförlitlig
+        byggmiljö
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Spåra signering, retention och avveckling av artefakt
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Kontrollera proveniens även för AI-genererade byggen
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-042
+  namn: IaC och GitOps-leverans
+  plattform: PLT-009
+  definition_fran_kallmodell: Versionshanterad provisionering och deklarativ teknisk förändring.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Återskapa infrastrukturkonfiguration från version
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Upptäck drift och oavsiktlig konfigurationsändring
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Testa deklarativ ändring, driftavvikelse, godkänd återgång och en ändring som
+        kräver undantag
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Begränsa och spåra agentinitierad IaC-förändring
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-092
+  namn: Backend- och tjänsteutvecklingsgrund
+  plattform: PLT-009
+  definition_fran_kallmodell: Standardiserad backend-/API-baseline, projektstruktur, beroenden, säkerhets-
+    och observability-hookar samt testbarhet.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Starta tjänst med dokumenterat ramverk och tester
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Kontrollera kontrakt, timeout och hälsokontroll i ny tjänst
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Uppgradera mall i existerande team utan omfattande handarbete
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Upptäck AI-genererad kod som avviker från standard
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-093
+  namn: Mobil applikationsutvecklingsgrund
+  plattform: PLT-009
+  definition_fran_kallmodell: Standardiserad iOS/iPadOS/Android-baseline, build, signering, identitet,
+    telemetry och testbarhet.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Bygg och signera mobilapp reproducerbart
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast när egna mobilappar utvecklas och behöver distribueras
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Verifiera säkert certifikatsflöde och enhetstest
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast när egna mobilappar utvecklas och behöver distribueras
+    G3:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Distribuera signerad testversion; pröva incidentrutiner och korrigerande release,
+        utan att förutsätta omedelbar återkallelse från alla enheter
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast när egna mobilappar utvecklas och behöver distribueras
+    G4:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Stoppa otillåtna klientbehörigheter och datainsamling
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast när egna mobilappar utvecklas och behöver distribueras
+- id: PLS-086
+  namn: Programvarusäkerhetsanalys
+  plattform: PLT-009
+  definition_fran_kallmodell: Automatiserad analys av kod, beroenden, hemligheter, artefakter och IaC
+    i leveransflöden.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Situationsberoende
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Hitta och åtgärda allvarlig sårbarhet
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G2:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Situationsberoende
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Stoppa testläckt hemlighet före merge
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G3:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Visa riskbaserade grindar med tidsbundet undantag
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+    G4:
+      funktionskritikalitet: Kritisk
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Skanna AI-genererad kod och verifiera funna beroenden
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: prövas utifrån organisationens behov
+- id: PLS-094
+  namn: AI-assisterad programvaruutveckling
+  plattform: PLT-009
+  definition_fran_kallmodell: Kontrollerad AI-hjälp för kod, förståelse, test, dokumentation, review och
+    agentisk implementering.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: 'Om AI-kodstöd används: säkerställ att koden hanteras av samma mänskliga gransknings-
+        och testansvar som annan kod'
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Verifiera att kodgranskning och test gäller AI-kod
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G3:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Visa policy för modellåtkomst och koddata med mätning
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: endast vid aktuellt behov av tjänstetypen
+    G4:
+      funktionskritikalitet: Viktig
+      gemensam_plattform: Viktig vid återkommande behov
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Begränsa agentverktyg och verifiera mänskligt beslut vid högrisk
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Relevant när aktuell AI/ML-funktion används; kritikalitet bestäms av risk och verksamhetsbetydelse
+- id: PLS-095
+  namn: AI-applikationsutvecklingsgrund
+  plattform: PLT-009
+  definition_fran_kallmodell: Standardiserad SDK-/ramverksbaseline för generativa AI-/agentappar, tool
+    calling, prompts, retrieval och hooks.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Visa enkel godkänd utvecklingsmetod om AI-app finns
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: Versionssätt prompts, verktygskontrakt och testfall
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G3:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Skapa ny AI-app via godkänd mall och registrera ägare
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: endast vid aktuellt behov av tjänstetypen
+    G4:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Kontrollera verktygsmandat, dataåtkomst och eval vid release
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Relevant när aktuell AI/ML-funktion används; kritikalitet bestäms av risk och verksamhetsbetydelse
+- id: PLS-019
+  namn: Modellutvärdering och AI-regressionstest
+  plattform: PLT-004
+  definition_fran_kallmodell: Eval-set, benchmark och regressionstest för modeller, prompts, retrievalkedjor
+    och agentbeteende.
+  kalltyp: primarkalla_sammanfattad
+  generationsprofiler:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Dokumenterad och reproducerbar grundmetod; central självbetjäning är inte generellt nödvändig.
+      verifieringsprov: Dokumentera kvalitetstest om ML används
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Normalt inte motiverad utan konkret behov
+      niva: Separata tjänstelivscykler med säkra automatiserade kontroller och tydliga gränssnitt.
+      verifieringsprov: 'Om ML/AI används: jämför dokumenterade versioner mot relevant och versionsatt
+        testmängd'
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Endast om organisationen faktiskt använder relevant AI-/ML- eller agentlösning
+    G3:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Förvaltat, versionerat och användbart gemensamt erbjudande där standardfall är självbetjänade.
+      verifieringsprov: Blockera releaser när definierat evalkrav inte uppfylls
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: endast vid aktuellt behov av tjänstetypen
+    G4:
+      funktionskritikalitet: Situationsberoende
+      gemensam_plattform: Situationsberoende
+      niva: Riskstyrd leverans av mänskligt och AI-assisterat skapade lösningar med spårbara mandat.
+      verifieringsprov: Pröva regression av agents verktygsval och otillåtna handlingar
+      kunskapsstatus: arkitekturbedomning; prövas mot användningsfall
+      tillamplighet: Relevant när aktuell AI/ML-funktion används; kritikalitet bestäms av risk och verksamhetsbetydelse
+beslutsalternativ:
+- behall
+- komplettera
+- andra_anvandning_och_ansvar
+- ersatt
+tolkningsregler:
+  kritikalitet: Bedömer funktionens betydelse när användningsfallet finns, inte obligatoriskt införande
+    av varje central tjänst.
+  situationsberoende: Förmågan kan vara irrelevant när organisationen inte har den typen av lösningar;
+    då ska den inte utvärderas som ett glapp.
+  generation: Generationerna anger leverans- och ansvarsmönster; verktygens förekomst avgör inte ensam
+    generationen.
+  teknikvarning: Indikation som ska prövas med ett representativt användningsfall, inte automatisk signal
+    om produktbyte.
+bedomningsprov:
+- id: LEVERANS-01
+  namn: Spårbar ändringskedja
+  gen: G2
+  godkant_nar: En konkret driftsättning kan härledas till källa, kontroll, artefakt och beslut.
+- id: LEVERANS-02
+  namn: Tjänstekontrakt
+  gen: G2
+  godkant_nar: En brytande ändring upptäcks innan driftsättning i representativt flöde.
+- id: LEVERANS-03
+  namn: Självbetjänad livscykel
+  gen: G3
+  godkant_nar: Ett utomstående team kan skapa, uppgradera, hantera undantag och avveckla standardtjänst
+    utan onödiga manuella steg.
+- id: LEVERANS-04
+  namn: AI-styrd leverans
+  gen: G4
+  godkant_nar: En AI-relaterad ändring kan riskklassas, testas, godkännas och återkallas i enlighet med
+    fastställda mandat.
