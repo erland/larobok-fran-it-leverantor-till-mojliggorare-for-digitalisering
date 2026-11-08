@@ -1,0 +1,595 @@
+id: CAP-IT-01
+namn: Interaktion, presentation och kanaler
+version: '2.0'
+datum: '2026-11-07'
+status: Kritiskt reviderat faktaboksunderlag; inte nulägesbedömning eller juridisk kravspecifikation
+kallmodell: baseline v1.1
+kallor:
+  ursprung:
+  - Förmågeöversikt – tekniska IT-förmågor
+  - Plattformsöversikt – konceptuella plattformar
+  - Från systemdrift till digital självständighet
+  kompletterande:
+  - https://www.w3.org/TR/WCAG22/
+  - https://www.w3.org/WAI/ARIA/apg/
+  - https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Offline_and_background_operation
+  - https://www.nist.gov/itl/ai-risk-management-framework
+  - https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
+  - https://www.w3.org/WAI/standards-guidelines/wcag/non-web-ict/
+definition: Förmåga att leverera användbara, tillgängliga, säkra och förändringsbara möten via webb, mobil och
+  andra digitala kanaler.
+avgransning: Interaktion och kanalgränssnitt; verksamhetsregler, processbeslut, identitet, datainformationsägarskap
+  och tekniska integrationer tillhör angränsande förmågor.
+bedomningsprincip:
+  separera:
+  - funktionskritikalitet vid verkligt användningsfall
+  - behov av gemensam förvaltad plattform
+  - behov av automation
+  notering: Prioriteringar är villkorade av verksamhetsbehov och antal team; generation är inte teknikval.
+generationer:
+  G1:
+    roll: Kort historisk kontext
+    risk: Lokala gränssnitt, variation och manuell kvalitetsgranskning.
+  G2:
+    roll: Huvudperspektiv
+    generationsarv:
+    - Olika begrepp och interaktionsmönster i olika tjänster
+    - Brutna användarresor vid API-fel och sessionsavbrott
+    - Bristande tillgänglighet och versionssamordning
+    - Osäkra och tvetydiga offline- eller notifieringsbekräftelser
+    - Native mobil och specialiserade klienter verifieras felaktigt med endast webbtester
+    - Offlineköer kan fastna efter bakgrundsbegränsning eller innehålla uppgifter på utbytt enhet
+    forbattringsspar:
+      A: Rätta avbrott, tillgänglighet, kanalkontrakt, återkoppling och ägaransvar i befintliga produkter.
+      B: Mät återanvändningsbehov och driftskostnad för gemensamma byggblock innan plattform införs.
+    fungerande_stod:
+    - Viktiga användarresor fungerar genom flera tjänster, inklusive fel och väntelägen
+    - Tangentbord och hjälpmedel kan användas för centrala uppgifter
+    - Lokal sparning och mottagen registrering särskiljs
+    - Produktteam kan identifiera och åtgärda användarproblem över tjänstegränser
+    - Användarutfall följs per relevant användargrupp och kanal, även med hjälpmedel
+    - Offlineklient visar lokal, kölagd, serverbekräftad och konfliktfylld status och kan återhämta utebliven
+      bakgrundssynk
+    teknikvarningar:
+    - UI-bibliotek blockerar tillgänglig implementering trots rätt användning
+    - Formulärmotor saknar kritiska tillstånd och rimlig utbyggnadsväg
+    - Offlineplattform saknar verifierbar konflikt- och synkhantering
+  G3:
+    roll: Förvaltade och självbetjänade kanalbyggblock vid återkommande behov
+    behovsindikatorer:
+    - Flera team återbygger samma komponenter och tillgänglighetslösningar
+    - Uppgradering och support är dyr och specialistberoende
+    fungerande_stod:
+    - Versionerade, testade paket och publicerade kompatibilitetslöften
+    - Självbetjäning för införande, uppgradering, stöd och avveckling
+    - Mätbar effekt på användarutfall och teamens tidsåtgång
+    - Migrering till nya komponentversioner har verifierats i konsumerande produkter, inte bara hos plattformsleverantören
+    - Förbättringar mäts i både verkliga användarutfall och plattformens livscykelkostnad
+    teknikvarningar:
+    - Gemensamma byggblock är svårare att förändra än lokala lösningar
+    - Central plattform övertar felaktigt produkt- och verksamhetsbeslut
+  G4:
+    roll: Möjlig AI-assisterad, verksamhetsnära gränssnittsutveckling
+    fungerande_stod:
+    - Godkända byggblock för genererad interaktion med riskstyrd publicering
+    - Otydlig AI-genererad åtgärd eller otillgängligt UI kan stoppas
+    - Auktoritativa backendkontroller verkställer behörigheter
+    teknikvarningar:
+    - Gränssnittet ger sken av utfört beslut när endast ett förslag finns
+    - AI-genererade kontroller kan inte användas med hjälpmedel
+    - Klientens instruktioner förväxlas med skydd mot otillåten handling
+diagnostiskt_scenario:
+  titel: En ansökan över webb, mobil och notifiering
+  steg:
+  - Starta ansökan och spara utkast i webben
+  - Bryt nätet under komplettering i mobilen och skapa konkurrerande ändring
+  - Återanslut och kontrollera konfliktutfall och återkoppling
+  - Kontrollera när notifiering skapas i förhållande till faktiskt verksamhetstillstånd
+  - Undersök kontrakt, UX och ansvarsbrister innan nytt plattformsköp
+  - Pröva samma uppgift separat i webbläsare, native mobil och eventuella specialklienter med relevanta hjälpmedel
+  - Simulera att bakgrundssynk uteblir och att enheten delas, tappas eller byter ägare
+  - Mät användarens slutförande och begriplighet, inte bara avsända API-anrop
+beslutsordning:
+- Verifiera den verkliga användarresan och tillgängligheten
+- Rätta brister i G2 inklusive felhantering och kontrakt
+- Mät återkommande behov av gemensamma byggblock
+- Jämför behålla, komplettera, ändra ansvar/användning och ersätta
+plattformstjanster:
+- id: PLS-001
+  namn: Design System-tjänst
+  plattform:
+    id: PLT-001
+    namn: Design System- och komponentplattform
+  grunduppdrag_enligt_kallmodell: Återanvändbara visuella komponenter, designprinciper och tillgänglighetsnära
+    stöd
+  tillamplighet: Återkommande digitala gränssnitt och flera utvecklingsteam
+  avgransning: Äger inte formulärregler, bakomliggande verksamhetsprocess, identitet eller hela kundresans produktbeslut
+  beroenden:
+  - CAP-IT-10
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig
+      gemensamt_plattformsbehov: Bra att ha
+      tekniskt_stod: Dokumenterade stilprinciper, semantisk HTML och ett litet komponentbibliotek; keyboard-/skärmläsartest
+        för centrala mönster.
+      verifiering: Prova tangentbordsnavigation och skärmläsare i tre kritiska komponenter och dokumentera avvikelser.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Viktig
+      gemensamt_plattformsbehov: Viktig
+      tekniskt_stod: Gemensamma tokens, navigation, fel- och väntelägen; tydliga kompatibilitetsregler när flera
+        team återanvänder komponenter.
+      verifiering: Verifiera den delade dialogen och hela användarflödet i två webbprodukter, med tangentbord,
+        skärmläsare, fokushantering och användaruppgiftens slutförande; prova native-klient separat där den finns.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Kritisk vid många team
+      gemensamt_plattformsbehov: Kritisk vid många team
+      tekniskt_stod: Versionerade komponentpaket och design tokens, tillgänglighetsregression i CI, migrationsguider,
+        deprecationspolicy, support och adoptionsmätning.
+      verifiering: Låt två konsumerande produkter uppgradera versionerat komponentpaket med kompatibilitetskontroll,
+        tillgänglighetsregression och dokumenterad migrering; avveckla sedan äldre version.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Kritisk vid bred självutveckling
+      gemensamt_plattformsbehov: Kritisk vid bred självutveckling
+      tekniskt_stod: Godkända komponenter för AI-genererade gränssnitt, tydlig visning av förslag kontra beslut,
+        mänsklig kontroll vid riskfyllda handlingar och automatiska tillgänglighetskontroller.
+      verifiering: AI-genererad dialog med saknad etikett eller oåtkomlig knapp nekas publicering eller kräver
+        verifierad korrigering.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-002
+  namn: Webbutvecklingsgrund
+  plattform:
+    id: PLT-009
+    namn: Utvecklings- och leveransplattform
+  grunduppdrag_enligt_kallmodell: Standardiserad projektstart och klientarkitektur med säkerhetsbaseline och telemetri
+  tillamplighet: Webbapplikationer/PWA och utveckling i flera team
+  avgransning: Ersätter inte designsystem, CI/CD-plattformen, runtime eller applikationens domänlogik
+  beroenden:
+  - CAP-IT-10
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig vid webb
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Reproducerbar projektstruktur, säkra standardinställningar, användbara fel-/laddningslägen,
+        dokumenterad uppdateringsväg.
+      verifiering: Starta och bygg ett litet webbsystem reproducerbart, verifiera säker konfiguration och felmeddelanden.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Kritisk vid många webbteam
+      gemensamt_plattformsbehov: Viktig
+      tekniskt_stod: Delad klientarkitektur, API-kontrakt, standardiserad telemetri, säker tokenhantering och
+        test av brutna beroenden.
+      verifiering: Starta ny webbklient, hantera autentiseringsavbrott och API-fel, verifiera feltelemetri och
+        beroendeuppdatering.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Kritisk vid självbetjäning
+      gemensamt_plattformsbehov: Kritisk vid många team
+      tekniskt_stod: Självbetjänad projektgenerator, testsvit, komponentintegration, dependency-uppdateringar
+        och lättanvända säkra leveransmallar.
+      verifiering: Två team skapar webbstöd från samma grund, uppgraderar beroenden och hanterar stödperioder
+        för äldre klienter; mät arbetstid och verifiera säker avveckling.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Kritisk vid bred AI-assisterad webb
+      gemensamt_plattformsbehov: Kritisk vid många producenter
+      tekniskt_stod: AI-assisterad kodgenerering sker inom signerade och versionsstyrda mallar; automatisk testning
+        av UI, integritet och tillgänglighet, begränsade agentverktyg.
+      verifiering: Ett genererat webbprojekt passerar test av åtkomst, beroenden, tillgänglighet och publiceringsmandat
+        före release.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-003
+  namn: Formulärstjänst
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Formulärdefinition, fältvalidering och återanvändbar formulärmotorik
+  tillamplighet: Många liknande formulär, långa eller reglerade inmatningsflöden
+  avgransning: Äger inte designkomponenterna, verksamhetens beslut, hela arbetsflödet eller auktoritativ data
+  beroenden:
+  - CAP-IT-02
+  - CAP-IT-03
+  - CAP-IT-04
+  - CAP-IT-01
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig där formulär används
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Lokalt formulär med fältregler, begriplig validering, säker inmatning och stöd för avbrutna
+        steg.
+      verifiering: Ogiltiga värden stoppas och förklaras utan att tidigare inmatning försvinner.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Viktig vid många formulär
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Delade scheman, versionering av fält och förutsägbar felhantering mot flera tjänster; formulär
+        skickar data via definierade API:er.
+      verifiering: Fyll i formulär med fel, sparat utkast och avslutad session; granska skärmläsaråterkoppling
+        samt skillnaden mellan fältvalidering och verksamhetsbeslut.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Viktig vid återkommande formulär
+      gemensamt_plattformsbehov: Viktig vid stor återanvändning
+      tekniskt_stod: Versionerade formulärdefinitioner, valideringskontrakt, tillgängliga standardkomponenter,
+        testmiljö och konfigurerbar publiceringsprocess.
+      verifiering: Uppgradera en delad formulärdefinition med ändrade fält och felmeddelanden i två konsumentprodukter;
+        prova att äldre sparade utkast och tangentbordsflöden kan hanteras enligt dokumenterad migrationspolicy.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Viktig för verksamhetsnära formulär
+      gemensamt_plattformsbehov: Viktig vid kontrollerad självutveckling
+      tekniskt_stod: Riskstyrd självbetjäning för formulärskapande; AI får föreslå fält men publicering, personuppgiftshantering
+        och verksamhetsvalidering kräver ansvarig godkännare.
+      verifiering: AI-föreslaget formulär som samlar otillåtna uppgifter nekas publicering tills verksamhets-
+        och integritetsgranskning godkänt.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-004
+  namn: Notifikations- och meddelandeleverans
+  plattform:
+    id: PLT-024
+    namn: Notifikations- och meddelandeplattform
+  grunduppdrag_enligt_kallmodell: Kontrollerad flerkanalsleverans av notifieringar och meddelanden via e-post,
+    SMS, push eller in-app
+  tillamplighet: IT-stöd som behöver kommunicera med användare över en eller flera kanaler
+  avgransning: Äger inte verksamhetsbeslutet att avisera, processens eskalering eller transport mellan backendtjänster
+  beroenden:
+  - CAP-IT-02
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk vid verksamhetskritiska aviseringar
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Dokumenterade mottagare, sändkanal, retry och informationstyp; inga hemligheter i öppna meddelanden.
+      verifiering: Uteblivet SMS/e-post syns i logg och kan hanteras manuellt utan förlorad affärshändelse.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Kritisk vid verksamhetskritiska aviseringar
+      gemensamt_plattformsbehov: Viktig vid flera appar
+      tekniskt_stod: Gemensamma kanalspecifika mallar, korrelation, kvittensstatus, felkoder och hantering av
+        dubbletter.
+      verifiering: Skicka avisering med misslyckad leverans och försening; särskilj skapat, skickat, levererat,
+        läst och verksamhetsstatus.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Kritisk vid verksamhetskritiska aviseringar
+      gemensamt_plattformsbehov: Viktig vid bred kanalanvändning
+      tekniskt_stod: Självbetjänade godkända notifieringsprofiler, mall-/kanalversionering, preferenser, samtycken
+        där relevant, kvoter och leveransstatistik.
+      verifiering: Skapa, ändra och avveckla en notifieringsmall i två kanalprodukter; verifiera versionsberoenden,
+        tillgängligt innehåll, korrekt mottagare och dokumenterad utfasning utan felaktig verksamhetskvittens.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Kritisk vid verksamhetskritiska aviseringar
+      gemensamt_plattformsbehov: Kritisk vid mycket bred automatisering
+      tekniskt_stod: Agentutlösta notifieringar begränsas av mottagarkrets, ämne, sekretessklass, frekvens och
+        åtgärdsmandat; avvikelse kan stoppas.
+      verifiering: AI-initierad notifiering utan godkänt mandat eller mottagare stoppas före extern leverans.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-074
+  namn: Geospatial informations- och karttjänst
+  plattform:
+    id: PLT-015
+    namn: Geospatial plattform
+  grunduppdrag_enligt_kallmodell: Återanvändbara kartlager, geokodning och spatiala frågor/analys utan att ta
+    över domänens informationsägarskap
+  tillamplighet: Kart- och platsberoende arbetsflöden; särskilt fält-/logistiknära verksamhet
+  avgransning: Äger inte auktoritativa geografiska fakta, domänbeslut eller allmän BI
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-05
+  - CAP-IT-13
+  generationer:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Bra att ha
+      tekniskt_stod: Enkla kartvyer och datakällor med källa, aktualitet, koordinatreferens och sekretesskontroll.
+      verifiering: Kartan har textbaserat alternativ och anger datats ursprung och uppdateringstid.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Dokumenterade geodatakontrakt, cache och lämpliga API:er för flera konsumenter; separat behörighet
+        för skyddade lager.
+      verifiering: Validera kartkälla och åtkomst till skyddade positioner; ge ett tillgängligt icke-kartbaserat
+        alternativ.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Viktig vid många geoflöden
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: Självbetjänade kart-/geokodningsprofiler med licens-/kostnadskontroll, SLO, tillgängliga
+        textalternativ och datakvalitet.
+      verifiering: Två konsumenter uppgraderar kart-API och kartlager inklusive datakällors giltighet, kända koordinat-/precisionseffekter
+        och fortsatt tillgängligt alternativ; avveckla gammal anslutning.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Viktig vid agentstödd geoverksamhet
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: AI-baserad geoassistans visar osäkerhet och källor, begränsar åtkomst till känsliga positioner
+        och kräver mänskligt beslut vid högriskåtgärd.
+      verifiering: AI-föreslagen platsåtgärd granskas mot geografisk datakvalitet, mandat och informationsklass
+        innan publicering.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-089
+  namn: Mediedistribution och streaming
+  plattform:
+    id: PLT-016
+    namn: Mediebearbetnings- och distributionsplattform
+  grunduppdrag_enligt_kallmodell: Skalbar åtkomstkontrollerad mediedistribution, cache/edge, range delivery och
+    vid behov adaptiv streaming
+  tillamplighet: Tjänster med stor eller återkommande distribution av bild, ljud eller video
+  avgransning: Äger inte originalmedia, transkodning (PLS-088), verksamhetsmässig publicering eller arkivering
+  beroenden:
+  - CAP-IT-13
+  - CAP-IT-12
+  - CAP-IT-04
+  generationer:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Bra att ha
+      tekniskt_stod: Grundläggande åtkomstskydd, korrekt MIME, bild-/videotextalternativ och rimlig bandbreddsprofil.
+      verifiering: Obehörig användare nekas media och hörbar information har relevant textalternativ.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Kontrollerad distribution via cache eller CDN vid behov; token/URL-livstid, versionsändringar
+        och mätning av uppspelningsfel.
+      verifiering: Pröva textningsstöd, skyddad medie-URL, varierande bandbredd och användning med hjälpmedel.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Viktig vid omfattande medieflöden
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: Självbetjänade distributionsprofiler, mätbar latency/kostnad, rättighetsvillkor, signerade
+        länkar och tillgängliga textnings-/alternativspår.
+      verifiering: Uppgradera mediekanal för två konsumenter och verifiera stöd för bildtexter/undertexter, gamla
+        länkar, skyddad åtkomst, kostnad och utfasning enligt dokumenterad policy.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Viktig vid omfattande medieflöden
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: Styrd mediaåtkomst för genererade eller multimodala gränssnitt; tydlig markering av syntetiskt
+        material där relevant och strikt skydd av privata länkar.
+      verifiering: Maskingenererad video eller bild får märkning/ursprungsinformation när relevant och publiceras
+        först efter riskanpassad kontroll.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+- id: PLS-075
+  namn: Mobil fältapplikationsgrund och offline-synkronisering
+  plattform:
+    id: PLT-025
+    namn: Mobil fält- och synkplattform
+  grunduppdrag_enligt_kallmodell: Återanvändbar säker lokal lagring, offline state, bidirektionell synk och konflikthantering
+    för fältappar
+  tillamplighet: Fältarbete med svag konnektivitet eller offlinekrav
+  avgransning: Äger inte verksamhetssemantik för konflikter, auktoritativ masterdata eller själva mobilklientens
+    alla UX-beslut
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-11
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk om offline är verksamhetskrav
+      gemensamt_plattformsbehov: Situationsberoende
+      tekniskt_stod: Lokala utkast, tydlig status för uppkoppling, skyddad datalagring och manuell kontrollerad
+        uppladdning vid nätåtkomst.
+      verifiering: Arbete under nätavbrott går att återuppta och skicka när anslutning återkommer utan datatapp.
+      leveransmodell: Enskilda team väljer komponenter och ramverk; manuella granskningar och enskilda integrationspunkter.
+      ansvar: System-/produktägare ansvarar för upplevd funktion och tillgänglighet; utvecklingsteam implementerar
+        klient, drift ger basmiljö.
+      huvudrisk: Inkonsekvent interaktion, dubbelarbete, svårtestade specialkomponenter och bristande tillgänglighet.
+      klassificering: arkitektonisk_bedomning
+    G2:
+      funktionskritikalitet: Kritisk om offline är verksamhetskrav
+      gemensamt_plattformsbehov: Viktig vid många fältappar
+      tekniskt_stod: Idempotent synkronisering, versionsmärkt lokalt state, konfliktdetektion och återupptagning
+        efter nätavbrott.
+      verifiering: Stäng av nätet, lägg två ändringar i lokal kö, stoppa appen och låt bakgrundssynk utebli; testa
+        efter återstart, konkurrerande serverändring och utloggning på delad enhet. Verifiera synkstatus, behörighet
+        och lokal dataexponering.
+      leveransmodell: Delade UI-bibliotek och gemensamma kanalkomponenter växer fram, men införande och uppgradering
+        varierar mellan team.
+      ansvar: Kanal-/UX-funktioner förvaltar principer; domänteam äger kundresor, gränssnitt och bakomliggande
+        kontrakt.
+      huvudrisk: Fragmenterade upplevelser, skilda tillgänglighetsnivåer, versionskonflikter och brutna användarresor.
+      klassificering: arkitektonisk_bedomning
+      anvandarutfall: Mät slutförande, avbrott och begriplig återkoppling för relevant användargrupp där tjänsten
+        ingår i användarresan; resultat ska inte förväxlas med komponentens installationsgrad.
+    G3:
+      funktionskritikalitet: Kritisk om offline är verksamhetskrav
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: Självbetjänad offline-SDK/profil med krypterad cache, policy för datalivslängd, testverktyg
+        för konflikter och telemetri.
+      verifiering: Två fältappar uppgraderar schema och synkprotokoll samtidigt som äldre klient arbetar offline;
+        visa kompatibilitet/avvisning och konfliktåterhämtning, kontrollera utbytt enhet, lokala köer och säker
+        avveckling.
+      leveransmodell: Självbetjänad onboarding, komponentpaket/mallar, CI-tester, mätbar adoption, support och
+        hanterad bakåtkompatibilitet.
+      ansvar: Plattformsteam äger konsumtionskontrakt och livscykel; verksamhets-/produktteam äger användningsfall,
+        innehåll och kundresa.
+      huvudrisk: Portal utan riktig automation, oflexibla centralstandarder, fördröjda komponentfixar och lägre
+        innovationsförmåga.
+      klassificering: arkitektonisk_bedomning
+      migrationskontroll: Verifiera versionerings-, uppgraderings- och avvecklingskostnad hos minst en faktisk
+        konsument. Undantag motiveras av tillämplighet och ändringens risk.
+    G4:
+      funktionskritikalitet: Kritisk om offline är verksamhetskrav
+      gemensamt_plattformsbehov: Situationsberoende – viktigt vid flera återkommande relevanta lösningar
+      tekniskt_stod: Kontrollerad AI-assistans även vid intermittent nät; tydliga begränsningar för lokal modell-/datakopia
+        och obligatorisk avstämning innan riskhandling.
+      verifiering: AI-föreslagen offlineåtgärd köläggs utan verkställande; vid återanslutning verifieras aktuellt
+        mandat, färsk information och affärsregler innan eventuell verkställighet. Visa säkert stopp för föråldrad
+        eller obehörig åtgärd.
+      leveransmodell: Policykontrollerade mallar, automatisk kvalitetskontroll, riskklassning och spårbar versionshantering
+        även för lösningar producerade nära verksamheten.
+      ansvar: Verksamheten äger avsikt och konsekvenser; plattform ansvarar för kontroller och erbjudanden; applikation
+        och identitetsförmåga verkställer behörigheter.
+      huvudrisk: Förvirrande AI-förslag, överautomation, obehöriga åtgärder, otillgängliga dynamiska UI och okontrollerad
+        kanalsprawl.
+      klassificering: arkitektonisk_bedomning
+granskningsresultat_v2:
+  kritiska_korrigeringar:
+  - Separata tillgänglighetsprov för webb och icke-webbaserad programvara
+  - Verifierbara användarutfall och jämförelse mellan användargrupper
+  - Konsumentstyrd migrering och kostnad över hela plattformslivscykeln
+  - Offlineköer vid utebliven bakgrundssynk och förlorad/utbytt enhet
+  ursprungliga_kallidentiteter_oforandrade: true

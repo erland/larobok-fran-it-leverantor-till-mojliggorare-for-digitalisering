@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "for maga": "CAP-IT-01",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-01-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap01-v2/cap-it-01/CAP-IT-01-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-01-kapitel.md",
+      "sha256": "08d028f93699aaa7c31357dd165ef5f3cb6ed8a7bb683938e82fcfa694929510"
+    },
+    {
+      "for maga": "CAP-IT-01",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-01-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap01-v2/cap-it-01/CAP-IT-01-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-01-modell.yaml",
+      "sha256": "2a923a0df49a7d85222e60927da231f0e62efad92dceb6dfb261f753564611b1"
+    },
+    {
+      "for maga": "CAP-IT-01",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-01-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap01-v2/kritisk-granskning-CAP-IT-01.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-01-granskning.md",
+      "sha256": "434c5591c14c7322110f0824b7efeeea154232864d1996f92ea6ed71fa522a4d"
+    },
+    {
+      "for maga": "CAP-IT-02",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-02-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap02-v2/cap-it-02/CAP-IT-02-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-02-kapitel.md",
+      "sha256": "b9542049eb22643057a51253b094b834d7f53ead80c0ed4eae18834e373b89f9"
+    },
+    {
+      "for maga": "CAP-IT-02",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-02-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap02-v2/cap-it-02/CAP-IT-02-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-02-modell.yaml",
+      "sha256": "29b680ef4312405c2aba505d5972d1b35e21d6957224b3e4fc8b0129e4e9c651"
+    },
+    {
+      "for maga": "CAP-IT-02",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-02-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap02-v2/kritisk-granskning-CAP-IT-02.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-02-granskning.md",
+      "sha256": "84219848951135203b62675cfebc79d912d9e558950f7406038b2c63509b7f2f"
+    },
+    {
+      "for maga": "CAP-IT-03",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-03-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-03/CAP-IT-03-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-03-kapitel.md",
+      "sha256": "6585c8b6d3addc11eaa4ec51f1e9b53ddff09351203b651eeb42d77e378b3d5e"
+    },
+    {
+      "for maga": "CAP-IT-03",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-03-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-03/CAP-IT-03-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-03-modell.yaml",
+      "sha256": "98e88c2a9de2d66320f92a82c5b5901ea3588978e83e545ae141c1d7baf1bba6"
+    },
+    {
+      "for maga": "CAP-IT-03",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-03-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "kritisk-granskning-CAP-IT-03.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-03-granskning.md",
+      "sha256": "1383c979ecc4401cbf251633bb203dd45a312eb87fa68008158281554e3dee30"
+    },
+    {
+      "for maga": "CAP-IT-04",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-04-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap04-v2/cap-it-04/CAP-IT-04-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-04-kapitel.md",
+      "sha256": "ab75154d10d5d3b8958847c114818f8716c1e6458adde00f75922967e08c4e42"
+    },
+    {
+      "for maga": "CAP-IT-04",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-04-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap04-v2/cap-it-04/CAP-IT-04-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-04-modell.yaml",
+      "sha256": "44f2179c98c0d156b1823da8b31840036679a3d7875583595596d7eb47d97276"
+    },
+    {
+      "for maga": "CAP-IT-04",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-04-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap04-v2/kritisk-granskning-CAP-IT-04.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-04-granskning.md",
+      "sha256": "9434a1efb5738c77cdf1af6094bc4b60f0583843b61e38315158a2f6854ec4c1"
+    },
+    {
+      "for maga": "CAP-IT-05",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-05-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-05/CAP-IT-05-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-05-kapitel.md",
+      "sha256": "da1aa5d53a4cca7cef6305aea65cf45a5c07be01993662e696bb0988e44f2e77"
+    },
+    {
+      "for maga": "CAP-IT-05",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-05-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-05/CAP-IT-05-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-05-modell.yaml",
+      "sha256": "4b6d8ab29bbf08ab036872ae57fa4a88b7c3596b59b238ac5edf61e09c8bf419"
+    },
+    {
+      "for maga": "CAP-IT-05",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-05-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "kritisk-granskning-CAP-IT-05.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-05-granskning.md",
+      "sha256": "262891873dc4e47040656c4f28ac549bffa2aae4aaec5db11217f218d8ee68e2"
+    },
+    {
+      "for maga": "CAP-IT-06",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-06-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-06/CAP-IT-06-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-06-kapitel.md",
+      "sha256": "dc751be18da981070be4a22fba34bc2c5737a7f1b73ebd7193562ca23773698b"
+    },
+    {
+      "for maga": "CAP-IT-06",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-06-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "cap-it-06/CAP-IT-06-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-06-modell.yaml",
+      "sha256": "26f48ec561fbd559f3207071650d76657a5d682398112d390a19d8e6f2f6be0f"
+    },
+    {
+      "for maga": "CAP-IT-06",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-06-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "kritisk-granskning-CAP-IT-06.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-06-granskning.md",
+      "sha256": "adc83dc41ed8f5721dc1910116d72c48cc6e4c3c08510de6a5f5948cfa489dfa"
+    },
+    {
+      "for maga": "CAP-IT-07",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-07-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap07-v2/cap-it-07/CAP-IT-07-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-07-kapitel.md",
+      "sha256": "ad9b272281b21fdf107e824792423b4ec1871caf8470e97f285dc549e0c125a8"
+    },
+    {
+      "for maga": "CAP-IT-07",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-07-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap07-v2/cap-it-07/CAP-IT-07-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-07-modell.yaml",
+      "sha256": "108864f11a884cb9cf2db03e86cf369f17a09ed661a5c7997b3794937341a400"
+    },
+    {
+      "for maga": "CAP-IT-07",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-07-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap07-v2/kritisk-granskning-CAP-IT-07.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-07-granskning.md",
+      "sha256": "e2e50a1f95edd6542a66ce6a6fb3b115aa44b31b12bd6e99495bc0c20bf4e669"
+    },
+    {
+      "for maga": "CAP-IT-08",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-08-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap08-v2/cap-it-08/CAP-IT-08-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-08-kapitel.md",
+      "sha256": "22fbc14bfb109146d404fe38e96f4cb7d393c6f3e7240acebdc54c12e0ff6cc0"
+    },
+    {
+      "for maga": "CAP-IT-08",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-08-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap08-v2/cap-it-08/CAP-IT-08-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-08-modell.yaml",
+      "sha256": "c85cb1e83dd22720676066db72db2b619e19c9b2c6707c455a2c8bf5324d3fe2"
+    },
+    {
+      "for maga": "CAP-IT-08",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-08-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap08-v2/kritisk-granskning-CAP-IT-08.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-08-granskning.md",
+      "sha256": "0002f5fbba2981ddc9dec508187c17aa55e8d3c0d79bc33e3fab5db1796123ec"
+    },
+    {
+      "for maga": "CAP-IT-09",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-09-faktaboksunderlag-v3-granskat.zip",
+      "source_member": "faktabok-underlag-v3/cap-it-09/CAP-IT-09-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-09-kapitel.md",
+      "sha256": "a00779c66352c805b2137a9435a756ab5308b46dc3f7419adbeabf73bcf90741"
+    },
+    {
+      "for maga": "CAP-IT-09",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-09-faktaboksunderlag-v3-granskat.zip",
+      "source_member": "faktabok-underlag-v3/cap-it-09/CAP-IT-09-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-09-modell.yaml",
+      "sha256": "a81213d1aa3d6f9d6d1e9c5f285336b6a20de4daaf8fa8994586795bc0606df6"
+    },
+    {
+      "for maga": "CAP-IT-09",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-09-faktaboksunderlag-v3-granskat.zip",
+      "source_member": "faktabok-underlag-v3/kritisk-granskning-CAP-IT-09.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-09-granskning.md",
+      "sha256": "03299dfb5cb005d013dc5caccabf4b5e8d105a1cd63d47f437a1af6575e0d29d"
+    },
+    {
+      "for maga": "CAP-IT-10",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-10-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap10-v2/cap-it-10/CAP-IT-10-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-10-kapitel.md",
+      "sha256": "6bdb988be0b5153c0c5571a0a6552867bc8ee45dba817b74f5f2c725c7ab467c"
+    },
+    {
+      "for maga": "CAP-IT-10",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-10-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap10-v2/cap-it-10/CAP-IT-10-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-10-modell.yaml",
+      "sha256": "840703bfdff60355824710a82b2bdc3d48e226e3e29d8222cb6f26417b227e8c"
+    },
+    {
+      "for maga": "CAP-IT-10",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-10-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap10-v2/kritisk-granskning-CAP-IT-10.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-10-granskning.md",
+      "sha256": "e3f323c2c78878d4c9c5e2087dfb1c305f836bac8dfef63cdc5f3de55ace712f"
+    },
+    {
+      "for maga": "CAP-IT-11",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-11-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap11-v2/cap-it-11/CAP-IT-11-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-11-kapitel.md",
+      "sha256": "d7e3283cf2074e46c671e1f9b9642521441d7ff50bb16ca6d0fe48b24167e7e5"
+    },
+    {
+      "for maga": "CAP-IT-11",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-11-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap11-v2/cap-it-11/CAP-IT-11-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-11-modell.yaml",
+      "sha256": "12743fc95092efb182300e0af8c31ece79c550ece635c2410d63903ec313d022"
+    },
+    {
+      "for maga": "CAP-IT-11",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-11-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap11-v2/kritisk-granskning-CAP-IT-11.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-11-granskning.md",
+      "sha256": "7a5d32ed0a4232baf6f8d2d902239cb141b881432edf448e6c6f9a1f006a6382"
+    },
+    {
+      "for maga": "CAP-IT-12",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-12-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap12-v2/cap-it-12/CAP-IT-12-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-12-kapitel.md",
+      "sha256": "b242a10ae5fc778e8ab7844885b7e70109a33b9465fb666cf7f93729749a851d"
+    },
+    {
+      "for maga": "CAP-IT-12",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-12-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap12-v2/cap-it-12/CAP-IT-12-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-12-modell.yaml",
+      "sha256": "6058618f8163a441ad1f3816cd5b7361e5ae828000514233b22e8658933400d9"
+    },
+    {
+      "for maga": "CAP-IT-12",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-12-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap12-v2/kritisk-granskning-CAP-IT-12.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-12-granskning.md",
+      "sha256": "ca866ae5203a7fdd44a5c79b8426ee313574d35dbefb14793ac87cc6b6488068"
+    },
+    {
+      "for maga": "CAP-IT-13",
+      "kategori": "kapitel",
+      "source_zip": "CAP-IT-13-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap13-v2/cap-it-13/CAP-IT-13-faktabokstext.md",
+      "destination": "docs/kallmaterial/kapitel/CAP-IT-13-kapitel.md",
+      "sha256": "72c1f558c2e9cdec8828d54f09d664267069355eb332f299c0351abdf03358e5"
+    },
+    {
+      "for maga": "CAP-IT-13",
+      "kategori": "modell",
+      "source_zip": "CAP-IT-13-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap13-v2/cap-it-13/CAP-IT-13-faktaboksmodell.yaml",
+      "destination": "docs/kallmaterial/modeller/CAP-IT-13-modell.yaml",
+      "sha256": "412f0993dce3209c73a54eabb6e5931898cdadc2885f4eb57a98d707aa4fcf37"
+    },
+    {
+      "for maga": "CAP-IT-13",
+      "kategori": "granskning",
+      "source_zip": "CAP-IT-13-faktaboksunderlag-v2-granskat.zip",
+      "source_member": "faktabok-underlag-cap13-v2/kritisk-granskning-CAP-IT-13.md",
+      "destination": "docs/kallmaterial/granskningar/CAP-IT-13-granskning.md",
+      "sha256": "90f567a699436c4987fdc9c382b8b29f4a121e0a848e09dce112c920d058ea49"
+    }
+  ]
+}

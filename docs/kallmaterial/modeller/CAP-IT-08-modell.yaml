@@ -1,0 +1,337 @@
+schema_version: '1.1'
+id: CAP-IT-08
+namn: Applikationsexekvering och körmiljö
+status: faktaboksunderlag – kritiskt granskat version 2; ej publiceringsgranskat
+datum: '2026-11-07'
+bokprofil: factbook
+definition: Köra applikationer och andra workloads standardiserat, säkert och förvaltningsbart under definierade
+  tekniska och operativa villkor.
+avgransning:
+  bygg_test_release: CAP-IT-10
+  observerbarhet_backup_aterstallning: CAP-IT-09
+  skyddsteknik: CAP-IT-12
+  identitet: CAP-IT-07
+bedomningsprinciper:
+  separera:
+  - funktionskritikalitet
+  - behov_av_gemensam_plattform
+  - automationsbehov
+  generation_2_som_utgangspunkt: true
+  fyra_teknikbeslut:
+  - behall
+  - komplettera
+  - andra_anvandning_och_ansvar
+  - ersatt
+  indikatorstyper:
+  - behov
+  - funktion
+  - kvarvarande_generationsarv
+  - teknik_och_plattformsval
+  - forandring
+  - beredskap
+  diagnostik:
+  - skilj grunddriftsbrist från skalnings-/självbetjäningsbehov
+  - skilj produktbrist från implementation, process och ansvar
+  - kontrollera tjänstens hela livscykel, även ändring, incident och avveckling
+generationer:
+  G1:
+    namn: Sammanhållen systemdrift
+    relevans:
+    - Egna applikationer med tydliga systemgränser och väl avgränsade driftmiljöer
+    stod:
+    - Stödda runtime-versioner, dokumenterade driftprofiler, patch- och konfigurationsrutiner
+    leverans: Systemnära och ofta manuellt men kontrollerat.
+    fallgropar:
+    - Personberoende installationer
+    - Osäker patch- och middleware-livscykel
+    indikatorer_tillrackligt_stod:
+    - En stödd applikation går att installera och uppgradera enligt dokumenterad rutin
+    indikatorer_olamplig_teknik:
+    - Produkten är utanför support eller hindrar nödvändiga uppgraderingar
+    evidensklass: arkitekturbedomning
+  G2:
+    namn: Distribuerade IT-stöd
+    relevans:
+    - Många samverkande tjänster och delade infrastrukturer med fler beroenden
+    stod:
+    - Återanvändbara runtime-profiler och reproducerbar provisionering
+    - Konfiguration, säkerhet, isolering och versionsansvar tydliggjorda
+    leverans: Standardmallar och upprepbara processer, delvis automatiserade.
+    fallgropar:
+    - Containerisering förväxlas med modernisering av hela ansvarskedjan
+    - Miljöbeställningar utförs som specialfall trots återkommande behov
+    indikatorer_tillrackligt_stod:
+    - Tre representativa arbetslaster kan placeras, säkras och uppgraderas reproducerbart
+    - Ett misslyckat batchjobb kan återstartas utan oavsiktlig dubbel verksamhetseffekt
+    - Ett runtime-versionsbyte har provad återhämtningsväg
+    indikatorer_olamplig_teknik:
+    - EOL-runtime, bristande isolering, oöverstigliga beroenden eller oproportionerliga licenskostnader
+    kvarvarande_g1_g2_arv:
+    - Manuell unik serverbeställning för varje liten tjänst
+    - Oklart ansvar för middleware, basbilder och patchning
+    tva_forbattringsspar:
+      A_stabilisera_g2:
+      - Standardisera profiler, tydliggör ansvar och patchning
+      - Inför reproducerbara installationer och grundläggande resurskontroller
+      B_mot_g3:
+      - Identifiera återkommande beställningstyper
+      - Gör ett begränsat automatiserat tjänsteerbjudande med ägare och mätbar ledtid
+    evidensklass: arkitekturbedomning
+  G3:
+    namn: Plattformsorienterad IT
+    relevans:
+    - Många team med likartade runtimebehov och hög återkommande manuell belastning
+    stod:
+    - Självbetjänade körmiljöprofiler med dokumenterade kontrakt
+    - Policy, kvoter, uppgradering, kostnad, avveckling och teknisk integration
+    leverans: Plattform som intern produkt, självbetjäning för standardfall.
+    fallgropar:
+    - Portal utan faktisk automation
+    - För många påtvingade standardprofiler och en växande undantagskö
+    indikatorer_tillrackligt_stod:
+    - Normalfall kan skapas, ändras och avvecklas utan manuell specialistkedja
+    - Undantag och avveckling fungerar utan dolda personberoenden
+    - Plattformsteamet mäter faktisk användning och supportbehov, inte bara provisionering
+    indikatorer_olamplig_teknik:
+    - Avsaknad av säkra API:er eller förvaltningsväg efter första leverans
+    evidensklass: arkitekturbedomning
+  G4:
+    namn: Verksamhetsnära och AI-stödd utveckling
+    relevans:
+    - Godkända verksamhetsutvecklade lösningar behöver säkra och avgränsade runtime-profiler
+    stod:
+    - Riskklassade resurser, identiteter, kostnadstak, livslängd och återkallelse
+    - Kontroller för automatiserad provisionering och tydliga ägare
+    leverans: Automatiserade tillåtna normalfall med policybaserade gränser; framtidsscenario.
+    fallgropar:
+    - Obegränsad resursskapande rätt för agenter
+    - Teknisk runtime förväxlas med verksamhetsmandat
+    indikatorer_tillrackligt_stod:
+    - Otillåten eller överdimensionerad workload stoppas automatiskt
+    - Ägare och livscykel går att verifiera
+    - Policyöverträdelse blockeras eller skickas till uttrycklig prövning utifrån risk
+    indikatorer_olamplig_teknik:
+    - Plattformen kan inte tillämpa risknivå, kvoter eller automatisk avveckling
+    evidensklass: framtidsscenario
+overgangar:
+  G1_G2:
+    inriktning: Från systemunika installationer till reproducerbara profiler för distribuerade tjänster
+    kvarvarande_arv:
+    - Individuell serverbeställning
+    - Oklara middleware- och patchansvar
+    kontroll:
+    - Pröva reproducerbar installation och versionsbyte av minst två olika tjänster
+  G2_G3:
+    inriktning: Från återkommande manuella beställningar till en förvaltad självbetjäningsprodukt
+    forandringstryck:
+    - Många standardfall med långa ledtider
+    - Stor variation i likartade profiler
+    beredskap:
+    - Dokumenterade standardprofiler och produktansvar
+    - Kontrollerad automatisk provisionering och finansiering
+    kontroll:
+    - Mät beställning till körbar miljö samt andel normalfall utan manuell handläggning
+  G3_G4:
+    inriktning: Från utvecklarstyrd till riskstyrt bredare konsumtion av runtime
+    forandringstryck:
+    - Fler godkända verksamhetslösningar och AI-stödda arbetsflöden
+    beredskap:
+    - Tydliga mandat och riskklasser
+    - Tekniskt enforced kvoter, identiteter, stopp och avveckling
+    kontroll:
+    - Försök skapa en otillåten, för dyr eller för långlivad arbetslast och verifiera att den blockeras
+    evidensklass: framtidsscenario
+plattformar:
+  PLT-007: Applikations- och körmiljöplattform
+  PLT-011: Security Operations- och skyddsplattform
+tjanster:
+- id: PLS-032
+  namn: Virtual Machine Runtime
+  plattform: PLT-007
+  behov: VM- och OS-bundna arbetslaster
+  prioritering: Situationsberoende tjänst; relevant funktion kan vara kritisk för vald arbetslast
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Repeterbar VM-bas, patchansvar och resursisolering
+      plattformstjanst: Situationsberoende
+      verifiering: Provisionera VM från godkänd basbild, tillämpa säker uppdatering och verifiera återstart
+        samt resursisolering
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Deklarativa VM-profiler, kvoter och livscykel
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Beställ, ändra och avveckla VM genom godkänt gränssnitt; kontrollera kvot och kvarlämnade
+        resurser
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Riskstyrd VM-provisionering och avveckling
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Försök skapa VM med otillåten behörighet eller livslängd i test och verifiera policybeslut
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+- id: PLS-091
+  namn: Förvaltad applikationsserverruntime
+  plattform: PLT-007
+  behov: Applikationer med middlewareberoenden
+  prioritering: Situationsberoende tjänst; relevant funktion kan vara kritisk för vald arbetslast
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Versionerade profiler och oberoende applikationsändringar där möjligt
+      plattformstjanst: Situationsberoende
+      verifiering: Uppgradera applikationsserverprofil med två applikationer och verifiera kompatibilitet och
+        beroenden
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Förvaltade runtimeprofiler med standardiserade uppgraderingsvägar
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Visa hur en stödd runtimeprofil beställs och får ett förannonserat versionsbyte med undantagshantering
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Kompatibilitetsprofil för kvarvarande specialsystem
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Verifiera att äldre middlewareprofil bara kan beställas av behörig roll med tydlig livscykel
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+- id: PLS-031
+  namn: Container Application Runtime
+  plattform: PLT-007
+  behov: Tjänster som vinner på containerpaketering
+  prioritering: Situationsberoende tjänst; relevant funktion kan vara kritisk för vald arbetslast
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Säkra bilder, resursgränser och repeterbar drift
+      plattformstjanst: Viktig där containrar används
+      verifiering: Driftsätt en versionerad containerbild; verifiera minsta privilegier, resursgräns och säkert
+        återtag av release
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Självbetjänad container-runtime med automatiska grundkontroller
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Skapa tjänst via godkänd profil och verifiera automatiska standardkontroller samt avveckling
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Policygränser för automatiskt skapade containertjänster
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Pröva automatisk provisionering med otillåtet privilegium och verifiera att skyddet stoppar
+        detta
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+- id: PLS-033
+  namn: Batch- och jobbkörning
+  plattform: PLT-007
+  behov: Schemalagda och kortlivade jobb
+  prioritering: Situationsberoende tjänst; relevant funktion kan vara kritisk för vald arbetslast
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Spårbar schemaläggning, isolering och omkörning
+      plattformstjanst: Situationsberoende
+      verifiering: Framkalla timeout och omkörning av schemalagt jobb; verifiera att ingen oönskad dubbel effekt
+        uppstår
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Förvaltad jobbtjänst med deklarativ konfiguration och kvoter
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Skapa schemalagt jobb med kvot, loggning, ägarskap och standardiserad avveckling
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Risk- och kostnadstyrda automatiserade jobb
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Verifikation av maxkörningstid och kostnadsgräns för automatiskt initierat jobb
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+- id: PLS-034
+  namn: Specialiserad och accelererad compute-runtime
+  plattform: PLT-007
+  behov: Specialiserad compute, GPU-beroende beräkning
+  prioritering: Situationsberoende tjänst; relevant funktion kan vara kritisk för vald arbetslast
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Tydlig resursprofil för faktisk acceleratoranvändning
+      plattformstjanst: Situationsberoende
+      verifiering: Kör representativ GPU- eller specialberäkning och följ isolering, prestanda och faktisk
+        kostnad
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Delad styrd kapacitet, tilldelning och kostnadssynlighet
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Begär acceleratorprofil och testa tilldelningskvot, frigörande samt kostnadssynlighet
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Begränsad och spårbar AI-/analysacceleration när den behövs
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Försök beställa otillåten acceleratornivå och verifiera stopp eller förhandsprövning
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+- id: PLS-078
+  namn: Workloadskydd
+  plattform: PLT-011
+  behov: Tekniskt skydd av exekverande arbetslaster
+  prioritering: Skyddskritiskt enligt riskklass; särskilt verktyg situationsberoende
+  generationer:
+    G1:
+      stod: Systemnära teknik för relevant arbetslast; form och omfattning efter behov
+      plattformstjanst: Behövs inte nödvändigtvis som central tjänst
+      evidensklass: arkitekturbedomning
+      verifiering: Kontrollera stödstatus, ägarskap och dokumenterad uppdateringsväg för relevant teknik
+    G2:
+      stod: Skydd av VM/container med riskbaserad kontroll
+      plattformstjanst: Kritisk skyddsfunktion efter risk
+      verifiering: Prova testad hot- eller policyavvikelse och kontrollera att skydd, loggning och ansvar fungerar
+      evidensklass: arkitekturbedomning
+    G3:
+      stod: Automatiserat skydd kopplat till godkända profiler
+      plattformstjanst: Gemensam produkt om återkommande behov finns
+      verifiering: Verifiera att relevant skydd aktiveras automatiskt för ny VM/containerprofil och att undantag
+        är spårbara
+      evidensklass: arkitekturbedomning
+    G4:
+      stod: Styrda skydd och återkalleligt tillträde för nya arbetslaster
+      plattformstjanst: Risk- och användningsstyrd
+      verifiering: Pröva att en obehörig automatiserad arbetslast hindras och att larm och ägare går att spåra
+      evidensklass: framtidsscenario
+  verifieringsprincip: Kontrollera faktisk tjänstefunktion skild från val av central plattform
+kallor:
+- typ: primarkalla
+  titel: Förmågeöversikt – tekniska IT-förmågor, baseline v1.1
+  tillampning: CAP-IT-08 och sex PLS-relationer
+- typ: primarkalla
+  titel: Plattformsöversikt – konceptuella plattformar, baseline v1.1
+  tillampning: PLT-007 och PLT-011
+- typ: primarkalla
+  titel: Från systemdrift till digital självständighet
+  tillampning: Fyra generationer och förändringslogik
+- typ: extern_referens
+  url: https://tag-app-delivery.cncf.io/whitepapers/platform-eng-maturity-model/
+- typ: extern_referens
+  url: https://csrc.nist.gov/pubs/sp/800/190/final
+- typ: extern_referens
+  url: https://kubernetes.io/docs/concepts/workloads/
+- typ: extern_referens
+  url: https://www.cncf.io/blog/2026/09/01/platform-engineering-maturity-from-toolchain-to-self-service/
+  tillampning: Kompletterande exempel på skillnaden mellan standardgränssnitt och faktisk självbetjäning; inte
+    generationsbevis

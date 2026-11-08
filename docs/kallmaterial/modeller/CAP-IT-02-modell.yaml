@@ -1,0 +1,379 @@
+metadata:
+  id: CAP-IT-02
+  titel: Process, workflow och ärendehantering
+  typ: faktaboksunderlag
+  version: '2.0'
+  datum: '2026-11-07'
+  utgangspunkt: G2
+  modellbaseline: v1.1
+  status: Kritiskt reviderat faktaboksunderlag; extern sak- och juridisk granskning återstår
+kallavgransning:
+  kallmodell:
+  - Förmågeöversikt – tekniska IT-förmågor, baseline v1.1
+  - Plattformsöversikt – konceptuella plattformar, baseline v1.1
+  - Från systemdrift till digital självständighet
+  direkta_tjanster:
+  - PLS-004
+  - PLS-005
+  - PLS-006
+  - PLS-007
+  granntjanster_ej_direkta:
+  - PLS-003
+  - PLS-008
+  - PLS-009
+  - PLS-020
+  - PLS-021
+  analytiskt: Generationsprioriteringar, tester och diagnostiska rekommendationer är redaktionella bedömningar,
+    inte direkt källkrav eller nulägesinventering.
+  externa_referenser:
+  - titel: OMG BPMN 2.0.2
+    url: https://www.omg.org/spec/BPMN/2.0.2
+  - titel: OMG CMMN 1.1
+    url: https://www.omg.org/spec/CMMN/1.1
+  - titel: Saga distributed transactions pattern
+    url: https://learn.microsoft.com/en-us/azure/architecture/patterns/saga
+  - titel: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+  - titel: Camunda – Process instance migration (produktexempel)
+    url: https://docs.camunda.io/docs/components/concepts/process-instance-migration/
+  - titel: Camunda – Versioning process definitions (produktexempel)
+    url: https://docs.camunda.io/docs/components/best-practices/operations/versioning-process-definitions/
+definition: Tekniskt stöd för explicita, beständiga och långlivade verksamhetsflöden, ärenden, mänskliga uppgifter
+  och relevanta notifieringar.
+avgransning: Äger inte verksamhetsregler eller beslut. Integrationstransport CAP-IT-06, datakällor CAP-IT-04, auktorisation
+  CAP-IT-07, driftbarhet CAP-IT-09, cybersäkerhet CAP-IT-12, utvecklingsleverans CAP-IT-10. Formulär och beslutsmotortjänster
+  är närliggande men inte direkt stödjande PLS i denna källmodell.
+bedomningsprincip:
+  separera:
+  - funktionskritikalitet vid faktiskt behov
+  - gemensamt_plattformsbehov
+  - automationsbehov
+  nyckelregel: Ingen generation kräver automatiskt central workflowmotor, caseplattform eller CMMN/BPMN-implementation.
+generationer:
+  G1:
+    roll: Kort historisk kontext
+    karnproblem: Lokal status och inbyggda flöden kan vara personberoende eller dolda i kod och timerjobb.
+    fungerande_stod:
+    - Dokumenterade tillstånd och eskalering
+    - Kontrollerad återstart av vänteläge
+    teknikvarningar:
+    - Processstatus går förlorad vid omstart
+  G2:
+    roll: Huvudperspektiv – sammanhängande ansvar för distribuerade verksamhetsflöden
+    generationsarv:
+    - Osynliga tidsstyrda jobb och lokal ärendestatus
+    - Många system med motstridiga statustolkningar
+    - Arbetsköer som inte följer beslutade mandat
+    forbattringsspar:
+      A: Rätta processtillstånd, ansvar, idempotens, återupptagning och verksamhetsmässig felhantering även utan
+        central plattform.
+      B: Identifiera återkommande, redan fungerande tekniska mönster som kan göras till gemensamma självbetjänade
+        tjänster.
+    fungerande_stod:
+    - En hel processinstans är spårbar genom tekniska och mänskliga steg
+    - Fel och väntelägen är observerbara och går att hantera
+    - Ansvar och mandat för varje beslut kan verifieras
+    - Parallella ändringar hanteras med versions-/konfliktkontroll och giltiga tillståndsövergångar
+    teknikvarningar:
+    - Tekniken kan inte uthålligt lagra eller återuppta kritiska instanser
+    - Påstådd rollback saknar definierad kompensation eller rättelse
+    - Sista skrivningen vinner tyst vid konkurrerande beslut eller fördröjda händelser
+  G3:
+    roll: Gemensamma, förvaltade process- och casetjänster när återanvändning motiverar dem
+    behovsindikatorer:
+    - Flera team implementerar identiska uppgiftsköer, timers och avvikelsemönster
+    - Manuellt plattformsarbete dominerar ledtiden för nya standardflöden
+    fungerande_stod:
+    - Standardflöden kan skapas, ändras, observeras och avvecklas enligt kända villkor
+    - Versioner för redan körande instanser hanteras uttryckligt
+    - Verksamhet och plattform har åtskilda ansvar
+    - Pågående processversioner kan samexistera eller migreras med uttryckligt verifierat resultat
+    teknikvarningar:
+    - Central motor blir flaskhals för verksamhetsändringar
+    - Portal för nya flöden döljer manuella specialiststeg
+    - Instansmigration saknar säkra regler
+    - Ny definition tillämpas tyst på gamla instanser utan kontroll av aktiva uppgifter, timers och data
+  G4:
+    roll: Framåtblickande – riskstyrd verksamhetsnära och AI-assisterad automation
+    fungerande_stod:
+    - Mänsklig godkännandepunkt och mandat kan verifieras
+    - Agenters förbjudna anrop nekas vid betrodd kontrollpunkt
+    - Köade och redan utförda handlingar hanteras enligt riskmodell
+    teknikvarningar:
+    - AI-förslag registreras som bindande beslut utan kontroll
+    - Tokenåterkallelse antas göra genomförda externa handlingar ogjorda
+beslutsordning:
+- Välj representativ processinstans med faktiska väntelägen och fel
+- Rätta ansvar, tillstånd, behörighet och återhämtning i G2
+- Pröva samtidig ändring och processversionsbyte innan man väljer central plattform
+- Mät återkommande behov och kostnader för specialarbete
+- Pröva behålla, komplettera, ändra användning/ägarskap eller ersätta efter verifierad brist
+plattformstjanster:
+- id: PLS-005
+  namn: Workfloworkestrering
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Förvaltad runtime för explicita och långlivade processflöden.
+  tillamplighet: Flera steg med väntan, tidsvillkor, kompensation eller återupptagning mellan system. Inte varje
+    kodsekvens.
+  avgransning: Orkestrerar teknisk process; äger inte verksamhetsregler, API-kontrakt, identitet eller auktoritativa
+    affärsdata.
+  beroenden:
+  - CAP-IT-06
+  - CAP-IT-04
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-10
+  - CAP-IT-03
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig vid långlivade processer
+      gemensamt_plattformsbehov: Bra att ha
+      krav_och_avgransning: 'Beständig processstatus, timers, manuell återstart och transaktionsgränser kan implementeras
+        i systemet; motorn är valfri. '
+      leverans_och_ansvar: Systemteamet dokumenterar väntesteg, tidsfrister och återställningsrutiner.
+      verifieringsprov: Återstarta systemet mitt i ett vänteläge och kontrollera att tidvillkor och instansstatus
+        bevaras utan omedveten dubbel exekvering.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk vid tvärsystemprocesser
+      gemensamt_plattformsbehov: Viktig vid många flöden
+      krav_och_avgransning: Hållbar exekvering, korrelations-ID, timeout, idempotens, kompensation, versionshantering
+        av körande instanser och översikt över hela flödet. Hantering av flera lokala transaktioner kräver uttalade
+        idempotens- och kompensationsregler; kompenserande åtgärd är inte garanterad rollback.
+      leverans_och_ansvar: Välj orkestrering kontra händelsedriven samverkan per domän; definiera tydlig processägare
+        och incidentväg.
+      verifieringsprov: Stoppa en deltagande tjänst efter ett lokalt commit; följ instansen och kontrollera idempotens,
+        ansvar, kompensationsbeslut och säker återupptagning. Lägg även in en fördröjd återkomst efter timeout och
+        kontrollera att processen inte går tillbaka till ett tidigare beslutstillstånd.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk vid komplexa flöden
+      gemensamt_plattformsbehov: Kritisk vid bred återanvändning
+      krav_och_avgransning: Självbetjänad processruntime med standardiserade exekveringsprofiler, skalning, spårbarhet,
+        versionssamexistens och uttryckligt verifierad migrering av instanser och isolering mellan konsumenter.
+        Processdefinitioner för långlivade instanser måste kunna samexistera eller migreras under kontrollerade
+        villkor.
+      leverans_och_ansvar: Plattformsteam erbjuder versionerade SDK:er, stödda BPMN-profiler där relevant, mallar,
+        testmiljö och SLA/SLO; produktteam äger definitioner.
+      verifieringsprov: Skapa en standardprocess självbetjänat, prova äldre och ny definition samtidigt, utför en
+        motoruppgradering och avveckla en instans med spårbar avvikelsehantering. Pröva dessutom en avsiktligt otillåten
+        migrering och att aktivt tillstånd förblir begripligt.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk vid agentstyrda affärsflöden
+      gemensamt_plattformsbehov: Situationsberoende vid flera agentstyrda flöden
+      krav_och_avgransning: Policybaserad exekvering för agentinitierade steg, separata mandat, mänsklig attest
+        för högriskåtgärder, reproducerbar processhistorik och säker avbrytning. Mandat kontrolleras vid verkställighet,
+        med särskild plan för köade och oåterkalleliga steg.
+      leverans_och_ansvar: Verksamheten godkänner versionerade flöden; AI-förslag får inte ändra exekveringsregler
+        utan kontrollerad release.
+      verifieringsprov: Försök låta en agent utföra ett steg utanför sitt mandat; verifiera nekande vid verkställighetsgräns
+        och säker hantering av köade respektive redan utförda handlingar.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-006
+  namn: Case management-plattformstjänst
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Generiskt erbjudande för långlivade case/ärenden med status, historik och arbetskontext.
+    Inte ett verksamhetsspecifikt ärendehanteringssystem.
+  tillamplighet: Kunskapsintensiva ärenden med varierande arbetsordning, lång varaktighet och behov av gemensam
+    historik.
+  avgransning: Ger teknisk casemodell; beslutar inte vilka ärenden som finns, deras juridiska status, verksamhetens
+    behörigheter eller dokumentens auktoritativa källa.
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-01
+  - CAP-IT-03
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk där ärenden är kärnverksamhet
+      gemensamt_plattformsbehov: Situationsberoende
+      krav_och_avgransning: 'En stabil lokal ärendemodell med unik identitet, status, handläggarhistorik, sökbarhet
+        och återupptagning. '
+      leverans_och_ansvar: Verksamhetssystemets team definierar livscykel och ansvar; gemensam motor krävs inte.
+      verifieringsprov: Följ ett ärende från skapande till arkivering; verifiera entydig identitet, historik, återupptagning
+        och status.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk vid distribuerad ärendehantering
+      gemensamt_plattformsbehov: Viktig vid flera ärendesystem
+      krav_och_avgransning: Korrelera ärendestatus över tjänster; historik, delegering, sammanslagning/uppdelning
+        där behov finns och konsekvent hänvisning till dokument och beslut. Teknisk casestatus får inte bli en konkurrerande
+        auktoritativ källa till verksamhetsbeslut. Hantera samtidiga skrivningar med versionskontroll eller lämplig
+        transaktionsisolering; äldre händelser får inte tyst återställa senare status.
+      leverans_och_ansvar: Domänägaren äger ärendets semantik; tekniska delsystem delar kontrakt och återhämtningsrutiner.
+      verifieringsprov: 'Simulera samtidiga ärendeuppdateringar från två system, där en händelse fördröjs; verifiera
+        ägarskap, konfliktregler och spårbar rättelse. Låt två skribenter utgå från samma version: en avslutar ärendet
+        och en ändrar underlaget; verifiera att konflikten upptäcks och rättas med spårbarhet.'
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk vid återkommande casebehov
+      gemensamt_plattformsbehov: Viktig vid stor caseportfölj
+      krav_och_avgransning: 'Versionerade generiska casebyggblock: tillstånd, milstolpar, auditspår, uppgiftsrelationer,
+        dokumentreferenser och delad säkerhetsprofil. Flera verksamhetsdomäner får använda casemönster utan att
+        förlora ägarskapet för information och beslut.'
+      leverans_och_ansvar: Självbetjänat case-API, datamodellsmallar, export/migreringsväg och ägarstyrd konfiguration;
+        undvik en universell central datamodell.
+      verifieringsprov: Starta, ändra och avsluta två olika casetyper på standardtjänsten; prova behörighet, versionsbyte,
+        retention och export utan att blanda verksamhetsägarskap. Prova två konkurrerande uppdateringar även efter
+        versionsbytet.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk där AI behandlar ärenden
+      gemensamt_plattformsbehov: Situationsberoende vid flera AI-stödda caselösningar
+      krav_och_avgransning: Maskinläsbar ärendekontext med dataminimering och behörighetskontroll, föreslagna nästa
+        steg, spårbar agentmedverkan och mänskligt ansvar för beslut. AI-förslag ska hållas isär från bindande beslut
+        med ansvarig människa eller behörig tjänst.
+      leverans_och_ansvar: Godkända casebyggblock för verksamhetsnära skapande; styrd modelländring och rollbaserade
+        granskningsflöden.
+      verifieringsprov: Låt AI föreslå en ärendeåtgärd utan beslutmandat; kontrollera att den inte får besluta och
+        att underlag, beslutande aktör och rättelse kan spåras.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-007
+  namn: Human task och arbetskö
+  plattform:
+    id: PLT-002
+    namn: Process- och beslutsplattform
+  grunduppdrag_enligt_kallmodell: Tekniskt stöd för mänskliga uppgifter, köer, tilldelning, deadlines och eskalering
+    i flera process-/case-lösningar.
+  tillamplighet: Mänskliga arbetsmoment behöver tilldelas, följas upp, eskaleras och vid behov omfördelas.
+  avgransning: Äger uppgiftens tekniska livscykel; inte beslutets innehåll, organisatoriskt mandat eller ärendets
+    auktoritativa verksamhetsdata.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-01
+  - CAP-IT-09
+  - CAP-IT-03
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig vid mänsklig handläggning
+      gemensamt_plattformsbehov: Bra att ha
+      krav_och_avgransning: 'Arbetslistor, tilldelning, slutförande och synlig status, med manuell prioritering
+        och tydliga roller. '
+      leverans_och_ansvar: Lokal kö i ärendesystemet; eskalering kan vara manuell och dokumenterad.
+      verifieringsprov: Tilldela en uppgift, simulera frånvaro, omfördela och verifiera att slutförandet bara sker
+        av korrekt behörig person.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk vid många teamöverlämningar
+      gemensamt_plattformsbehov: Viktig vid flerkanalshandläggning
+      krav_och_avgransning: Samordnad uppgiftsidentitet, köpolicy, tidsfrister, eskalering, delegering och robust
+        synk mellan flera system. Uppgiftstilldelning ger inte i sig beslutsmandat; det måste kontrolleras när handlingen
+        verkställs.
+      leverans_och_ansvar: Avtal om vem som får omfördela, avsluta eller återöppna; integrera identitets- och processkontrakt.
+      verifieringsprov: Låt två handläggare konkurrera om samma uppgift, återkalla behörighet och pröva deadline;
+        verifiera att endast tillåten effekt registreras. Kör dessutom en slutförande- och omfördelningsbegäran
+        samtidigt; endast en giltig uppgiftsövergång får lyckas.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk vid stora handläggningsflöden
+      gemensamt_plattformsbehov: Viktig vid många konsumenter
+      krav_och_avgransning: Självbetjänat task-API med köprofil, SLA, revisionsspår, standardiserad notifieringskoppling
+        och integration med identitet. Kö- och uppgiftsmallar bör stödja ändring, omfördelning och säker avveckling.
+      leverans_och_ansvar: Plattformen tillhandahåller task-runtime; verksamhetsägaren konfigurerar prioritering
+        och godkänner arbetsfördelningsregler.
+      verifieringsprov: Självbetjäna en ny uppgiftstyp och prova tilldelning, eskalering, förändrade behörighetskrav
+        och avveckling av kön utan föräldralösa ärenden. Kontrollera parallella anspråk på uppgiften och återhämtning
+        efter avbruten omfördelning.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk vid AI-förslag till mänskliga beslut
+      gemensamt_plattformsbehov: Situationsberoende vid många hybridflöden
+      krav_och_avgransning: Explicit separation av agentuppgift och mänsklig attest; tidbegränsade uppdrag, förklarbar
+        prioritering, delegation och automatisk flaggning vid osäkerhet. Agenten kan bistå med prioritering men
+        ska inte tilldelas generell beslutsbehörighet.
+      leverans_och_ansvar: Verksamheten fastställer vilket arbete agenten får utföra och vilka uppgifter som kräver
+        människa; policy kontrolleras före fullföljande.
+      verifieringsprov: Låt agent föreslå uppgiftsfördelning och försöka besluta om riskklassat ärende; verifiera
+        spärr och explicit mänsklig godkännandepunkt.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-004
+  namn: Notifikations- och meddelandeleverans
+  plattform:
+    id: PLT-024
+    namn: Notifikations- och meddelandeplattform
+  grunduppdrag_enligt_kallmodell: Kontrollerad flerkanalsleverans av notifieringar och meddelanden till mottagare;
+    stödjer CAP-IT-02 och CAP-IT-01.
+  tillamplighet: Processers deadlines, eskaleringar eller tillstånd behöver kommuniceras till människor eller mottagande
+    kanaler.
+  avgransning: Äger teknisk leverans, inte beslutet att avisera, vem som är behörig mottagare eller intern systemmeddelanderuntime
+    i CAP-IT-06.
+  beroenden:
+  - CAP-IT-01
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-12
+  - CAP-IT-09
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig vid tidskritisk avisering
+      gemensamt_plattformsbehov: Situationsberoende
+      krav_och_avgransning: 'Skicka relevanta meddelanden, skydda innehåll, följa upp misslyckad leverans och ha
+        manuella reservvägar. '
+      leverans_och_ansvar: Enskilt system integrerar e-post/SMS; meddelandetext och mottagare kontrolleras av verksamhetssystemet.
+      verifieringsprov: Simulera misslyckad e-post/SMS-leverans; verifiera felstatus, reservrutin och att leverans
+        inte tolkas som utfört beslut.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk vid tidskritiska tvärsystemflöden
+      gemensamt_plattformsbehov: Viktig vid många applikationer
+      krav_och_avgransning: Händelsekorrelation, återförsök, leveransstatus, idempotens, mallversion och säker kanalval
+        kopplat till processstatus. Leveransstatus får inte förväxlas med läsning, kvittens eller faktisk verksamhetseffekt.
+      leverans_och_ansvar: Komponenter skickar meddelandebegäran med stabilt ID; aviseringsplattformen äger kanalleverans.
+      verifieringsprov: Skapa upprepade notifieringsbegäranden för samma ärende och kontrollera deduplicering enligt
+        avtal, mottagarval, personuppgiftsskydd och felrapport. Testa att en gammal aviseringsbegäran anländer efter
+        att ärendet avslutats; utskick ska följa avtalad policy.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk när avisering krävs
+      gemensamt_plattformsbehov: Viktig vid bred användning
+      krav_och_avgransning: Självbetjänade aviseringsprofiler, mottagarpreferenser, kanalpolicy, mallar, kvoter,
+        spårbarhet, åtkomststyrning och uppföljning av leveransutfall. Kanalval, integritet, felkö, avveckling och
+        mallversion ingår i livscykeln.
+      leverans_och_ansvar: Plattformsteam driver erbjudandet; processägaren bestämmer varför och när avisering sker
+        samt godkända mottagare.
+      verifieringsprov: Skapa och avveckla en kanalprofil självbetjänat, ändra mall säkert och verifiera köhantering,
+        mottagarpreferenser och tekniska leveransutfall.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk vid agentbaserad extern avisering
+      gemensamt_plattformsbehov: Situationsberoende vid bred agentanvändning
+      krav_och_avgransning: 'Policy på agentinitierade utskick: syfte, mottagare, innehåll, klassning, frekvens
+        och mänskligt godkännande när konsekvensen är hög. Agentavisering bör riskklassas för innehåll, mottagare
+        och oåterkalleliga externa effekter.'
+      leverans_och_ansvar: AI får föreslå meddelande men plattform/konsument måste kontrollera behörighet och eventuella
+        atteststeg före utskick.
+      verifieringsprov: Låt agent begära avisering till icke godkänd mottagare och återkalla mandat under köläggning;
+        kontrollera att nya anrop nekas och att köade uppdrag bedöms särskilt.
+      bedomningsursprung: analytisk_rekommendation
+verifieringsscenario_g2:
+  titel: Ansökan som fastnar efter beslut
+  forlopp: System A registrerar ansökan, B kontrollerar uppgifter, C beslutar och D skickar notifiering. Fel efter
+    C ger otydlig status och två aviseringar.
+  prov:
+  - Spåra en instans med oförändrad korrelationsidentitet
+  - Fastställ auktoritativt ärendetillstånd och vem som ansvarar för nästa steg
+  - Stoppa en deltagande tjänst efter lokal commit och före kvittens
+  - Pröva återförsök och separat avvikelse-/kompensationsrutin
+  - Byt handläggare och verifiera mandat vid beslutstillfället
+  - Låt två handläggare försöka ändra samma ärendeversion; säkerställ konfliktkontroll och verifierbar rättelse
+  - Leverera en äldre statushändelse efter ett senare beslut och kontrollera att ärendet inte oavsiktligt backar
+  godkant_nar: Inget steg försvinner tyst; oavsiktlig dubbel verksamhetseffekt förhindras eller upptäcks och hanteras
+    enligt beslutad rutin. Verksamheten kan utreda och återuppta ärendet. Konkurrerande och fördröjda ändringar
+    orsakar ingen tyst förlorad uppdatering.
+verifieringsscenario_g3:
+  titel: Versionsbyte medan ärenden väntar
+  forlopp: Starta instans i processversion 1; lämna den i mänskligt vänteläge; publicera version 2 och pröva samexistens
+    samt kontrollerad migrering.
+  prov:
+  - Kontrollera att version 1 kan slutföra väntande uppgift utan oavsiktliga nya regler
+  - Prova en uttryckligt planerad instansmigrering med kontroll av variabler, uppgifter, timers och historik
+  - Pröva en otillåten migrering och kontrollera att instansen inte går förlorad
+  - Dokumentera produktversion och exakta begränsningar för migrering
+  godkant_nar: Pågående instanser kan slutföras eller hanteras med godkänd migreringsväg; ingen status eller uppgift
+    försvinner utan kontrollerad avvikelse.

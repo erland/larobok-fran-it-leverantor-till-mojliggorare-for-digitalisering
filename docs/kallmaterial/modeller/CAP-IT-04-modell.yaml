@@ -1,0 +1,957 @@
+metadata:
+  id: CAP-IT-04
+  titel: Datahantering och informationslagring
+  typ: faktaboksunderlag
+  version: '2.0'
+  datum: '2026-11-07'
+  utgangspunkt: G2
+  modellbaseline: v1.1
+  status: Kritiskt internreviderad; extern sakkunnig- och juridisk granskning återstår
+kallavgransning:
+  ursprung:
+  - Från systemdrift till digital självständighet
+  - Förmågeöversikt – tekniska IT-förmågor CAP-IT-04
+  - Plattformsöversikt – konceptuella plattformar v1.1
+  externt:
+  - NIST SP 800-209 (2020) – fastställd publikation
+  - NIST SP 800-209 Rev. 1 (2026) – endast utkast, inte gällande standard
+  - CNCF Platform Engineering Maturity (2026)
+  analytiskt: Generationskrav, prioritet, verifieringsprov och förändringsindikatorer är tolkningar för en generisk organisation,
+    inte obligatoriska normkrav.
+definition: Realisera informationens tekniska behov och livscykel genom lämplig lagring, konsistens, historik, kopior,
+  retention, återställningsbarhet och förändringsförmåga.
+avgransning: Verksamhetens semantiska informationsägarskap och auktoritativ källa ligger utanför; operativ backup, restoretest
+  och disaster recovery primärt CAP-IT-09.
+generationer:
+  G1:
+    roll: Kort historisk bakgrund
+    stod: Förvaltade databaser och lagring för sammanhållna system, med kända krav på dataansvar och livscykel.
+    behovsindikatorer:
+    - Beständig verksamhetsinformation
+    - Konsistens och historik utifrån verksamhetskrav
+    fungerande_stod:
+    - Källa och dataansvar är dokumenterade
+    - Databasens livscykel och återställningsberoenden är kända
+    teknikvarningar:
+    - Utgången support eller ouppfyllt konsistenskrav
+    - Manuella rutiner utan testbar återställbarhet
+  G2:
+    roll: Huvudperspektiv – diagnostik av distribuerad data
+    stod: Tydliga datagränser, auktoritativa källor, versionshanterade kontrakt, konsistens- och kopiehantering.
+    behovsindikatorer:
+    - Flera självständiga tjänster
+    - Överlappande datakopior och analysbehov
+    - Strikta kvalitets- eller bevarandekrav
+    fungerande_stod:
+    - Ägarskap, källa och fördröjning kan fastställas för representativ information
+    - Schemaändring kan provas med kända konsumenter
+    - Dubletter, fördröjning och radering hanteras utan tyst dataförlust
+    - Aktualitet, konsistens och RPO/RTO för det kritiska informationsflödet har olika verifierade mål
+    - Gallring och fortsatt användningsförbud kan följas genom primärdata, kopior, index och återläsning
+    teknikvarningar:
+    - Otillräckliga konsistensegenskaper eller prestanda för verkliga krav
+    - Saknar säkra ändrings- och exportvägar
+    - Teknik som inte längre säkerhetsunderhålls
+    - Antagande att en kod-rollback också återställer data eller en externt publicerad händelse
+    generationsarv:
+    - Direktåtkomst till andra tjänsters datatabeller
+    - Oklara auktoritativa källor
+    - Manuella schemaändringar och oinventerade kopior
+    forbattringsspar:
+      A: Åtgärda brister i datagränser, kvalitet, ansvar och återställningsberoenden
+      B: Automatisera återkommande dataerbjudanden när de har dokumenterad efterfrågan
+  G3:
+    roll: Standardiserade, förvaltade dataerbjudanden
+    stod: Självbetjänade och livscykelhanterade teknikprofiler med säkerhet, kapacitetskontroll, kostnadsansvar och undantag.
+    behovsindikatorer:
+    - Många team med likartade dataönskemål
+    - Hög belastning från återkommande manuella beställningar
+    fungerande_stod:
+    - Standarddatatjänst kan skapas, ändras och avvecklas av konsument enligt policy
+    - Uppgradering och hantering av undantag kan demonstreras
+    - Informationsägarskap och tekniskt plattformsansvar är åtskilda
+    - Kompatibel schemaförändring, framåträttning och återställning prövas för representativ datatjänst
+    teknikvarningar:
+    - Portal som döljer manuella godkännandekedjor
+    - Inga hållbara schema-/versionsuppgraderingar
+    - Katalog av tjänster utan förvaltning, kostnadskontroll och användning
+  G4:
+    roll: Framåtblickande riskstyrd datakonsumtion
+    stod: Ändamålsbegränsad och spårbar dataåtkomst även för verksamhetsutvecklade AI-arbetsflöden, med skyddade kopior
+      och livscykel.
+    behovsindikatorer:
+    - AI-stödda eller verksamhetsutvecklade lösningar som konsumerar verksamhetsdata
+    - Ökad risk för okontrollerade datauttag eller kopior
+    fungerande_stod:
+    - Otillåtna datauttag nekas vid betrodda kontrollpunkter
+    - Källversion och databegränsning kan följas
+    - Temporära bearbetningsytor kan identifieras och avvecklas
+    - Återkallad åtkomst prövas med kända tokenlivslängder och kvarvarande exporterade kopior
+    - Källhänvisning till ett AI-svar kontrolleras separat från svarets faktiska korrekthet
+    teknikvarningar:
+    - AI-index eller kopior saknar åtkomst- och raderingsmodell
+    - Ingen teknisk återkallelse av nya läsningar
+    - Katalogpost förväxlas med kvalitets- eller behörighetsgaranti
+overgangar:
+  G1_G2:
+    syfte: Kort historisk förklaring av distribuerade datagränser och kvarvarande generationsarv
+  G2_G3:
+    syfte: Göra repetitiva dataerbjudanden självbetjänade först när funktionell datagrund fungerar
+    beredskap:
+    - Fastställda datakällor och konsumentansvar
+    - Repetitiva och standardiserbara behov
+    - Automatiserad provisionering och avveckling
+    - Kapacitet för långsiktigt produktansvar
+  G3_G4:
+    syfte: Kontrollerbar dataanvändning av fler utvecklare och agenter
+    beredskap:
+    - Ändamålsstyrd åtkomst och bekräftade dataägare
+    - Trovärdig metadata och kvalitet
+    - Verifierbar återkallelse av ny åtkomst
+    - Avveckling av temporära kopior
+prioritetsprincip: Bedöm först om tjänstens funktion behövs i det konkreta användningsfallet och hur stora konsekvenser
+  ett fel får; bedöm därefter om ett gemensamt förvaltat erbjudande lönar sig. Ingen prioritet är automatiskt stigande
+  med generationen.
+plattformstjanster:
+- id: PLS-064
+  namn: Analytisk datahantering
+  plattform:
+    id: PLT-020
+    name: Analytisk data- och data engineering-plattform
+  tillamplighet: När historisk och fler-källebearbetad analys krävs
+  grunduppdrag_enligt_kallmodell: Analytisk lagring och bearbetning för stora historiska datamängder; skild från federerad
+    källåtkomst.
+  generationer:
+    G1:
+      funktionellt_stod: Separata rapportdatabaser eller periodiska utdrag med dokumenterad uppdatering och avstämning.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: En historisk fråga kan reproduceras mot ett fastställt utdrag.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Separat analytisk lagring med styrda inläsningar, partitionering och kapacitetsplanering för
+        många källor.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Käll-till-rapport-avstämning visar saknade eller dubbla perioder.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Förvaltade warehouse-/lakehouse-profiler med katalog, åtkomstpolicy, kostnadsgränser och reproducerbara
+        miljöer.
+      funktionsprioritet_i_tillampligt_fall: 'Kravstyrd: kritisk endast när verksamhetskonsekvensen motiverar det'
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Team skapar godkänd analysmiljö och genomför återställning av en felaktig laddning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Policybegränsade analysytor för AI med definierad härkomst, dataavgränsning och spårbara kopior.
+      funktionsprioritet_i_tillampligt_fall: 'Kravstyrd: kritisk endast när verksamhetskonsekvensen motiverar det'
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: AI-arbetsflöde nekas data utanför godkänt ändamål och resultat kan härledas till versionsmärkt
+        dataset.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar analytisk datahantering, och kan det lösas med befintliga
+    förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-065
+  namn: Dataflöden och datapipelines
+  plattform:
+    id: PLT-020
+    name: Analytisk data- och data engineering-plattform
+  tillamplighet: När återkommande analytiska dataflöden behöver styras
+  grunduppdrag_enligt_kallmodell: Kontrollerad ingestion, transformation och dataförflyttning för data/analys; inte transaktionell
+    integration.
+  generationer:
+    G1:
+      funktionellt_stod: Schemalagda ETL-jobb med felrapportering och dokumenterad fältmappning.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Felaktigt källdata stoppas eller flaggas, inte tyst överhoppas.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Idempotenta pipelines, versionsstyrda scheman och återkörning vid delvis misslyckad inläsning.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Samma batch körs två gånger utan att dubblera resultat.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Mallbaserade, testade pipelineprofiler med katalogregistrering, policykontroll och lineage som
+        standard.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Ny pipeline skapas utan manuellt specialbygge och ger fullständig körningsspårning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Tydliga datakontrakt och kvalitetsspärrar även för AI-ingestion, embedding- och uppdateringsflöden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: En otillåten källa blockeras före ny index-/modelluppdatering; en felaktig körning kan isoleras
+        och rättas med dokumenterad omkörnings- eller kompenseringsstrategi.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar dataflöden och datapipelines, och kan det lösas med befintliga
+    förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-098
+  namn: Semantiskt data- och måttlager
+  plattform:
+    id: PLT-013
+    name: BI- och semantikplattform
+  tillamplighet: När många analyser behöver gemensamma mått och definitioner
+  grunduppdrag_enligt_kallmodell: Delade semantiska data-/måttmodeller; verksamheten äger definitionerna.
+  generationer:
+    G1:
+      funktionellt_stod: Lokalt definierade begrepp och beräkningsregler dokumenteras i rapporter.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Två rapporter kan förklara varför samma mått skiljer sig.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Gemensamma versionsstyrda mått prioriteras för tvärfunktionella analyser.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Ändrad måttdefinition får tydlig påverkan och godkännande.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Publicerade måttkontrakt med återanvändbar API-/BI-konsumtion, roller och versionshantering.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Två verktyg returnerar identiskt mått för samma avgränsning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI-agenter använder samma godkända mått och begreppsdefinitioner som mänskliga analytiker.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Ett AI-arbetsflöde kan inte ändra publicerad definition av ett styrande mått utan godkännande;
+        alternativa beräkningar märks som sådana.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar semantiskt data- och måttlager, och kan det lösas med
+    befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-066
+  namn: Datakatalog, metadata och lineage
+  plattform:
+    id: PLT-021
+    name: Data governance- och kvalitetsplattform
+  tillamplighet: När dataset och dataflöden behöver kunna hittas, förstås och spåras
+  grunduppdrag_enligt_kallmodell: Teknisk metadata, dataset discovery och lineage; länkar till dataägarskap.
+  generationer:
+    G1:
+      funktionellt_stod: En inventering av viktiga datakällor med ägare, retention och beroenden.
+      funktionsprioritet_i_tillampligt_fall: Bra att ha
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Ansvarig och primär källa hittas för ett kritiskt dataset.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Gemensamma metadata och manuellt kompletterad härkomst över centrala dataflöden.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Påverkade rapporter kan identifieras vid en ändring i källschema.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Automatiserad metadatafångst, sökning, klassningskoppling och lineage i plattformens standardflöden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Ny datatjänst dyker upp i katalog med ägare och relationer utan separat beställning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Maskinläsbar proveniens för AI-konsumtion, beslutsunderlag och åtkomstbeslut.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Ett AI-svars hämtade underlag kan spåras till käll- och datasetversion; svarsinnehållets korrekthet
+        testas separat.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar datakatalog, metadata och lineage, och kan det lösas
+    med befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-082
+  namn: Datakvalitet och datavalidering
+  plattform:
+    id: PLT-021
+    name: Data governance- och kvalitetsplattform
+  tillamplighet: När datakvalitet behöver kontrolleras över flera flöden
+  grunduppdrag_enligt_kallmodell: Datasetprofilering, kvalitetstester och kvalitetsmätning; inte meddelandekontraktsvalidering.
+  generationer:
+    G1:
+      funktionellt_stod: Systemägda fältkontroller, avstämningar och manuella kvalitetsrapporter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Fel i obligatoriskt data upptäcks innan fastställd rapportering.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Automatiserade kvalitetskontroller vid gränsövergångar och dataladdningar med avvikelseägare.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: En bruten kvalitetsregel ger synlig incident och stoppar berört uttag.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Återanvändbara kvalitetsregler med standardmått, trend och policygrindar i pipelineprofiler.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Nytt dataset är kvalitetstestat före publicering och avvikelse kan spåras.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Färskhet, representativitet och källdrift övervakas även för AI- och agentkonsumtion.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: En riskklassad kvalitetsregel för ett utvalt dataflöde blockerar eller flaggar inaktuella data;
+        tillåtna undantag är dokumenterade.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      prioritet_forklaring: Kritisk endast om tjänstens faktiska verksamhetsfall har kritiska konsekvenser; generationsnivå
+        ger inte i sig denna prioritet.
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar datakvalitet och datavalidering, och kan det lösas med
+    befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-067
+  namn: Referens- och masterdatatjänst
+  plattform:
+    id: PLT-021
+    name: Data governance- och kvalitetsplattform
+  tillamplighet: När gemensamma referensvärden eller masterdata används av flera system
+  grunduppdrag_enligt_kallmodell: Teknisk publicering/versionering av beslutade referens- och utvalda masterdata.
+  generationer:
+    G1:
+      funktionellt_stod: Systemlokala kodlistor med avtalad uppdateringsprocess; centrala begrepp har en ägare.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Ny kod kan införas utan oförklarade konfliktvärden i berörda system.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Gemensam distribution med versionsnummer, identitetsmatchning och felhantering.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Två konsumenter kan samexistera under kontrollerat versionsskifte.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänad prenumeration och publicering mot ägarstyrda referensdataprodukter.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Konsument provar nytt kodverk parallellt med föregående version och kan återgå till kompatibel
+        användning utan informationsförlust.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Styrda auktoritativa kodverk används även i AI-genererad logik; källans begreppsägarskap bevaras.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Agent avvisar icke-giltiga koder och anger auktoritativ version.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar referens- och masterdatatjänst, och kan det lösas med
+    befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-012
+  namn: Förvaltad cache
+  plattform:
+    id: PLT-003
+    name: Databas- och persistensplattform
+  tillamplighet: När åtkomstlatens eller belastning motiverar cache
+  grunduppdrag_enligt_kallmodell: Tillfälliga/härledda låg-latenskopior; inte auktoritativ information.
+  generationer:
+    G1:
+      funktionellt_stod: Lokal cache vid mätbart latensbehov med timeout och utgångstid.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Bortfall av cache ger kontrollerat beteende utan dataförlust.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Cache-policy för flera tjänster med invalidation och skydd mot stale reads.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Källa ändras och cache uppdateras inom fastställt toleransfönster.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Förvaltad cacheprofil med åtkomst, kvoter, mätvärden och automatisk livscykel.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Team kan starta och avveckla cache utan handbyggd drift och med kostnadstak.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Kortlivade AI-/agentcachedata isoleras efter användare, ändamål och dataklass.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Test med två olika behörighetskontexter visar att skyddade cacheposter inte läcker mellan dem,
+        även efter återkallad åtkomst inom angivet tidsfönster.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar förvaltad cache, och kan det lösas med befintliga förvaltade
+    tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-081
+  namn: Förvaltad dokumentdatabas
+  plattform:
+    id: PLT-003
+    name: Databas- och persistensplattform
+  tillamplighet: När dokumentorienterade datamönster motiverar separat persistens
+  grunduppdrag_enligt_kallmodell: Dokumentorienterad persistens när relationsdatabas eller objektlagring inte passar.
+  generationer:
+    G1:
+      funktionellt_stod: En dokumentdatabas införs endast med tydligt behov och schema-/indexansvar.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Versionsbyte av dokumentformat ger inget oavsiktligt databortfall.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Tjänstvisa ägarskap, indexeringsprofiler och schemaevolution över konsumenter.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Gammal och ny dokumentversion kan läsas parallellt under migration.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Policyklar dokumentdatabasprofil med provad restore, schema- och retentionkontrakt.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Team provisionerar tjänst, genomför migration och verifierar återläsning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Agentåtkomst begränsas via applikationslager och dokumentens ändamål; rå databasaccess är inte
+        standard.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Agent kan endast hämta dokument inom godkänt uppdrag.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar förvaltad dokumentdatabas, och kan det lösas med befintliga
+    förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-083
+  namn: Förvaltad grafdatabas
+  plattform:
+    id: PLT-003
+    name: Databas- och persistensplattform
+  tillamplighet: När relations-/nätverksfrågor kräver grafstruktur
+  grunduppdrag_enligt_kallmodell: Persistens och traversering av explicit grafbaserade relationer.
+  generationer:
+    G1:
+      funktionellt_stod: Graf används endast om relationsfrågor motiverar avvikelse från ordinarie lagringsprofil.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: En central traverseringsfråga har verifierad riktighet och prestanda.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Kontrollerade grafimporter och relationstyper; källsystemens ägarskap dokumenteras.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: En radering i auktoritativ källa avspeglas i grafens härledda relationer inom avtalat fönster;
+        avvikelse kan spåras.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Standardprofil med behörighetsfilter, schemaändring och avgränsad querykostnad.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: En gränsöverskridande fråga avvisas utan dataexponering.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Kunskapsgrafer får versionerad proveniens och relationell behörighetsfiltrering för AI.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: AI kan inte använda skyddade relationer för att indirekt avslöja känsliga objekt.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar förvaltad grafdatabas, och kan det lösas med befintliga
+    förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-010
+  namn: Förvaltad relationsdatabas
+  plattform:
+    id: PLT-003
+    name: Databas- och persistensplattform
+  tillamplighet: När transaktionell eller strukturerad relationslagring behövs
+  grunduppdrag_enligt_kallmodell: Standardiserad relationsdatabas med provisionering, säkerhet, backupintegration och
+    livscykel.
+  generationer:
+    G1:
+      funktionellt_stod: Databasdrift med återställningsplan, åtkomststyrning, schemaförvaltning och tydlig systemägare.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Datakonsistens och logisk restore prövas efter definierad felhändelse.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Isolerade databaser/schemaägarskap per tjänst, versionsstyrda migrationer och kontrollerad kompatibilitet.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid många tekniskt delade miljöer; annars situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Schemaändring provas med gamla och nya konsumenter; eventuella destruktiva dataskrivningar har
+        plan för framåträttning eller kontrollerad återställning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänade databasprofiler med IaC, säkerhetsbaseline, nyckelrotation, backupkoppling och
+        kostnadsstyrning.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Ny databasmiljö provisioneras och avvecklas via godkänt API med audit trail.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Dataåtkomst för genererade lösningar/AI sker med minsta privilegium, tidsbegränsning och transaktionsgränser.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: En agent får bara skriva via av verksamheten godkänd och loggad domänkontroll; ett otillåtet
+        ändringsförsök nekas.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar förvaltad relationsdatabas, och kan det lösas med befintliga
+    förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-097
+  namn: Federerad och styrd dataåtkomst
+  plattform:
+    id: PLT-022
+    name: Federerad dataåtkomstplattform
+  tillamplighet: När styrd åtkomst till fördelad data behövs utan kopiering
+  grunduppdrag_enligt_kallmodell: Styrda frågor över heterogena källor utan krav på gemensam fysisk kopia.
+  generationer:
+    G1:
+      funktionellt_stod: Avgränsade rapportfrågor mot enskilda källor med förhandsprövade behörigheter.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Källans åtkomstkontroll respekteras vid utsökning.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Federerade läsfrågor med tidsgränser, källbelastningsskydd och ansvar för frågekostnad.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Felande källa ger definierat partiellt fel, inte felaktigt komplett resultat.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänad policykontrollerad federation med katalog, audit trail och kvoter.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: En konsument får bara godkända attribut över två källsystem.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI/agent-frågor begränsas via attributpolicy, syfte och frågekvoter utan breda datakopior.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Agent nekas en otillåten kombination av attribut över två källor och nekandet loggas vid federerad
+        kontrollpunkt.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar federerad och styrd dataåtkomst, och kan det lösas med
+    befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-074
+  namn: Geospatial informations- och karttjänst
+  plattform:
+    id: PLT-015
+    name: Geospatial plattform
+  tillamplighet: När geografiska data och kartfunktioner är verksamhetsrelevanta
+  grunduppdrag_enligt_kallmodell: Geokodning, kartlager, geodata och spatiala frågor; äger inte domänens geodata.
+  generationer:
+    G1:
+      funktionellt_stod: Lokal GIS-integration med dokumenterade koordinatsystem och datakällor.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Samma plats får korrekt position efter konvertering.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Samordnade geodatatjänster och uppdateringsfrekvens över flera fält- och ärendetjänster.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Ändrad kartkälla påverkar konsumenter kontrollerat.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Återanvändbara kartlager, geokodnings-API och attributåtkomst som standarderbjudande.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Ny klient kan ansluta till tillåtet kartlager utan särskild integration.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Agent-/analysfrågor använder platsdata med geofencing, sekretess och upplösningsbegränsning.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Känslig plats maskeras för otillåtet användningsfall.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar geospatial informations- och karttjänst, och kan det
+    lösas med befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-013
+  namn: Förvaltad fil-, block- och volymlagring
+  plattform:
+    id: PLT-019
+    name: Lagringsplattform
+  tillamplighet: När fil-, block- eller volymbaserad lagring behövs
+  grunduppdrag_enligt_kallmodell: Förvaltad fil-/blocklagring och beständiga volymer med kapacitets- och livscykelprofiler.
+  generationer:
+    G1:
+      funktionellt_stod: Separat lagringsprovisionering, kapacitetsbevakning och ägare för beständig fil/block-data.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Full volym eller diskloss ger larm och prövad återställningsväg.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Isolerade volymer per workload med konsekvent åtkomst och flytt-/snapshothantering.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Flytt av tjänst bibehåller data och intecknar inga grannvolymer.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänade lagringsklasser, kvoter, livscykel och krypteringsprofiler för applikationer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: En lagringsvolym kan skapas, expanderas och avvecklas via godkänt gränssnitt med åtkomstkontroll
+        och spårbarhet, oavsett vald runtime.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: Kortlivade verksamhetslösningar har automatisk gallring och separation mellan tillfälligt och
+        beständigt tillstånd.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Livscykelprov skiljer gallring av primärdata från retention för backup och bevarandepliktigt
+        arkiv; återläsning återintroducerar inte otillåtet aktiva uppgifter.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar förvaltad fil-, block- och volymlagring, och kan det
+    lösas med befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-011
+  namn: Objektlagring
+  plattform:
+    id: PLT-019
+    name: Lagringsplattform
+  tillamplighet: När objektlagring motsvarar data- eller artefaktbehov
+  grunduppdrag_enligt_kallmodell: Beständig objekt-/bloblagring med livscykel- och skyddsprofiler.
+  generationer:
+    G1:
+      funktionellt_stod: Avgränsad bloblagring med åtkomstlistor, namngivning och dokumenterad retention.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Objekt kan återfinnas och verifieras efter avtalad arkiveringsperiod.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Gemensamma säkra buckets, versionshantering, livscykelregler och händelseintegration.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: En oavsiktlig överskrivning upptäcks; återställning av tidigare objektversion visas om versionering
+        ingår i vald profil, annars provas överenskommen återställningsväg.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Förvaltade objektklasser och självbetjänad provisionering med policy, kryptering och retention.
+      funktionsprioritet_i_tillampligt_fall: 'Kravstyrd: kritisk endast när verksamhetskonsekvensen motiverar det'
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Team skapar klassad bucket med korrekta standardregler utan manuella steg.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI-artefakter, promptbilagor och dataset lagras med ändamål, proveniens och automatisk tidsgräns.
+      funktionsprioritet_i_tillampligt_fall: 'Kravstyrd: kritisk endast när verksamhetskonsekvensen motiverar det'
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: AI-process får inte lägga känsliga resultat i oklassad allmän bucket.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar objektlagring, och kan det lösas med befintliga förvaltade
+    tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-088
+  namn: Mediebearbetning och transkodning
+  plattform:
+    id: PLT-016
+    name: Mediebearbetnings- och distributionsplattform
+  tillamplighet: När återkommande mediaomkodning eller bearbetning behövs
+  grunduppdrag_enligt_kallmodell: Konverterar medier till tekniska representationer; äger inte original, metadata eller
+    records-livscykel.
+  generationer:
+    G1:
+      funktionellt_stod: Kontrollerad konvertering i applikation vid faktiskt mediebehov och bevarat original.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Utdata kan spåras till oförändrat original.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Asynkron transkodning med kö, retry och format-/codecstandarder för flera tjänster.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Stor video konverteras utan att blockera kundflöde; fel kan återköras.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänat API för standardformat, malwarekontroll och återanvändbara renditions.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Klient begär ny preview med definierad profil och livscykel.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI-medieflöden får rättigheter, metadata och proveniens från original genom hela kedjan.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Derivat kan inte publiceras eller återanvändas utanför källans tillåtna ändamål.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar mediebearbetning och transkodning, och kan det lösas
+    med befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-075
+  namn: Mobil fältapplikationsgrund och offline-synkronisering
+  plattform:
+    id: PLT-025
+    name: Mobil fält- och synkplattform
+  tillamplighet: När fältarbete behöver offline-data och synkronisering
+  grunduppdrag_enligt_kallmodell: Säker lokal lagring, offline state, synkronisering och konfliktlösning i fältklienter.
+  generationer:
+    G1:
+      funktionellt_stod: Enskild app har krypterat lokalt cache-/offlineunderlag och manuell konflikthantering.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Avbrott och återanslutning medför inte tyst dataförlust.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Synkronisering med checkpoint, konfliktstrategier och säkra enhetsidentiteter över tjänster.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Samtidiga ändringar från två offlineenheter hanteras enligt dokumenterad konfliktpolicy; förlust,
+        automatisk prioritering och manuell lösning är testade för berörda data.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Återanvändbar offline-SDK/profil med dataurval, retention och central livscykel.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Fältteam startar app från mall och kan demonstrera återupptagen synk efter avbrott.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI-stöd i fält får lokala sekretessgränser och kan stängas av när datastatus är osäker.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Agent avstår från riskfyllt beslut på inaktuella offlineuppgifter.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar mobil fältapplikationsgrund och offline-synkronisering,
+    och kan det lösas med befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-084
+  namn: Mallbaserad dokumentgenerering
+  plattform:
+    id: PLT-002
+    name: Process- och beslutsplattform
+  tillamplighet: När strukturerad information behöver omsättas till dokument efter styrda mallar
+  grunduppdrag_enligt_kallmodell: Genererar dokument från strukturerad data och versionerade mallar; inte signering eller
+    e-arkiv.
+  generationer:
+    G1:
+      funktionellt_stod: Systemlokala dokumentmallar med version och kontrollerad datamappning.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Manuell beställning och specialisthanterad drift; lokala modeller och återställningsplaner.
+      verifieringsprov: Genererat dokument kan kopplas till mallversion och insatsdata.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G2:
+      funktionellt_stod: Gemensam generering med versionshanterade mallar, central kvalitet och deterministiska utdata.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Gemensamma tekniska komponenter men många tjänstespecifika anpassningar och beställningar.
+      verifieringsprov: Ett tidigare genererat dokument kan granskas mot sparad mallversion och insatsdata; fullständig
+        byte-för-byte-reproduktion krävs bara när det är ett verksamhetskrav.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G3:
+      funktionellt_stod: Självbetjänat dokument-API med typade data, godkända mallar och lagringsintegration.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Självbetjänade databas-/lagringsprofiler, policy-as-code, versionering och datakatalog där relevant.
+      verifieringsprov: Team genererar dokument i verksamhetens faktiskt kravställda format (exempelvis PDF/A om arkivkrav
+        finns) och visar spårbar mallversion och leverans.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+    G4:
+      funktionellt_stod: AI kan hjälpa till att förbereda underlag men rättsligt betydelsefulla dokument kommer från
+        godkänd mall och data.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Riskklassade, kortlivade och ändamålsbegränsade dataerbjudanden med maskinellt verkställda begränsningar.
+      verifieringsprov: Agent kan inte ändra styrande mall utan granskat godkännande.
+      bedomningstyp: arkitekturbedomning, situationsanpassad
+      kallstatus: Analytisk arkitekturbedömning; inte normativt krav i källmodellen
+  diagnostisk_fraga: Vilket konkret informationsbehov motiverar mallbaserad dokumentgenerering, och kan det lösas med
+    befintliga förvaltade tjänster?
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+diagnostik_fore_teknikbyte:
+  krav_och_informationsansvar: Är auktoritativ källa, tidskrav och tillåten användning avtalade?
+  arkitektur_och_integration: Beror felet på kopior, kontrakt, migrationsordning eller konsistens?
+  implementation_och_forvaltning: Kan befintlig teknik klara kravet efter rimlig konfiguration, integration eller uppgradering?
+  produktbegransning: Finns en verifierad funktionell, säkerhetsmässig, support- eller kostnadsgräns som kräver förändrat
+    produktval?
+  beslutsalternativ:
+  - behåll
+  - komplettera
+  - ändra användning eller ansvar
+  - ersätt

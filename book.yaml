@@ -1,0 +1,48 @@
+title: Från IT-leverantör till möjliggörare för digitalisering
+subtitle: Fyra generationer av IT – gemensamma plattformar, digital självständighet och ett nytt ansvar
+author: Erland Lindmark
+language: sv
+book_kind: factbook
+book_type: nonfiction_technology_and_organization
+difficulty: experienced
+audience: IT-chefer, arkitekter, verksamhetsledare och ansvariga i större organisationer
+edition: '1'
+version: '0.1'
+date: '2026-11-07'
+rights: All rights reserved
+publisher: ''
+cover_image: assets/cover/omslag.png
+pdf_size: 170x240
+identifier: ''
+subject: IT-transformation, plattformsorientering, digital självständighet och AI
+description: Resonerande faktabok om övergången från IT-leverans till möjliggörande av digitalisering.
+project_slug: fran-it-leverantor-till-mojliggorare
+chapters:
+- chapters/00-inledning.md
+- chapters/01-nar-it-blir-en-broms.md
+- chapters/02-fyra-generationer.md
+- chapters/03-it-formagor.md
+- chapters/04-interaktion-kanaler.md
+- chapters/05-process-workflow.md
+- chapters/06-regler-beslut.md
+- chapters/07-datahantering.md
+- chapters/08-analys-ai.md
+- chapters/09-integration.md
+- chapters/10-identitet-tillit.md
+- chapters/11-slutanvandarmiljo.md
+- chapters/12-cybersakerhet.md
+- chapters/13-utveckling-leverans.md
+- chapters/14-kormiljo.md
+- chapters/15-natverk.md
+- chapters/16-driftbarhet.md
+- chapters/17-it-nya-roll.md
+- chapters/99-kallor.md
+exports:
+  epub:
+    enabled: true
+    include_text_toc: false
+    toc_depth: 1
+  pdf:
+    enabled: true
+    include_toc_before_introduction: true
+    toc_depth: 3

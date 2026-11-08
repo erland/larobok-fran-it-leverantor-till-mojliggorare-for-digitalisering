@@ -1,0 +1,424 @@
+id: CAP-IT-11
+namn: Slutanvändarmiljö och klientplattform
+version: '2.0'
+datum: '2026-11-07'
+status: Separat kritiskt reviderat faktaboksunderlag; extern sakgranskning återstår
+kallmodell: Baseline v1.1; CAP/PLS/PLT-definitioner och identiteter bevarade
+kallor:
+  ursprung:
+  - Förmågeöversikt – tekniska IT-förmågor, v1.1
+  - Plattformsöversikt – konceptuella plattformar
+  - Från systemdrift till digital självständighet
+  kompletterande:
+  - https://csrc.nist.gov/pubs/sp/800/124/r2/final
+  - https://csrc.nist.gov/pubs/sp/800/46/r2/final
+  - https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
+definition: Förmåga att erbjuda och livscykelhantera säkra, förvaltade och användbara tekniska miljöer där slutanvändare
+  kan konsumera organisationens digitala tjänster och applikationer.
+avgransning:
+- Kontors- och samarbetsapplikationers funktionalitet och produktivitets-AI
+- Identitets- och behörighetsmodeller (CAP-IT-07)
+- Generell cybersäkerhetsdetektion (CAP-IT-12)
+- Nätverksarkitektur (CAP-IT-13)
+- Generell server-/workload-runtime (CAP-IT-08)
+- Ekonomisk asset management och ITSM-processer
+- Verksamhetsapplikationernas funktionalitet
+bedomningsprincip:
+  skilj:
+  - Kritisk funktion i verkligt användningsfall
+  - Nytta och kostnad av gemensam förvaltad plattform
+  - Automation av upprepade uppgifter
+  notering: Generationerna är idealtyper. Tjänster är tillämpliga efter klienttyper, informationsklass, exponering, storlek
+    och uppdrag. G4 är scenario. Ingen viss produkt eller fullständig MDM/DaaS-implementation är ett allmänt generationskrav.
+    För privatägda, delade och specialiserade klienter måste faktisk OS-/hanteringsfunktion, integritet och risk dokumenteras;
+    riskbaserade kompensationskontroller kan ersätta ej tillämplig agentteknik.
+generationer:
+  G1:
+    roll: Kort historisk kontext
+    risk: Manuella standardimages, lokala installationsundantag, okända klienter och fördröjd patchning.
+  G2:
+    roll: Huvudperspektiv
+    generationsarv:
+    - Många enheter och operativsystem med olika policy- och patchnivåer
+    - Otydligt klientansvar vid tjänsteproblem
+    - Förlorade eller delade enheter med kvarvarande lokala data och sessioner
+    - Klientuppdateringar utan ringar, stoppvillkor eller återhämtningsväg
+    - Otillräcklig separation mellan användare på delade klienter
+    - Långvarigt offlinearbete utan verifierad hantering av utgångna mandat eller lokala data
+    forbattringsspar:
+      A: Verifiera inventering, skydd, uppdatering, åtkomst och avveckling oberoende av ny plattform.
+      B: Mät återkommande klientbehov och kostnad före investering i självbetjänad klientplattform.
+  G3:
+    roll: Förvaltad klientplattform och självbetjäning där nyttan är bevisad
+    fungerande_stod:
+    - Nya profiler och appar kan tilldelas utan engångshantering när risk och omfattning motiverar
+    - Pilotringar, stoppvillkor, reservadministration och incidentåterhämtning fungerar
+    - Ändring, utfasning och avveckling av enheter, appar och sessioner ingår i erbjudandet
+    - Konsumenternas användbarhet, skyddstäckning och serviceutfall mäts
+    - Uppdateringar provas på representativa hjälpmedel och specialklienter, inte bara genom installationsstatus
+    - Tillfällig administrativ reservväg fungerar även när central compliancepolicy slår fel
+    teknikvarningar:
+    - En central policy kan låsa alla användare ute utan reservväg
+    - Hanteringsprodukt saknar nödvändigt stöd för relevant klienttyp trots rätt konfiguration
+  G4:
+    roll: Framåtblickande riskstyrda klientprofiler för verksamhets- och AI-nära digitalisering
+    fungerande_stod:
+    - Åtkomst till känslig tjänst baseras på identitet, relevant klientstatus och risk
+    - AI-programs åtkomst till lokala filer, tjänster och sessioner kan begränsas
+    - Isolering används där faktisk informationsrisk motiverar den, inte som generellt krav
+    - BYOD-arbetsdata begränsas efter överenskommen hantering utan antagande om kontroll över privat data
+    teknikvarningar:
+    - Godkänd klient antas innebära godkänt AI-mandat
+    - Session eller kopierad data antas kunna återkallas retroaktivt
+diagnostiskt_scenario:
+  namn: Förlorad mobil, misslyckad appuppdatering och avslutat konsultuppdrag
+  prov:
+  - Testmobil kopplas från nätet före fjärrraderingsförsök; dokumentera vad som endast begärts och vad som bekräftats
+  - Stoppa nya och vid behov befintliga sessioner i identitets- och applikationslagren
+  - Distribuera ofarligt felaktigt apppaket till pilotring; stoppa och prova återhämtning
+  - Avveckla extern testanvändares virtuella profil och granska kvarvarande filer, åtkomst och kostnad
+  - Undersök om fel beror på profil, paket, integration, process eller produktgräns
+  - Bedöm om återkommande steg faktiskt motiverar gemensam självbetjäning
+  - Växla användare på delad testterminal; granska cache, dokument, token, utskrifter och kvarvarande session
+  - Anslut specialklient efter lång offlineperiod och pröva återspelning med utgånget mandat
+  - Verifiera att funktionskritisk arbetsuppgift kan slutföras med relevant hjälpmedel efter klientuppdatering
+beslutsordning:
+- Kartlägg faktiska användare, klienttyper och informationsrisk
+- Testa en säker och användbar klientresa från start till avveckling
+- Åtgärda grundbrister i G2 utan att vänta på ny plattform
+- Mät upprepade beställningar, felkostnader och effekten av standardprofiler
+- Välj behålla, komplettera, ändra arbetssätt/ägarskap eller ersätta efter verifierad rotorsak
+plattformstjanster:
+- id: PLS-045
+  namn: UEM/MDM
+  plattform:
+    id: PLT-010
+    namn: Endpointhanteringsplattform
+  grunduppdrag_enligt_kallmodell: Funktionalitet för enrollment, policy, konfiguration och complianceuppföljning av slutanvändarenheter.
+  tillamplighet: När organisationen förvaltar klienter eller måste kunna verifiera enhetsstatus, konfiguration och avveckling.
+    BYOD, delade klienter och specialutrustning kan behöva andra kontrollvägar än full enhetshantering.
+  avgransning: Äger enhetslivscykel och teknisk konfiguration; inte verksamhetsbehörigheter (CAP-IT-07), generellt SOC-skydd
+    (CAP-IT-12) eller ekonomisk asset management.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-12
+  - CAP-IT-13
+  - CAP-IT-09
+  generationer:
+    G1:
+      generationsroll: Systemorienterad klientdrift
+      funktionens_kritikalitet: Viktig för förvaltade klienter
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Enklare manuella rutiner kan räcka där volymen är låg.
+      tekniskt_stod: Inventering av enheter, standardimage, grundinställningar, enhetsägare, patchplan och dokumenterad
+        återlämning; teknisk kontroll kan vara lokal eller katalogbaserad.
+      ansvar: Klientdrift registrerar, konfigurerar och avvecklar enhet med checklista.
+      verifieringsprov: Välj tre representativa G1-klienter; kontrollera ägare, patchstatus och dokumenterad återlämning
+        utan krav på MDM-produkt.
+      felscenario: Okänd dator blir kvar med gamla behörigheter.
+      forutsattning: När organisationen förvaltar klienter eller måste kunna verifiera enhetsstatus, konfiguration och
+        avveckling.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G2:
+      generationsroll: Heterogena klienter och distribuerade IT-stöd
+      funktionens_kritikalitet: Kritisk vid stor eller heterogen klientflotta
+      behov_av_gemensam_plattform: Viktig
+      automationsbehov: Beror på volym, variation och risk; inte obligatoriskt generationskrav.
+      tekniskt_stod: Centraliserad registrering där tillämpligt, klasspecifik policy, krypterings-/patchstatus, fjärrlåsning
+        och radering endast där ägarskap, hanteringsläge och OS faktiskt stödjer det.
+      ansvar: Klientteam förvaltar MDM/UEM och samordnar kontroller med IAM och säkerhet.
+      verifieringsprov: Sätt testmobil offline, markera den för borttagning och spärra nya sessioner separat. Redovisa
+        obekräftad fjärrradering som obekräftad. Pröva också en privatägd testklients avtalade arbetsdataseparation utan
+        att begära otillåten kontroll över privat data.
+      felscenario: Ohanterade mobiler behåller data och åtkomst.
+      forutsattning: När organisationen förvaltar klienter eller måste kunna verifiera enhetsstatus, konfiguration och
+        avveckling.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G3:
+      generationsroll: Förvaltade klientprofiler och kontrollerad självbetjäning
+      funktionens_kritikalitet: Kritisk för förvaltad digital arbetsplats
+      behov_av_gemensam_plattform: Kritisk vid många team/enheter
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Automatiserad enrollment, roll-/riskbaserade profiler, compliance-API, styrd ändringshantering,
+        drifttelemetri, återställning av policy och automatiserad avveckling.
+      ansvar: Plattformsteam publicerar säkerhets- och enhetsprofiler; applikationsteam konsumerar godkända miljöer.
+      verifieringsprov: Inför ny klientprofil i liten ring och simulera en policy som spärrar administration. Verifiera
+        stoppvillkor och reservväg innan bred utrullning. Kontrollera även reservadministration när ordinarie klienter
+        spärras av en felaktig compliancepolicy.
+      felscenario: Felaktig global policy blockerar alla utan återhämtningsväg.
+      forutsattning: När organisationen förvaltar klienter eller måste kunna verifiera enhetsstatus, konfiguration och
+        avveckling.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G4:
+      generationsroll: Riskstyrda klienter och AI-nära användningsfall
+      funktionens_kritikalitet: Kritisk för hanterade enheter med känslig åtkomst
+      behov_av_gemensam_plattform: Situationsberoende; särskilt värdefull där riskstyrd enhetstillit måste verifieras
+        i stor skala
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Kontinuerlig postureutvärdering, kortlivad enhetstillit, automation för externa/temporära användare
+        och standard för tillåtna AI-verktyg utan att ge generell lokal dataåtkomst.
+      ansvar: Klientplattform definierar enhetssäkerhet; IAM och informationsägare avgör åtkomst och dataskydd.
+      verifieringsprov: Låt en icke-kompatibel testklient nå en högriskresurs. Verifiera riskbaserad blockering, rättelsemöjlighet
+        och att enhetstillit inte ersätter verksamhetsmandat. Verifiera att osäker eller inaktuell status inte automatiskt
+        ger samma behörighet som färsk verifiering.
+      felscenario: Ohanterad enhet kringgår datagränser via AI-app.
+      forutsattning: När organisationen förvaltar klienter eller måste kunna verifiera enhetsstatus, konfiguration och
+        avveckling.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+- id: PLS-046
+  namn: Endpoint Application Distribution
+  plattform:
+    id: PLT-010
+    namn: Endpointhanteringsplattform
+  grunduppdrag_enligt_kallmodell: Funktionalitet för paketering och distribution av applikationer till slutanvändarenheter.
+  tillamplighet: När installerade klientprogram behöver paketeras, signeras, fördelas eller uppdateras; inte som krav
+    för ren webbåtkomst.
+  avgransning: Gäller applikationsleverans till slutanvändarenheter, inte byggen/CI-CD (CAP-IT-10), webbdistribution
+    eller programvarans verksamhetsfunktion.
+  beroenden:
+  - CAP-IT-10
+  - CAP-IT-07
+  - CAP-IT-12
+  - CAP-IT-09
+  generationer:
+    G1:
+      generationsroll: Systemorienterad klientdrift
+      funktionens_kritikalitet: Viktig där installerade appar används
+      behov_av_gemensam_plattform: Bra att ha
+      automationsbehov: Enklare manuella rutiner kan räcka där volymen är låg.
+      tekniskt_stod: Verifierat installationspaket, kontrollerad version, dokumenterade installationskrav och möjlighet
+        till avinstallation. Manuell distribution kan räcka vid få klienter.
+      ansvar: Klientdrift installerar efter test/godkännande av applikationsägare.
+      verifieringsprov: Installera och uppdatera en godkänd klientapp på definierad standardklient, dokumentera ansvar
+        och versionsläge.
+      felscenario: Datorer har oförenliga eller osupporterade programversioner.
+      forutsattning: När installerade klientprogram behöver paketeras, signeras, fördelas eller uppdateras; inte som
+        krav för ren webbåtkomst.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G2:
+      generationsroll: Heterogena klienter och distribuerade IT-stöd
+      funktionens_kritikalitet: Viktig för många installerade klientappar
+      behov_av_gemensam_plattform: Viktig
+      automationsbehov: Beror på volym, variation och risk; inte obligatoriskt generationskrav.
+      tekniskt_stod: Centralt styrda distributionsringar, kompatibilitetsmatris, signatur-/paketkontroll, inventering,
+        återförsök och rapportering av misslyckade installationer.
+      ansvar: Applikationsägare ansvarar för paketeringskrav; klientteam styr utrullning.
+      verifieringsprov: Skicka ofarligt felaktigt paket till pilotring, kontrollera upptäckt, identifiera berörda klienter
+        och stoppa bred utrullning. Verifiera en kritisk arbetsuppgift efter installation, inklusive tillbehör och hjälpmedel
+        när relevant.
+      felscenario: Felaktig appuppdatering slår ut flera arbetsflöden.
+      forutsattning: När installerade klientprogram behöver paketeras, signeras, fördelas eller uppdateras; inte som
+        krav för ren webbåtkomst.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G3:
+      generationsroll: Förvaltade klientprofiler och kontrollerad självbetjäning
+      funktionens_kritikalitet: Viktig för installerade appar, inte generellt för rena webbappar
+      behov_av_gemensam_plattform: Viktig vid stor appportfölj
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Självbetjänad godkänd appkatalog, automatisk tilldelning utifrån behov/behörighet, deklarativ uppdateringspolicy,
+        stegvis deployment och automatiserad borttagning.
+      ansvar: Plattformsteam tillhandahåller kanalen; appteam ansvarar för paket, tester, support och livscykel.
+      verifieringsprov: Byt paketversion för två konsumentgrupper, prova kompatibilitet och verifiera plan för återhämtning
+        när nedgradering inte stöds. För operativsystemstyrd eller butiksdistribuerad mobilapp, testa scenario där omedelbar
+        nedgradering inte är möjlig.
+      felscenario: Katalogen tillåter okontrollerade eller osignerade appar.
+      forutsattning: När installerade klientprogram behöver paketeras, signeras, fördelas eller uppdateras; inte som
+        krav för ren webbåtkomst.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G4:
+      generationsroll: Riskstyrda klienter och AI-nära användningsfall
+      funktionens_kritikalitet: Viktig där lokal programinstallation behövs
+      behov_av_gemensam_plattform: Viktig för kontrollerade installationsflöden
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Snabb kuraterad publicering av verksamhetsappar, automatiserade kompatibilitets- och skadevarukontroller
+        och avvecklingspolicy; för webb- och AI-appar kan säker åtkomst vara mer relevant än klientinstallation.
+      ansvar: Verksamhet/appägare godkänner ändamål; klientplattform granskar och distribuerar endpointpaket.
+      verifieringsprov: Inför en verksamhetsutvecklad klientapp i godkänd distributionsväg och pröva signering, datarättigheter,
+        spärr och avveckling. Kontrollera kvarvarande lokal data och behörighet efter borttagning av appen.
+      felscenario: Snabbproducerad verksamhetsapp får alltför bred lokal åtkomst.
+      forutsattning: När installerade klientprogram behöver paketeras, signeras, fördelas eller uppdateras; inte som
+        krav för ren webbåtkomst.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+- id: PLS-077
+  namn: Endpointskydd
+  plattform:
+    id: PLT-011
+    namn: Security Operations- och skyddsplattform
+  grunduppdrag_enligt_kallmodell: Teknisk funktionalitet för skydd av slutanvändarenheter, exempelvis EDR/anti-malware,
+    lokal skyddspolicy och endpointnära detektion.
+  tillamplighet: När klienttypernas hotmodell kräver endpointnära skydd. Skydd kan vara OS-inbyggt, agentbaserat eller
+    ersättas av riskmotiverade kompenserande kontrollpunkter där agentstöd saknas; central EDR är inte alltid tillgänglig
+    eller lämplig.
+  avgransning: Skydd, upptäckt och endpointnära respons tillhör CAP-IT-12; CAP-IT-11 behöver integrera skyddet med klientprofiler.
+    Inte generell SOC-analys, IAM eller ITSM-incidentprocess.
+  beroenden:
+  - CAP-IT-12
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-10
+  generationer:
+    G1:
+      generationsroll: Systemorienterad klientdrift
+      funktionens_kritikalitet: Riskberoende; skydd mot relevanta hot krävs, agentteknik inte universell
+      behov_av_gemensam_plattform: Situationsberoende
+      automationsbehov: Enklare manuella rutiner kan räcka där volymen är låg.
+      tekniskt_stod: Stöd för anti-malware, automatiska signatur-/motoruppdateringar, lokal brandvägg och avvikelsehantering;
+        central detektion kan vara enklare.
+      ansvar: Säkerhetsfunktionen äger skyddskrav; klientdrift säkerställer installation och uppdatering.
+      verifieringsprov: Simulerad, ofarlig provhändelse på en G1-klient; kontrollera befintligt skydd, larmväg och ansvar.
+      felscenario: En infekterad dator sprider skadlig kod via filer och nätverk.
+      forutsattning: När klienttypernas hotmodell kräver endpointnära skydd. Skydd kan vara OS-inbyggt, agentbaserat
+        eller ersättas av riskmotiverade kompenserande kontrollpunkter där agentstöd saknas; central EDR är inte alltid
+        tillgänglig eller lämplig.
+      tolkning: Verifiera skyddet mot faktisk hotmodell och enhetstyp. EDR-agent, MDM-compliance och SOC-larm har olika
+        kontrollgränser; avsaknad av agent är inte ensam bevis för oskyddad eller skyddad enhet.
+    G2:
+      generationsroll: Heterogena klienter och distribuerade IT-stöd
+      funktionens_kritikalitet: Hög vid exponerade och databehandlande klienter; kontrolltyp beror på enhetsklass
+      behov_av_gemensam_plattform: Viktig vid omfattande flotta och återkommande säkerhetsoperationer; annars situationsberoende
+      automationsbehov: Beror på volym, variation och risk; inte obligatoriskt generationskrav.
+      tekniskt_stod: Riskbaserat anti-malware/EDR där tillgängligt, OS-inbyggt eller isolerande skydd på begränsade klienter,
+        täckningsregister, telemetri och SOC-samverkan. Stöd för isolering och detektion varierar mellan OS och klientklasser.
+      ansvar: SOC äger detektion/incidentrespons; klientteam äger deployment och täckning.
+      verifieringsprov: På testklient, stoppa skyddsagentens rapportering; verifiera att täckningsförlust upptäcks och
+        SOC kan agera utan att klientteamets ansvar blandas ihop. Redovisa separat klientklasser där agent saknas och
+        vilka kompenserande kontroller som har verifierats.
+      felscenario: Angripare rör sig mellan enheter medan isolering dröjer.
+      forutsattning: När klienttypernas hotmodell kräver endpointnära skydd. Skydd kan vara OS-inbyggt, agentbaserat
+        eller ersättas av riskmotiverade kompenserande kontrollpunkter där agentstöd saknas; central EDR är inte alltid
+        tillgänglig eller lämplig.
+      tolkning: Verifiera skyddet mot faktisk hotmodell och enhetstyp. EDR-agent, MDM-compliance och SOC-larm har olika
+        kontrollgränser; avsaknad av agent är inte ensam bevis för oskyddad eller skyddad enhet.
+    G3:
+      generationsroll: Förvaltade klientprofiler och kontrollerad självbetjäning
+      funktionens_kritikalitet: Hög där endpointhot är relevanta; profil och kontrollform varierar
+      behov_av_gemensam_plattform: Situationsberoende till viktig; samordnad skyddstjänst vid skala och risk
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Skyddsprofil som är tillämplig per klientklass, riskbaserade undantag med sluttid, verifierad täckning
+        och återkommande kontroll att kompenserande skydd verkligen fungerar.
+      ansvar: Säkerhetsplattform förvaltar policy och detektion; klientplattform förvaltar skyddets införande på varje
+        enhet.
+      verifieringsprov: Ny enhet registreras med godkänd skyddsprofil; testa ett tidsbegränsat undantag och att skydd
+        återställs efter utgångsdatum. Prova en låst mobil eller specialklient utan agentstöd och verifiera definierad
+        kompenserande kontroll.
+      felscenario: Automatisk enrollment skapar oskyddade klienter i stor skala.
+      forutsattning: När klienttypernas hotmodell kräver endpointnära skydd. Skydd kan vara OS-inbyggt, agentbaserat
+        eller ersättas av riskmotiverade kompenserande kontrollpunkter där agentstöd saknas; central EDR är inte alltid
+        tillgänglig eller lämplig.
+      tolkning: Verifiera skyddet mot faktisk hotmodell och enhetstyp. EDR-agent, MDM-compliance och SOC-larm har olika
+        kontrollgränser; avsaknad av agent är inte ensam bevis för oskyddad eller skyddad enhet.
+    G4:
+      generationsroll: Riskstyrda klienter och AI-nära användningsfall
+      funktionens_kritikalitet: Hög för exponerade högriskklienter; situationsberoende för isolerade eller starkt begränsade
+        enheter
+      behov_av_gemensam_plattform: Situationsberoende; gemensam skyddstjänst där risk och omfattning motiverar
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Skydd även mot missbruk av klientbaserade AI-assistenter, browser-/sessionsrisker och misstänkta
+        lokala dataflöden där verktygsstöd finns; respons måste vara proportionerlig och granskningsbar.
+      ansvar: SOC analyserar hot och åtgärdar; verksamheten äger sin informationsrisk; klientplattform säkrar täckning.
+      verifieringsprov: 'Simulera misstänkt klientbeteende kopplat till AI-verktyg och använd ofarlig data; granska proportionerlig
+        respons, informationsrisk och bevarad legitim användning. Visa vilken kontroll som faktiskt stoppar handlingen:
+        klientpolicy, tjänstens behörighet eller SOC-respons.'
+      felscenario: AI-klient med stulen session får åtkomst till känsliga källor.
+      forutsattning: När klienttypernas hotmodell kräver endpointnära skydd. Skydd kan vara OS-inbyggt, agentbaserat
+        eller ersättas av riskmotiverade kompenserande kontrollpunkter där agentstöd saknas; central EDR är inte alltid
+        tillgänglig eller lämplig.
+      tolkning: Verifiera skyddet mot faktisk hotmodell och enhetstyp. EDR-agent, MDM-compliance och SOC-larm har olika
+        kontrollgränser; avsaknad av agent är inte ensam bevis för oskyddad eller skyddad enhet.
+- id: PLS-047
+  namn: Virtual Desktop/DaaS
+  plattform:
+    id: PLT-037
+    namn: Virtuell klientplattform
+  grunduppdrag_enligt_kallmodell: Funktionalitet för virtuella skrivbord/DaaS med definierade åtkomst-, session-, prestanda-
+    och profil-/livscykelprofiler.
+  tillamplighet: Endast vid verifierat behov av virtuella klienter, till exempel för äldre appar, externa användare eller
+    isolerad informationshantering.
+  avgransning: Inte generellt krav för moderna webbtjänster; inte UEM/MDM på fysiska enheter, och inte klientapplikationsdistribution
+    till fysisk endpoint. Serverruntime CAP-IT-08 är inte samma sak som virtuell slutanvändarmiljö.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-13
+  - CAP-IT-09
+  - CAP-IT-12
+  - CAP-IT-04
+  generationer:
+    G1:
+      generationsroll: Systemorienterad klientdrift
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Bra att ha
+      automationsbehov: Enklare manuella rutiner kan räcka där volymen är låg.
+      tekniskt_stod: Terminalserver/central fjärrsession kan vara rimlig för äldre applikationer eller kontrollerad extern
+        åtkomst; tydliga sessionstider och lokalt dataflöde.
+      ansvar: Klient-/applikationsdrift delar ansvar för fjärrmiljö och programkompatibilitet.
+      verifieringsprov: Provkör en äldre applikation i terminalsession med dokumenterat användarflöde och lokal datahantering.
+      felscenario: Sessioner bryts eller känsliga data lämnas i lokala profiler.
+      forutsattning: Endast vid verifierat behov av virtuella klienter, till exempel för äldre appar, externa användare
+        eller isolerad informationshantering.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G2:
+      generationsroll: Heterogena klienter och distribuerade IT-stöd
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Viktig vid många externa/tillfälliga användare
+      automationsbehov: Beror på volym, variation och risk; inte obligatoriskt generationskrav.
+      tekniskt_stod: Profilbaserade virtuella desktops, separat identitet, sessionshantering, nätverkssegmentering, prestandauppföljning
+        och tillgänglighetskrav.
+      ansvar: Virtuell klientplattform äger session/runtime; IAM äger autentisering; applikationsägare testar prestanda.
+      verifieringsprov: Ge extern testkonsult en tidsbegränsad virtuell session och verifiera inloggningsstopp, sessionsavslut
+        och datarensning vid uppdragets slut. Prova också att den externa användaren inte kan nå kvarvarande filer via
+        en annan aktiv session.
+      felscenario: En kvarstående virtuell profil ger åtkomst efter uppdragets slut.
+      forutsattning: Endast vid verifierat behov av virtuella klienter, till exempel för äldre appar, externa användare
+        eller isolerad informationshantering.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G3:
+      generationsroll: Förvaltade klientprofiler och kontrollerad självbetjäning
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Viktig vid återkommande behov
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Självbetjänad provisionering från godkända images/profiler, autoskalning där ekonomiskt rimligt,
+        policy för sessionsdata, central observability och automatisk avveckling.
+      ansvar: Plattformsteam äger image/sessionsprodukt; verksamhetstjänst äger sina applikationskrav.
+      verifieringsprov: Skapa godkänd virtuell profil för en temporär användare, prova sessionsbelastning, ändring av
+        image, avslut och efterföljande kostnadsstopp. Kontrollera användbarhet under realistisk nätverksfördröjning
+        och licenskostnad vid inaktivitet.
+      felscenario: Utan livscykelkontroll byggs kostsamma kvarlämnade miljöer upp.
+      forutsattning: Endast vid verifierat behov av virtuella klienter, till exempel för äldre appar, externa användare
+        eller isolerad informationshantering.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+    G4:
+      generationsroll: Riskstyrda klienter och AI-nära användningsfall
+      funktionens_kritikalitet: Situationsberoende
+      behov_av_gemensam_plattform: Viktig för särskilda isolerings- och datakontrollbehov
+      automationsbehov: Automatisera repetitiv tilldelning, ändring, återhämtning och avveckling när tjänsten är relevant.
+      tekniskt_stod: Riskprofiler för isolerad användning av känsliga appar eller AI-verktyg, tydlig sessionsisolering,
+        begränsat urklipp/filöverföring vid behov och spårbar tillgång utan generell full desktop för alla.
+      ansvar: Informationsägare avgör skyddsbehov; plattformsteam erbjuder tekniska profiler; SOC och IAM hanterar skydd
+        och tillit.
+      verifieringsprov: Testa kontroller för urklipp, export, utskrift och sessionstid i ett känsligt testflöde; dokumentera
+        återstående kanaler och acceptabla användarhinder. Fastställ om kontrollen faktiskt förhindrar dataexport eller
+        enbart försvårar vissa exportvägar.
+      felscenario: Virtuellt skrivbord ger falsk trygghet när data ändå kan exporteras okontrollerat.
+      forutsattning: Endast vid verifierat behov av virtuella klienter, till exempel för äldre appar, externa användare
+        eller isolerad informationshantering.
+      tolkning: Kontrollera teknisk effekt och faktisk användbarhet separat. Ett lyckat systemanrop bevisar inte att
+        arbetsuppgiften kan genomföras.
+ansvar_vid_incident:
+  klientteam: Enhetsstatus, profil och genomförande av klientåtgärder
+  sakerhetsfunktion: Hotbedömning, detektion, isoleringsråd och teknisk utredning
+  iam: Identiteter, token, sessioner och åtkomstbeslut
+  applikations_och_informationsagare: Lokala data, osynkroniserat arbete och konsekvenser för informationshantering
+  verksamhetsansvarig: Kontinuitetsprioritering och reservflöde
+  notering: Incidentledning och anmälningsbeslut följer organisationens styrning; rollerna är rekommenderad ansvarsfördelning,
+    inte källmodellens definition.

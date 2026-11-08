@@ -1,0 +1,509 @@
+metadata:
+  id: CAP-IT-06
+  titel: Integration och informationsutbyte
+  typ: faktaboksunderlag
+  version: '2.0'
+  datum: '2026-11-07'
+  utgangspunkt: G2
+  modellbaseline: v1.1
+  status: Kritiskt reviderad kapitelversion; extern sakgranskning och redaktionell harmonisering återstår
+kallavgransning:
+  ursprung:
+  - Förmågeöversikt – tekniska IT-förmågor, baseline v1.1
+  - Plattformsöversikt – konceptuella plattformar, baseline v1.1
+  - Från systemdrift till digital självständighet
+  externa_referenser:
+  - titel: OpenAPI Specification 3.2.1
+    url: https://spec.openapis.org/oas/v3.2.1.html
+  - titel: AsyncAPI Initiative – documentation
+    url: https://www.asyncapi.com/docs
+  - titel: CloudEvents Specification
+    url: https://github.com/cloudevents/spec
+  - titel: NIST SP 800-207 Zero Trust Architecture
+    url: https://csrc.nist.gov/pubs/sp/800/207/final
+  - titel: AWS Prescriptive Guidance – Transactional outbox
+    url: https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html
+  - titel: Spring Kafka – Exactly Once Semantics
+    url: https://docs.spring.io/spring-kafka/reference/kafka/exactly-once.html
+  analytiskt: Prioriteringar, generationsprofiler och verifieringsprov är generiska rekommendationer och inte en nulägesinventering
+    eller plattformsplikt.
+definition: Kontrollerat, säkert, spårbart och förändringsbart informations-/funktionsutbyte genom kontrakt och lämpliga
+  interaktionsformer
+avgransning: Inte domänbeslut eller informationsägarskap; underliggande nät/transport CAP-IT-13, identitet CAP-IT-07,
+  säkerhet CAP-IT-12, data CAP-IT-04, driftbarhet CAP-IT-09 och leverans CAP-IT-10.
+generationsprincip: Tekniktyp, säkerhetsnivå och behov av gemensam produkt får inte härledas mekaniskt ur generation;
+  bedöm verkliga risker och användningsfall.
+generationer:
+  G1:
+    roll: Kort historisk bakgrund
+    stod: Få systemgränser med fil, batch, API och ibland kö; dokumenterat ägarskap, transport och kvittens.
+    fungerande_stod:
+    - Utbyten har identifierade parter och dokumenterat format
+    - Fel kan upptäckas och rättas
+    teknikvarningar:
+    - Personberoende gränssnitt utan dokumenterad förvaltning
+  G2:
+    roll: Huvudperspektiv – robusta kontrakt och faktiska verksamhetseffekter
+    stod: Tjänste- och meddelandekontrakt, versionshantering, timeout/retry, dubbletthantering, ansvar och end-to-end-spårbarhet.
+    generationsarv:
+    - Odokumenterade API-/filberoenden
+    - Delad integrationslogik utan domänansvar
+    - Manuella beställningar och långa synkrona kedjor
+    - Dubbelskrivning mellan lokal databastranaktion och meddelandepublicering utan hanterat felutfall
+    forbattringsspar:
+      A: Rätta kontrakt, ansvar, återförsök, idempotens och säkerhet i befintlig integration
+      B: Automatisera standardiserbara och återkommande anslutningar när behovet är mätt
+    fungerande_stod:
+    - Ett kritiskt flöde kan följas från producent till verksamhetseffekt
+    - Kontrollerade dubbletter ger inte oavsiktliga dubbla effekter
+    - Producent och konsument kan övergå mellan kompatibla kontraktsversioner
+    - Avbrott mellan databascommit och publicering kan återhämtas med känd möjlighet till dubbletter
+    teknikvarningar:
+    - Brist på nödvändig leveransgaranti, säker support eller interoperabilitet
+    - Upprepade oförklarliga avbrott trots korrekt design och drift
+    - Påstående om exakt-en-gång-verksamhetseffekt bygger enbart på brokerns garanti
+  G3:
+    roll: Tekniska integrationsprofiler som självbetjänade och förvaltade produkter
+    stod: Säkra standardprofiler för API, köer, event, filer och kontrakt, inklusive provisionering, ändring, uppgradering
+      och avveckling.
+    behovsindikatorer:
+    - Många team med liknande integrationsbehov
+    - Manuella upprepade specialistärenden
+    fungerande_stod:
+    - Normalintegration kan skapas, ändras och avvecklas enligt standardpolicy
+    - Kontraktstest, teknisk åtkomst och driftövervakning medföljer erbjudandet
+    - Ändringar och undantag har tydligt ansvar
+    teknikvarningar:
+    - Självbetjäningsportal döljer manuell ärendekedja
+    - Central integrationsprodukt samlar verksamhetslogik från alla domäner
+  G4:
+    roll: Framåtblickande – styrt utnyttjande av integrationer från många verksamhets- och AI-konsumenter
+    stod: Upptäckbara men avgränsade verktyg/API:er, delegerade mandat, spårbarhet, kvoter, kontroller vid verkställighet
+      och hanterad avslutning.
+    fungerande_stod:
+    - Otillåtet agentanrop nekas vid betrodd kontrollpunkt
+    - Pågående och köade uppdrag hanteras vid mandatåterkallelse enligt specificerad riskmodell
+    - Redan utförda externa handlingar skiljs från stopp av nya anrop
+    teknikvarningar:
+    - Generell systemåtkomst ges till agentverktyg
+    - Tillbakadragen token antas göra redan utförda externa handlingar ogjorda
+beslutskriterier:
+  bedom_separat:
+  - funktionens kritikalitet i användningsfallet
+  - behovet av en gemensam teknisk tjänst
+  - behovet av automation och självbetjäning
+  - teknisk leveransgaranti kontra faktisk verksamhetseffekt
+  atgardsval:
+  - behåll och rätta arbetssätt
+  - komplettera tjänst eller kontroll
+  - ändra användningsmönster eller ansvar
+  - ersätt produkt efter verifierat hinder
+  diagnosordning:
+  - kontrakt, semantik och ansvar
+  - transaktionsgräns och atomiskt samband mellan domänändring och publicering
+  - applikationsarkitektur och sidoeffekter
+  - konfiguration, integration och drift
+  - produktsaknad funktion, support, ekonomi och livscykel
+plattformstjanster:
+- id: PLS-020
+  namn: API Management
+  plattform:
+    id: PLT-005
+    name: API- och integrationsplattform
+  grunduppdrag_enligt_kallmodell: Publicering, skydd, livscykel och uppföljning av API-kontrakt
+  tillamplighet: Vid behov av HTTP-/tjänste-API, särskilt flera självständiga konsumenter eller extern publicering.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-10
+  - CAP-IT-12
+  - CAP-IT-13
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk där API används
+      gemensamt_plattformsbehov: Situationsberoende
+      krav_och_avgransning: Identifierade systemgränssnitt med ägare, dokumenterat format, säker åtkomst och manuell
+        versions-/ändringskontroll. En särskild API-gateway är inte generellt nödvändig.
+      verifieringsprov: Ägare och kontrakt för externt anrop kan hittas; fel format nekas med definierat fel.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk där API används
+      gemensamt_plattformsbehov: Viktig
+      krav_och_avgransning: Versionshanterade API-kontrakt, gateway/skydd där exponeringsrisk finns, konsumentinventering,
+        tidsgränser och kontrollerade breaking changes mellan distribuerade tjänster.
+      verifieringsprov: Pröva med minst två konsumentversioner att publicerat HTTP-kontrakt förblir kompatibelt vid planerad
+        förändring; kontrollera separat att obehörig konsument nekas av avsedd kontrollpunkt. Återanvänd idempotensnyckel
+        med oförändrat och ändrat innehåll och verifiera avtalat beteende i applikationens kontrollpunkt.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk där API används
+      gemensamt_plattformsbehov: Viktig vid många självständiga team; kan bli kritisk vid verifierat organisatoriskt
+        beroende
+      krav_och_avgransning: Självbetjänad API-publicering via mall/API, dokumenterad developer experience, policyprofiler
+        för auth, kvoter och rate limiting, automatiska kontrakts-/säkerhetstester och mätbar avveckling. Separera konsumentidentifiering
+        och trafikkontroll från domänens auktorisationsbeslut.
+      verifieringsprov: Ett team publicerar, uppdaterar och avvecklar en godkänd API-profil; berörda konsumenter identifieras
+        och en policyförändring kan återställas utan att redan utförda verksamhetshandlingar antas återgå.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk där API används
+      gemensamt_plattformsbehov: Viktig vid många självständiga team; kan bli kritisk vid verifierat organisatoriskt
+        beroende
+      krav_och_avgransning: Agent- och verksamhetsutvecklade konsumenter får avsikts-, identitets- och riskstyrd API-åtkomst
+        via avgränsade verktyg; policy och kostnad/kvot synlig per uppdrag; högriskåtgärder kräver kontroll.
+      verifieringsprov: Ett läsbegränsat uppdrag nekas ändringsanrop även via alternativa verktyg; testa mandatåterkallelse
+        för nya anrop och dokumentera utestående sessioner.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-024
+  namn: Integrationsorkestrering och adaptering
+  plattform:
+    id: PLT-005
+    name: API- och integrationsplattform
+  grunduppdrag_enligt_kallmodell: Teknisk orkestrering, transformering och adaptering utan centralisering av verksamhetslogik
+  tillamplighet: Vid faktiska återkommande behov av adaptrar, protokollöversättning eller teknisk orkestrering.
+  beroenden:
+  - CAP-IT-02
+  - CAP-IT-04
+  - CAP-IT-09
+  - CAP-IT-10
+  generationer:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Enkla punkt-till-punkt-adaptrar och formatöversättningar dokumenteras; tekniska integrationsfel
+        kan omköras. Central orkestreringsmotor bara vid faktiskt behov.
+      verifieringsprov: En felaktig transformation upptäcks, dokumenteras och åtgärdas utan dataförlust.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Viktig där många adapterbehov
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Återanvändbara adaptrar, idempotent meddelandehantering, korrelations-ID och kontrollerad
+        teknisk retry; undvik central punkt som äger all domänlogik.
+      verifieringsprov: 'Testa upprepad leverans genom adapter: om dubbel affärseffekt kan uppstå kontrolleras konsumentens
+        idempotens och en kompensationsrutin; spåra ett fel med korrelations-ID. Simulera avbrott efter lokal domänändring
+        men före publicerat meddelande i det flöde där adaptern ingår.'
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Viktig där återkommande adapterbehov
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Förvaltade adapterprofiler och transformationer som versionerade, testade tjänster med självbetjänad
+        driftsättning, spårbar mapping och säkra standardinställningar.
+      verifieringsprov: Ett adapterflöde skapas, versionsändras och avvecklas med standardmall; test verifierar att domänbeslut
+        inte ligger dolt i central transformationslogik.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Viktig där agentverktyg integreras
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Policykontrollerad anslutning av AI-/verksamhetsflöden till godkända adapterverktyg, tydlig
+        separation mellan teknisk orkestrering och domänbeslut; ändringar kan rullas tillbaka.
+      verifieringsprov: Ett verktyg som försöker orkestrera en icke tillåten resurs stoppas vid betrodd verkställighetspunkt
+        och kan kopplas till uppdraget.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-021
+  namn: Enterprise Messaging
+  plattform:
+    id: PLT-034
+    name: Event- och meddelandeplattform
+  grunduppdrag_enligt_kallmodell: Förvaltad riktad asynkron kommunikation mellan system
+  tillamplighet: Vid köbaserad, tillförlitlig, asynkron riktad kommunikation.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-09
+  - CAP-IT-10
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk där tillförlitlig kö behövs
+      gemensamt_plattformsbehov: Situationsberoende
+      krav_och_avgransning: Kö-/meddelandefunktion där batch/asynkrona flöden kräver det; definierad leveranssemantik,
+        beständighet, kvittens och manuella fellistor.
+      verifieringsprov: Vid konsumentstopp kan meddelande återlevereras och hanteras utan tyst förlust.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk där tillförlitlig kö behövs
+      gemensamt_plattformsbehov: Viktig
+      krav_och_avgransning: 'Förvaltade köer med retry, dead-letter-kö, backpressure, korrelations-ID och idempotenta
+        konsumenter; dimensionera och separera felområden. Uttryck transaktionsgränser tydligt: lokal lagring och brokerpublicering
+        kan kräva outbox eller motsvarande; förväxla inte brokertransaktion med extern verksamhetseffekt.'
+      verifieringsprov: Upprepa ett meddelande tre gånger och pröva hur mottagaren förhindrar eller avstämmer dubbla
+        domäneffekter. Isolera ett obehandlingsbart meddelande och utse åtgärdsansvarig. Testa databascommit följt av
+        avbruten publicering och test där publicering lyckas men kvittens saknas. Pröva ack efter konsumentens effekt
+        och hantera fall där extern effekt inte kan göras idempotent.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk där tillförlitlig kö behövs
+      gemensamt_plattformsbehov: Viktig vid många självständiga team; kan bli kritisk vid verifierat organisatoriskt
+        beroende
+      krav_och_avgransning: Köer som självbetjänade produkter med åtkomstpolicy, retention, kvoter, schema-/versionskontroll,
+        automatiserade kapacitets- och återställningsprov.
+      verifieringsprov: Skapa och avveckla standardkö med åtkomst, retention, larm och återstartsprov; visa vem som ansvarar
+        för meddelanden som inte kan behandlas. Verifiera rättigheter och lagringstid för dead-letter-kön samt ägarskap
+        och godkännande för återspelning.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk där tillförlitlig kö behövs
+      gemensamt_plattformsbehov: Viktig
+      krav_och_avgransning: Säker asynkron hantering av AI-/verksamhetsuppdrag med begränsad livslängd, avbrytning, tydlig
+        ansvarig aktör och säkra kompensationsmönster.
+      verifieringsprov: Återkalla ett uppdragsmandat och visa hur en köad order kontrolleras vid verkställighet, spärras
+        eller kräver kompensation; hävda inte att tidigare levererade uppdrag automatiskt stoppas.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-022
+  namn: Event Streaming och Pub/Sub
+  plattform:
+    id: PLT-034
+    name: Event- och meddelandeplattform
+  grunduppdrag_enligt_kallmodell: Eventströmmar och publicering/prenumeration med kontrakt och retention
+  tillamplighet: Vid händelsebaserade flöden med flera konsumenter eller kontrollerat återuppspelningsbehov.
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-09
+  - CAP-IT-10
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Enkla notifieringar eller händelseutbyte kan förekomma; strömplattform är normalt inte nödvändig
+        för ett fåtal monoliter.
+      verifieringsprov: En händelse kan identifieras och konsumtionsbehov kan motiveras innan teknik införs.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Viktig vid eventdriven arkitektur
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Publicera domänhändelser med ägare, kontrakt, nycklar, ordningsantaganden, retention och
+        oberoende konsumenter; kontrollera replay och dubbletter.
+      verifieringsprov: Återspela en avgränsad mängd händelser, kontrollera konsumenternas deduplicering och verifiera
+        att ordnings- och retentionantaganden är dokumenterade. Verifiera ordning inom den dokumenterade nyckel-/partitionsgränsen;
+        testa att omspelning inte ger dubbla externa sidoeffekter.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Viktig vid eventdriven arkitektur
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Självbetjänad topic-/strömprofil med register, schemaevolution, åtkomstpolicy, kvoter, retention
+        och automatiska kompatibilitetstester.
+      verifieringsprov: Provisionera, ändra och avveckla topicprofil med validerat schema, retention och åtkomst; prova
+        att otillåten prenumeration nekas.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Viktig vid omfattande AI-eventflöden
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: AI-/verksamhetslösningar får explicit tillåten konsumtion av relevanta händelser; replay,
+        informationsklass och händelsers giltighet begränsas per syfte. Delat strömflöde kan inte automatiskt återkalla
+        redan utlästa eller kopierade händelser.
+      verifieringsprov: Efter avslutat agentuppdrag ska nya prenumerationer nekas och lagrade utdrag hanteras enligt
+        avtalad livscykel; redan exponerade händelser kan inte återkallas automatiskt.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-080
+  namn: Kontraktsregister och meddelandevalidering
+  plattform:
+    id: PLT-034
+    name: Event- och meddelandeplattform
+  grunduppdrag_enligt_kallmodell: Registrering, versionshantering, validering av tekniska kontrakt och meddelandescheman;
+    äger inte affärssemantiken
+  tillamplighet: Vid flera meddelande-/API-kontrakt där versions- och kompatibilitetskontroll behöver samordnas.
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-10
+  - CAP-IT-09
+  generationer:
+    G1:
+      funktionskritikalitet: Viktig där kontrakt används
+      gemensamt_plattformsbehov: Bra att ha
+      krav_och_avgransning: Versionsnummer, schema och godkännanderutin dokumenteras tillsammans med integrationsägare;
+        central registerprodukt inte alltid nödvändig.
+      verifieringsprov: En schemaändring har ägare och dokumenterat utfall innan driftsättning.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Viktig där kontrakt används
+      gemensamt_plattformsbehov: Viktig
+      krav_och_avgransning: Delad sökbar kontraktskatalog med kompatibilitetsregler; automatiserade consumer/provider-tester,
+        schema-validering och migrationsfönster.
+      verifieringsprov: Kör konsumentdrivna eller maskinella kompatibilitetsprov och stoppa en testad brytande schemaförändring;
+        komplettera med domänägarens semantiska ändringsbedömning. Pröva en strukturellt kompatibel men semantiskt brytande
+        ändring med verksamhetsägare och känd konsument.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Viktig där kontrakt används
+      gemensamt_plattformsbehov: Viktig vid många självständiga team; kan bli kritisk vid verifierat organisatoriskt
+        beroende
+      krav_och_avgransning: Kontrakt som självbetjänade, versionsstyrda artefakter med kvalitetspipeline, ägarmetadata,
+        schema-policy och automatiserade brytändringskontroller.
+      verifieringsprov: En ny schemaversion registreras, granskas, testas och eventuellt avvecklas med spårbara konsumenter;
+        kontrollera att semantik inte förväxlas med teknisk validering.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Viktig där kontrakt används
+      gemensamt_plattformsbehov: Viktig vid många självständiga team; kan bli kritisk vid verifierat organisatoriskt
+        beroende
+      krav_och_avgransning: Maskinläsbara kontrakt för agentverktyg och datakonsumenter, explicit åtkomst och schemakvalitet,
+        automatiserad upptäckt av drift från förväntat kontrakt.
+      verifieringsprov: Ett felstrukturerat agentanrop nekas av validering; ett strukturellt korrekt men otillåtet anrop
+        nekas separat av auktorisationskontroll.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-023
+  namn: Managed File Transfer
+  plattform:
+    id: PLT-035
+    name: B2B- och filutbytesplattform
+  grunduppdrag_enligt_kallmodell: Kontrollerat och spårbart filutbyte internt och externt
+  tillamplighet: Vid återkommande filöverföringar med teknisk och verksamhetsmässig kvittens.
+  beroenden:
+  - CAP-IT-04
+  - CAP-IT-07
+  - CAP-IT-09
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk där filutbyte används
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Säker filtransport med avsändar-/mottagaridentifiering, kvittens, integritetskontroll, återleverans
+        och manuella rutiner.
+      verifieringsprov: Levererad fil har checksumma, kvittens och återhämtningsrutin.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk där filutbyte används
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Spårbara filer över organisationsgränser med tekniska profiler, avtalade scheman, kvittens,
+        omkörning och dataskydd/retention.
+      verifieringsprov: Pröva korrupt, försenad och duplicerad fil med separat transportkvittens och verksamhetskvittens;
+        åtgärda utan oavsiktlig dubbelinläsning. Jämför separat innehållsintegritet, avsändarautentisering och verksamhetskvittens;
+        en checksumma räcker inte för alla tre.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk där filutbyte används
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Självbetjänad filöverföringsprofil med partnerspecifika behörigheter, onboarding, automatisk
+        antivirus-/innehållskontroll enligt risk och mätbart SLA.
+      verifieringsprov: Etablera, ändra och avveckla en filkanal med standardprofil; visa hantering av konton, nycklar,
+        retention och kvarvarande kopior.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk där filutbyte används
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Tillåten och tidsbegränsad filåtkomst för verksamhetsnära lösningar; AI får inte fritt exportera
+        material utan klassning, kontroll och spårbar mottagare.
+      verifieringsprov: En otillåten filöverföring nekas för nya överföringar, och test skiljer detta från redan överförda
+        kopior hos mottagaren.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-079
+  namn: Säker extern system- och myndighetsanslutning
+  plattform:
+    id: PLT-035
+    name: B2B- och filutbytesplattform
+  grunduppdrag_enligt_kallmodell: Kontrollerad onboarding, tillit, konnektivitet och informationsutbyte med externa organisationer;
+    ersätter inte andra teknikförmågor
+  tillamplighet: Vid extern system-/myndighetsanslutning med särskilda tillits-, avtalade eller regulatoriska villkor.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-12
+  - CAP-IT-13
+  - CAP-IT-09
+  generationer:
+    G1:
+      funktionskritikalitet: Kritisk vid extern anslutning
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Projektvis godkänd extern kommunikation med identifierad motpart, ansvarig, säkert protokoll
+        och dokumenterad avveckling.
+      verifieringsprov: En borttagen partners anslutning är spärrad och ansvarig mottagare är känd.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Kritisk vid extern anslutning
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Konsekvent extern partneronboarding, certifikat-/identitetskontroller, segmentering, teknisk
+        loggning, incidentkontakt och ägda kontrakt.
+      verifieringsprov: Simulera utgånget certifikat och störning hos extern part; kontrollera kontaktväg, överföringsstatus,
+        ansvar och kontrollerad återhämtning.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Kritisk vid extern anslutning
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Standardiserad anslutningsprofil per riskklass, automatiserade kontroller, katalog över motparter,
+        självbetjäning av låg risk och styrd avveckling.
+      verifieringsprov: Onboarda, rotera tillit, ändra och avsluta en extern parts anslutning med spårbar riskprövning;
+        verifiera att det inte finns kvar oavsedda behörigheter. Verifiera att motpartens avtalade certifikatsbyte fungerar
+        även under överlappande giltighetstid.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Kritisk vid extern anslutning
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Villkorade agent- och verksamhetskopplingar med uttrycklig tillåtelselista per motpart, ändamål
+        och transaktionsklass; mänsklig kontroll vid hög konsekvens.
+      verifieringsprov: En agentförfrågan att exportera till okänd part nekas; ett redan levererat dokument kan inte
+        antas bli återkallat.
+      bedomningsursprung: analytisk_rekommendation
+- id: PLS-075
+  namn: Mobil fältapplikationsgrund och offline-synkronisering
+  plattform:
+    id: PLT-025
+    name: Mobil fält- och synkplattform
+  grunduppdrag_enligt_kallmodell: Säker lokal lagring, offline-state, synkronisering och konflikthantering för fältapplikationer
+  tillamplighet: Vid fältarbete med intermittent nät och behov av lokal information eller offlineändringar.
+  beroenden:
+  - CAP-IT-01
+  - CAP-IT-04
+  - CAP-IT-07
+  - CAP-IT-11
+  - CAP-IT-12
+  generationer:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Enstaka offlineflöden kan hanteras applikationsvis med lokalt dataskydd, manuell konfliktupplösning
+        och tydlig sista-synk-indikering.
+      verifieringsprov: Två motstridiga offlineuppdateringar kan upptäckas och lösas utan tyst informationsförlust.
+      bedomningsursprung: analytisk_rekommendation
+    G2:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Flera klienter kräver återupptagbar synk, lokala köer, versionskontroll, konfliktregler och
+        testad hantering av partiell anslutning.
+      verifieringsprov: Koppla bort nätet, gör motstridiga ändringar på två enheter och återanslut; visa en beslutad
+        konflikthantering, utan tyst dataförlust eller oavsiktlig dubbel effekt. Pröva informationens giltighetstid och
+        avvisning av en för gammal offlineändring när verksamhetsregeln kräver det.
+      bedomningsursprung: analytisk_rekommendation
+    G3:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Återanvändbar offline-/synkgrund med säker lokal datalivscykel, enhets-/identitetskoppling,
+        självbetjänade SDK-profiler och automatiserade konflikttester.
+      verifieringsprov: En fältapp ansluter via dokumenterat erbjudande, hanterar informationsålder, enhetsförlust, behörighetsändring
+        och avveckling enligt policy.
+      bedomningsursprung: analytisk_rekommendation
+    G4:
+      funktionskritikalitet: Situationsberoende
+      gemensamt_plattformsbehov: Situationsberoende – bedöm antal konsumenter, upprepning och risk; inte kritisk enbart
+        på grund av generation
+      krav_och_avgransning: Verksamhetsnära fältappar och AI-assistenter arbetar med säkert begränsad offlinekunskap,
+        kan visa datans ålder och kräver ny auktorisation innan riskfylld synk/åtgärd.
+      verifieringsprov: En offlineagent med inaktuella uppgifter får inte genomföra högriskåtgärd utan ny kontroll; pröva
+        vad som händer om användaren avbryter innan synkronisering.
+      bedomningsursprung: analytisk_rekommendation
+verifieringsscenario_g2:
+  namn: Databasändring och meddelande med två avbrottspunkter
+  prov:
+  - Lokal transaktion committar men publiceraren avbryts före leverans
+  - Publicering lyckas men publiceraren avbryts före kvittens eller markering
+  - Samma meddelande når konsumenten upprepade gånger
+  forvantat: Beslutad databasändring ger så småningom avsett utbyte enligt definierade förutsättningar, dubblett identifieras
+    eller kompenseras enligt verksamhetskrav; kontrollera broker och extern mottagare var för sig.
+  grans: Ingen generell exakt-en-gång-verksamhetseffekt över godtyckliga externa system.

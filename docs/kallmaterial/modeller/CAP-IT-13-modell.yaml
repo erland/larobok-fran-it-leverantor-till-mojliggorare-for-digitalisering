@@ -1,0 +1,681 @@
+metadata:
+  id: CAP-IT-13
+  titel: Nätverk och konnektivitet
+  typ: faktaboksunderlag
+  version: '2.0'
+  datum: '2026-11-07'
+  utgangspunkt: G2
+  modellbaseline: v1.1
+  status: Internt kritiskt granskat och reviderat; ej oberoende faktagranskat
+kallavgransning:
+  ursprung:
+  - Från systemdrift till digital självständighet
+  - Förmågeöversikt – tekniska IT-förmågor CAP-IT-13
+  - Plattformsöversikt – konceptuella plattformar baseline v1.1
+  externt:
+  - NIST SP 800-207 Zero Trust Architecture (2020)
+  - NIST SP 800-204A Service-Mesh Architecture (2020)
+  - CNCF Platform engineering maturity (2026)
+  analytiskt: Generationskrav, indikatorer, bedömningar, beslut och verifieringsprov är författarens referensbedömningar,
+    inte direktavskrivna krav från källorna.
+definition: Säker, tillgänglig, prestandamässig och förvaltningsbar teknisk konnektivitet mellan användare, enheter,
+  workloads, platser, plattformar och externa nät.
+avgransning: Äger reachability, inte applikationskontrakt, informationssemantik eller integrationslivscykel.
+generationer:
+  G1:
+    roll: Kort historisk orientering
+    stod: Dokumenterade och tillförlitliga zoner, adresser, namn och förbindelser; manuellt stöd kan räcka.
+    behovsindikatorer:
+    - Stabila system behöver skyddad kommunikation mellan kända platser och resurser
+    fungerande_stod:
+    - Nätberoenden är begripliga och reservvägar är provade
+    teknikvarningar:
+    - Nätprodukter utan uppdateringsstöd eller oanvändbar återställningsprocess
+  G2:
+    roll: Huvudperspektiv och nulägesdiagnos
+    stod: Tjänstetrafik, DNS, segmentering, ingress och externa samband går att förstå, begränsa och felsöka.
+    behovsindikatorer:
+    - Många självständiga tjänster
+    - Flera interna eller externa nätgränser
+    - Stora konsekvenser av avbrott eller otillåtna trafikvägar
+    fungerande_stod:
+    - Tillåtna och nekade tjänsteflöden kan verifieras
+    - Kritiska tjänstekedjor kan felsökas
+    - Regler har ägare och avvecklingsrutin
+    - Prov av att skapa, ändra och avveckla ett vanligt flöde samt blockera otillåtet flöde med dokumenterat resultat
+    generationsarv:
+    - Grova zoner från monolittiden
+    - Manuell DNS och brandväggsbeställning
+    - Bristande kunskap om tjänstberoenden
+    teknikvarningar:
+    - Saknar nödvändig trafikgranularitet eller driftsstöd
+    - Saknar rimlig möjlighet till export eller automatisering
+    - Kostnader skenar med antalet trafikrelationer
+    forbattringsspar:
+      A: Säkra och felsöka dagens distribuerade konnektivitet
+      B: Standardisera repetitiva mönster till tjänsteerbjudanden
+  G3:
+    roll: Plattformsorienterat erbjudande
+    stod: Policybaserade, automatiserade nätprofiler med självbetjäning för standardfall och kontrollerade undantag.
+    behovsindikatorer:
+    - Många upprepade nätbeställningar
+    - Flera team konsumerar liknande trafikprofiler
+    fungerande_stod:
+    - Standardflöden skapas, ändras och avvecklas utan manuella specialistärenden
+    - Avslag kan förstås och granskas
+    - Regler och namnposter städas vid avveckling
+    - Policyändringar kan valideras och felaktiga ändringar hanteras utan okontrollerade driftstörningar
+    teknikvarningar:
+    - Endast portal framför manuella köer
+    - Ingen spårbar ändring eller maskinellt gränssnitt
+    - Oklara undantag, kostnader eller tjänsteansvar
+  G4:
+    roll: Framåtblickande, riskstyrd konsumtion
+    stod: Begränsade, spårbara och livscykelhanterade nätprofiler även för kortlivade verksamhets- och AI-lösningar.
+    behovsindikatorer:
+    - Verksamhetsnära utveckling
+    - Tillfälliga automatiserade processer
+    - Varierande risk för extern åtkomst
+    fungerande_stod:
+    - Tillfälliga nätvägar avvecklas automatiskt
+    - Otillåtna mål blockeras
+    - Ansvariga och kostnader kan härledas
+    teknikvarningar:
+    - AI-agenter har obegränsad egress
+    - Nätverkspolicy saknar tillämpning för kortlivade workloads
+    - Stopp av trafik misstas för återkallande av redan utförda handlingar
+overgangar:
+  G1_G2:
+    syfte: Förklara distribuerade beroenden och kvarvarande generationsarv, inte en fullständig historisk implementationsplan
+  G2_G3:
+    syfte: Gör repetitiva anslutningsmönster till förvaltade plattformstjänster när effekten motiverar det
+    beredskap:
+    - Inventerade beroenden och ägare
+    - Standardprofiler och undantagsregler
+    - Säker automation och avveckling
+    - Mätbar ledtid och kvalitet
+    - Underbyggt med mätning av frekventa normalfall, driftskostnad och förväntad nytta
+  G3_G4:
+    syfte: Riskstyrd konsumtion för fler självständiga och kortlivade lösningar
+    beredskap:
+    - Profil för riskklass och egress
+    - Ansvar och avveckling
+    - Spårbar maskinell åtkomst
+plattformstjanster:
+- id: PLS-057
+  namn: Lastbalansering och ingress
+  plattform:
+    id: PLT-031
+    name: Applikationsleverans- och ingressplattform
+  tillamplighet: När trafik ska exponeras/fördelas
+  grunduppdrag_enligt_kallmodell: Trafikdistribution och standardiserad ingress, åtskild från WAF och API Management
+  generationer:
+    G1:
+      funktionellt_stod: Manuellt konfigurerad lastbalansering och dokumenterade externa ingångar för system som
+        behöver redundans.
+      funktionsprioritet_i_tillampligt_fall: Viktig
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Vid bortfall av en applikationsinstans styrs trafik till frisk instans enligt plan.
+      fordjupat_prov: Prova felaktig backend, felaktigt certifikat och avveckling av en exponerad tjänst.
+    G2:
+      funktionellt_stod: Tjänstevis routning, hälsokontroller, TLS-hantering och spårbar konfiguration för flera
+        oberoende komponenter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Simulerat fel i en tjänst isoleras utan att övriga ingångar påverkas.
+      fordjupat_prov: Prova felaktig backend, felaktigt certifikat och avveckling av en exponerad tjänst.
+    G3:
+      funktionellt_stod: Självbetjänad ingress med standardprofiler, deklarativ routing, automatisk certifikathantering
+        och skyddade undantag.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Godkänd tjänst publiceras genom standardprofil; kontrollera hälsokontroller, certifikatlivscykel
+        och säker avveckling.
+      fordjupat_prov: Prova felaktig backend, felaktigt certifikat och avveckling av en exponerad tjänst.
+    G4:
+      funktionellt_stod: Riskklassad exponering av verksamhets- och AI-lösningar med automatisk avveckling, kvoter
+        och spårbar extern åtkomst.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Otillåten exponering nekas och en tidsbegränsad testingress tas bort automatiskt.
+      fordjupat_prov: Prova felaktig backend, felaktigt certifikat och avveckling av en exponerad tjänst.
+  varningssignal: Ingress som döljer fel eller är beroende av manuell konfiguration.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-079
+  namn: Säker extern system- och myndighetsanslutning
+  plattform:
+    id: PLT-035
+    name: B2B- och filutbytesplattform
+  tillamplighet: Endast vid externa part-/myndighetsanslutningar
+  grunduppdrag_enligt_kallmodell: Sammansatt onboarding, tillit, konnektivitet och informationsutbyte med externa
+    parter; ersätter inte underliggande tjänster
+  generationer:
+    G1:
+      funktionellt_stod: Partsspecifika nätverksförbindelser, kontaktvägar, certifikat och manuella anslutningsrutiner.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: En extern part kan kopplas bort och återanslutas efter dokumenterad rutin.
+      fordjupat_prov: Prova partnerbyte, certifikatrotation och kontrollerad frånkoppling.
+    G2:
+      funktionellt_stod: Standardiserad partinventering, krypterade anslutningar och testade beroenden mellan anslutning
+        och informationsutbyte.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Bytt partnercertifikat orsakar inte okontrollerat avbrott; utbyte kan felsökas över gränsen.
+      fordjupat_prov: Prova partnerbyte, certifikatrotation och kontrollerad frånkoppling.
+    G3:
+      funktionellt_stod: Återanvändbara anslutningsprofiler, automatiserad teknisk onboarding och versionsstyrda
+        tillits- och trafikpolicyer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: En godkänd ny part ansluts genom standardflöde och får spårbar ägare och avvecklingsdatum.
+      fordjupat_prov: Prova partnerbyte, certifikatrotation och kontrollerad frånkoppling.
+      bedomningsnotering: Automatiserad teknisk onboarding för godkända parter kan vara lämplig; partsgodkännande
+        och informationsutbyte kan kräva separat prövning.
+    G4:
+      funktionellt_stod: Policy- och riskstyrd anslutning för nya verksamhetsflöden och agentanrop, med begränsade
+        mandat och granskbara dataflöden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Agent kan inte skapa okänd extern part eller utöka dataåtkomst utan godkännande.
+      fordjupat_prov: Prova partnerbyte, certifikatrotation och kontrollerad frånkoppling.
+      bedomningsnotering: Automatiserad teknisk onboarding för godkända parter kan vara lämplig; partsgodkännande
+        och informationsutbyte kan kräva separat prövning.
+  varningssignal: Anslutningar utan tydligt part- och informationsansvar.
+  beroenden:
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-12
+- id: PLS-072
+  namn: Datacenter- och plattformskonnektivitet
+  plattform:
+    id: PLT-032
+    name: Datacenter- och plattformsnätverksplattform
+  tillamplighet: Datacenter-/plattformsmiljöer
+  grunduppdrag_enligt_kallmodell: Interna trafikvägar inom och mellan datacenter och plattformsmiljöer
+  generationer:
+    G1:
+      funktionellt_stod: Stabila VLAN/subnät, redundanta förbindelser och dokumenterad drift för servermiljöer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: En avsedd server når rätt tjänst via dokumenterad väg; reservlänk provas.
+      fordjupat_prov: Prova bortfall av nätväg mellan plattformar och mät påverkan på kritiskt tjänsteflöde.
+    G2:
+      funktionellt_stod: Routning och segmentering mellan många workloads, kontroll av öst–väst-trafik och kapacitetsuppföljning.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid flera driftmiljöer; annars situationsberoende
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: En otillåten tjänst-till-tjänst-förbindelse blockeras och avvikelse kan lokaliseras.
+      fordjupat_prov: Prova bortfall av nätväg mellan plattformar och mät påverkan på kritiskt tjänsteflöde.
+    G3:
+      funktionellt_stod: Deklarativ nätverksprovisionering för kluster och miljöer, standardiserad egress och lifecycle-koppling
+        till workloads.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny standardmiljö får tillåten konnektivitet utan manuell adress- eller brandväggshantering.
+      fordjupat_prov: Prova bortfall av nätväg mellan plattformar och mät påverkan på kritiskt tjänsteflöde.
+    G4:
+      funktionellt_stod: Dynamiska isoleringsprofiler för tillfälliga AI-/verksamhetsworkloads och automatisk nedstängning
+        av kommunikationsvägar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Kortlivat jobb får bara godkända flöden och inga kvarstående vägar efter avveckling.
+      fordjupat_prov: Prova bortfall av nätväg mellan plattformar och mät påverkan på kritiskt tjänsteflöde.
+  varningssignal: Oklara trafikvägar och bristande redundans mellan miljöer.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-054
+  namn: DNS och IPAM
+  plattform:
+    id: PLT-012
+    name: Enterprise nätverksplattform
+  tillamplighet: Alla nät med adresserade resurser
+  grunduppdrag_enligt_kallmodell: Namnuppslagning, IP-adresshantering och nätverksmetadata
+  generationer:
+    G1:
+      funktionellt_stod: Kontrollerade DNS-zoner, adressplan och dokumenterade ändringar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Namn och IP kan härledas till korrekt ägare; felaktig ändring kan återgå.
+      fordjupat_prov: Kontrollera ett namnbyte och att uttjänta poster tas bort utan att andra tjänster påverkas.
+    G2:
+      funktionellt_stod: Inventering av tjänsteadresser och namn i flera miljöer, automatiserad upptäckt och konflikthantering.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid många miljöer; annars situationsberoende
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Adresskonflikt upptäcks innan driftsättning och beroende till tjänst kan spåras.
+      fordjupat_prov: Kontrollera ett namnbyte och att uttjänta poster tas bort utan att andra tjänster påverkas.
+    G3:
+      funktionellt_stod: API-/IaC-styrd DNS/IPAM, standardiserade miljözoner, livscykelkopplade poster och automatisk
+        städning.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Skapande och borttagning av workload uppdaterar namn och adressmetadata utan handgrepp.
+      fordjupat_prov: Kontrollera ett namnbyte och att uttjänta poster tas bort utan att andra tjänster påverkas.
+    G4:
+      funktionellt_stod: Snabb, styrd provisionering och avveckling av kortlivade lösningar med ägare, TTL och policybegränsningar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Tillfälliga miljöer lämnar inga föräldralösa namnposter.
+      fordjupat_prov: Kontrollera ett namnbyte och att uttjänta poster tas bort utan att andra tjänster påverkas.
+  varningssignal: Föräldralösa poster, adresskonflikter och manuella DNS-ändringar.
+  beroenden:
+  - CAP-IT-08
+  - CAP-IT-10
+- id: PLS-055
+  namn: LAN och trådlöst nätverk
+  plattform:
+    id: PLT-012
+    name: Enterprise nätverksplattform
+  tillamplighet: När arbetsplatser eller lokala enheter ska anslutas
+  grunduppdrag_enligt_kallmodell: Lokal och trådlös konnektivitet för användare, enheter och lokala miljöer
+  generationer:
+    G1:
+      funktionellt_stod: Fungerande trådbundet/trådlöst nät, bassegmentering, reservrutiner och konfigurationsstyrning.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Kritisk arbetsplats förblir ansluten enligt definierad tillgänglighetsprofil.
+      fordjupat_prov: Kontrollera att okänd klient isoleras och att godkänd enhet får rätt nätprofil.
+    G2:
+      funktionellt_stod: Enhetsbaserad segmentering, central policy och uppföljning av kapacitet när fler digitala
+        tjänster används.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Okänd enhet får inte åtkomst till skyddat segment.
+      fordjupat_prov: Kontrollera att okänd klient isoleras och att godkänd enhet får rätt nätprofil.
+    G3:
+      funktionellt_stod: Policybaserad onboarding, NAC/integrerad identitet och gemensamma anslutningsprofiler för
+        användare och IoT.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny enhet får rätt nätprofil utan manuell portkonfiguration.
+      fordjupat_prov: Kontrollera att okänd klient isoleras och att godkänd enhet får rätt nätprofil.
+    G4:
+      funktionellt_stod: Risk- och kontextstyrd anslutning för fler verksamhetsnära enheter och edge/AI-klienter.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: En komprometterad enhet isoleras med dokumenterad återinträdesprocess.
+      fordjupat_prov: Kontrollera att okänd klient isoleras och att godkänd enhet får rätt nätprofil.
+  varningssignal: För stor tillit till enheter enbart därför att de finns på internt LAN.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-11
+  - CAP-IT-12
+- id: PLS-071
+  namn: WAN och platskonnektivitet
+  plattform:
+    id: PLT-012
+    name: Enterprise nätverksplattform
+  tillamplighet: Endast vid flera platser
+  grunduppdrag_enligt_kallmodell: Anslutningar mellan kontor, verksamhetsplatser och datacenter
+  generationer:
+    G1:
+      funktionellt_stod: Driftsatta platsförbindelser med kapacitetsmål, reservväg för kritiska platser och tydliga
+        avtal.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Avbrott i primär länk ger förväntad reservfunktion.
+      fordjupat_prov: Simulera degraderad förbindelse och verifiera kritiska flöden och reservväg.
+    G2:
+      funktionellt_stod: Mätbar latens, kapacitet och redundans för distribuerade beroenden; tydliga prioriteringar
+        för kritiska flöden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Kedjetest visar beteende vid paketförlust och degraderad WAN-länk.
+      fordjupat_prov: Simulera degraderad förbindelse och verifiera kritiska flöden och reservväg.
+    G3:
+      funktionellt_stod: Standardiserade platsprofiler, central policy och automatiserad driftsättning där det är
+        praktiskt möjligt.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny plats ansluts med godkänd profil och verifierad uppföljning.
+      fordjupat_prov: Simulera degraderad förbindelse och verifiera kritiska flöden och reservväg.
+    G4:
+      funktionellt_stod: Flexibel och säker anslutning för verksamhetsnära samt tillfälliga platser med riskbaserad
+        kontinuitet.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Tillfällig verksamhetsplats kan etableras och avvecklas med spårbar policy.
+      fordjupat_prov: Simulera degraderad förbindelse och verifiera kritiska flöden och reservväg.
+  varningssignal: WAN med uppmätt uptime men oacceptabla svarstider för tjänstekedjan.
+  beroenden:
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-089
+  namn: Mediedistribution och streaming
+  plattform:
+    id: PLT-016
+    name: Mediebearbetnings- och distributionsplattform
+  tillamplighet: Endast om tjänster med mediedistribution/streaming finns
+  grunduppdrag_enligt_kallmodell: Åtkomstkontrollerad distribution av bild, video och ljud med cache/edge och eventuellt
+    adaptiv streaming
+  generationer:
+    G1:
+      funktionellt_stod: Enkel kontrollerad leverans av statiska bilder och videofiler med lämplig kapacitet.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Auktoriserad användare når innehåll utan att obehörig får åtkomst.
+      fordjupat_prov: Mät kvalitet vid distributionstopp och överlast i faktisk medieprofil.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G2:
+      funktionellt_stod: Skalbar distribution/caching för flera kanaler, accesskontroller och stabil leverans vid
+        varierande last.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Lasttest visar acceptabel uppspelning och korrekt behörighetskontroll.
+      fordjupat_prov: Mät kvalitet vid distributionstopp och överlast i faktisk medieprofil.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G3:
+      funktionellt_stod: Konsumerbara distributionsprofiler med CDN-/edgeintegration, automationsgränssnitt och
+        mätbar tjänstekvalitet.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Viktig vid medieportfölj
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Team väljer godkänd profil och kan följa bandbredd, fel och kostnad.
+      fordjupat_prov: Mät kvalitet vid distributionstopp och överlast i faktisk medieprofil.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G4:
+      funktionellt_stod: Säker medieleverans till AI-/verksamhetsnära applikationer, med åtkomstbegränsning och
+        spårbart nyttjande.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Viktig vid medieportfölj
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Kortlivad klient får tidsbegränsad mediaåtkomst utan öppet publikt original.
+      fordjupat_prov: Mät kvalitet vid distributionstopp och överlast i faktisk medieprofil.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+  varningssignal: Överdesignad streamingplattform utan tydligt verksamhetsbehov.
+  beroenden:
+  - CAP-IT-01
+  - CAP-IT-04
+  - CAP-IT-12
+- id: PLS-056
+  namn: Fjärråtkomst
+  plattform:
+    id: PLT-030
+    name: Nätverkssäkerhets- och edgeplattform
+  tillamplighet: När fjärråtkomst behövs
+  grunduppdrag_enligt_kallmodell: Säker förvaltad fjärråtkomst för användare och administration
+  generationer:
+    G1:
+      funktionellt_stod: Kontrollerad VPN eller motsvarande, stark autentisering för administratörer och dokumenterade
+        åtkomstrutiner.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Behörighet kan återkallas och kopplingsförsök loggas.
+      fordjupat_prov: Prova tidsbegränsad fjärradministration, återkallelse och spårbarhet.
+    G2:
+      funktionellt_stod: Rollseparerad åtkomst till distribuerade tjänstemiljöer utan bred intern nätåtkomst.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Supportör når endast tilldelat system och åtkomst följs upp.
+      fordjupat_prov: Prova tidsbegränsad fjärradministration, återkallelse och spårbarhet.
+    G3:
+      funktionellt_stod: Identitets- och enhetsstyrd tjänstespecifik åtkomst med självbetjänad ansökan och automatiserad
+        avveckling.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Tillfälligt supportmandat löper ut och kan inte återanvändas.
+      fordjupat_prov: Prova tidsbegränsad fjärradministration, återkallelse och spårbarhet.
+    G4:
+      funktionellt_stod: Granulär och kortlivad åtkomst även för verksamhetsnära operatörer och automatiserade operatörsflöden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Agent eller människa nekas lateral åtkomst utanför explicit mandat.
+      fordjupat_prov: Prova tidsbegränsad fjärradministration, återkallelse och spårbarhet.
+  varningssignal: Permanenta administrativa tunnlar och otillräcklig identitetskontroll.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-12
+- id: PLS-073
+  namn: Internet- och edgeanslutning
+  plattform:
+    id: PLT-030
+    name: Nätverkssäkerhets- och edgeplattform
+  tillamplighet: När miljön behöver internet-/edgeanslutning
+  grunduppdrag_enligt_kallmodell: Kontrollerad internetingress/egress med kapacitet, tillgänglighet och skyddsprofiler
+  generationer:
+    G1:
+      funktionellt_stod: Kontrollerad internetgräns, dokumenterad trafik, kapacitet och robust DNS-/anslutningskedja.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Otillåten utgående trafik och känd farlig ingång blockeras.
+      fordjupat_prov: Prova begränsad egress, avbrott vid edge och återställning utan generella öppningar.
+    G2:
+      funktionellt_stod: Tjänstespecifik internetexponering och utgående beroenden kartläggs; övervakning av egress
+        och felvägar.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Förlust av extern API-endpoint ger hanterat fel, inte kedjekollaps.
+      fordjupat_prov: Prova begränsad egress, avbrott vid edge och återställning utan generella öppningar.
+    G3:
+      funktionellt_stod: Standardiserade ingress-/egressprofiler, policystyrda destinationslistor och deklarativ
+        provisionering.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny tjänst kan få godkänd utgående anslutning utan öppen allmän internetåtkomst.
+      fordjupat_prov: Prova begränsad egress, avbrott vid edge och återställning utan generella öppningar.
+    G4:
+      funktionellt_stod: Kontrollerad externt riktad åtkomst för agentiska verktyg, kostnadskvoter och kortlivade
+        miljöer.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Agent kan inte skicka data till okända destinationer och avvikelse larmas.
+      fordjupat_prov: Prova begränsad egress, avbrott vid edge och återställning utan generella öppningar.
+  varningssignal: Alltför bred utgående åtkomst och okänd internetberoendekedja.
+  beroenden:
+  - CAP-IT-09
+  - CAP-IT-12
+- id: PLS-058
+  namn: Nätsegmentering och trafikpolicy
+  plattform:
+    id: PLT-030
+    name: Nätverkssäkerhets- och edgeplattform
+  tillamplighet: Alla miljöer med skyddsvärda resurser
+  grunduppdrag_enligt_kallmodell: Zoner, segment och tillåtna trafikvägar; hotdetektion ligger i CAP-IT-12
+  generationer:
+    G1:
+      funktionellt_stod: Riskbaserade zoner, dokumenterade brandväggsregler och principen att bara avsedd kommunikation
+        tillåts.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Oavsiktlig trafik mellan skyddade segment nekas.
+      fordjupat_prov: Testa både en tillåten och en otillåten tjänsterelation; kontrollera logg, ägare och avveckling.
+    G2:
+      funktionellt_stod: Tjänste- och miljönära trafikpolicy, begränsning av lateral rörelse och spårbar ändringshantering.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Viktig vid omfattande nätpolicy; annars situationsberoende
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Endast kända tjänsteflöden tillåts och nekad trafik förklaras.
+      fordjupat_prov: Testa både en tillåten och en otillåten tjänsterelation; kontrollera logg, ägare och avveckling.
+    G3:
+      funktionellt_stod: Deklarativa policyprofiler, automatiska kontroller och mikrosegmentering där komplexiteten
+        motiverar det.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Nytt workload får restriktiv baseline och godkända flöden via kodstyrd policy.
+      fordjupat_prov: Testa både en tillåten och en otillåten tjänsterelation; kontrollera logg, ägare och avveckling.
+    G4:
+      funktionellt_stod: Dynamisk identitets-/riskkopplad policy för agent- och verksamhetsworkloads, med säkra
+        standardvärden.
+      funktionsprioritet_i_tillampligt_fall: Kritisk
+      gemensam_plattform_i_tillampligt_fall: Kritisk
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Kortlivat AI-arbetsflöde kan inte nå andra data-/tjänstedomäner utan explicit tillstånd.
+      fordjupat_prov: Testa både en tillåten och en otillåten tjänsterelation; kontrollera logg, ägare och avveckling.
+  varningssignal: Breda brandväggsregler, gamla undantag och policy som inte kan förklaras.
+  beroenden:
+  - CAP-IT-07
+  - CAP-IT-08
+  - CAP-IT-12
+- id: PLS-076
+  namn: Verksamhetskritisk fältkommunikation
+  plattform:
+    id: PLT-033
+    name: Verksamhetskritisk kommunikationsplattform
+  tillamplighet: Endast om verksamhetskritisk fältkommunikation krävs
+  grunduppdrag_enligt_kallmodell: Robust säker kommunikation i fält med högre kontinuitetskrav än kontorsnät
+  generationer:
+    G1:
+      funktionellt_stod: Dedikerad robust fältanslutning, reservrutiner och definierad prioritet för verksamhetskritisk
+        trafik.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Bortfall av normal kommunikationsväg utlöser prövad reservrutin.
+      fordjupat_prov: Prova failover i representativ fältsituation och mät kommunikationsförlust mot verksamhetskrav.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G2:
+      funktionellt_stod: Prioriterad kommunikation och uppföljning över flera system och användargrupper i fält.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Kommunikation för kritiskt flöde fungerar under belastning och störning.
+      fordjupat_prov: Prova failover i representativ fältsituation och mät kommunikationsförlust mot verksamhetskrav.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G3:
+      funktionellt_stod: Förvaltade fältkommunikationsprofiler, gemensam övervakning och återanvändbar integration
+        till plattformar.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Viktig vid fältverksamhet
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny fälttjänst kan anslutas via godkänd profil utan unik speciallösning.
+      fordjupat_prov: Prova failover i representativ fältsituation och mät kommunikationsförlust mot verksamhetskrav.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+    G4:
+      funktionellt_stod: Riskstyrd anslutning för nya sensorer, autonoma hjälpmedel och AI-stöd under avbrott eller
+        begränsad bandbredd.
+      funktionsprioritet_i_tillampligt_fall: Situationsberoende
+      gemensam_plattform_i_tillampligt_fall: Viktig vid fältverksamhet
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Kritisk verksamhetsfunktion klarar offline-/degraderat läge enligt mål.
+      fordjupat_prov: Prova failover i representativ fältsituation och mät kommunikationsförlust mot verksamhetskrav.
+      bedomningsnotering: Endast relevant om organisationens tjänster eller fältkrav motiverar denna profil; inget
+        generationskrav.
+  varningssignal: Antagande att vanlig kontors-WAN är tillräcklig för verksamhetskritisk fältkommunikation.
+  beroenden:
+  - CAP-IT-09
+  - CAP-IT-11
+  - CAP-IT-12
+- id: PLS-087
+  namn: Webb- och API-skydd
+  plattform:
+    id: PLT-018
+    name: Webb- och API-skyddsplattform
+  tillamplighet: När webb/API är exponerat
+  grunduppdrag_enligt_kallmodell: WAF, API-attackskydd, bot-/automationsskydd och L7-policy; skilt från ingress
+    och API Management
+  generationer:
+    G1:
+      funktionellt_stod: Grundskydd vid publikt exponerade webbgränssnitt inklusive uppdatering, filtrering och
+        skydd mot missbruk.
+      funktionsprioritet_i_tillampligt_fall: Kritisk vid extern exponering
+      gemensam_plattform_i_tillampligt_fall: Situationsberoende
+      leveransform: Specialist-/projektstyrd; dokumenterade konfigurationer
+      verifieringsprov: Kända otillåtna anrop blockeras utan att legitim användning stoppas.
+      fordjupat_prov: Prova relevant webbattack i testmiljö och verifiera falska positiva samt ägarskap för regelundantag.
+    G2:
+      funktionellt_stod: API-/webbskydd med tjänstespecifik policy, rate limiting och synlighet för distribuerade
+        endpoints.
+      funktionsprioritet_i_tillampligt_fall: Kritisk vid extern exponering
+      gemensam_plattform_i_tillampligt_fall: Viktig
+      leveransform: Tjänste-/miljöorienterad med gemensam koordinering
+      verifieringsprov: Skadligt eller överdrivet anropsmönster begränsas och kan granskas.
+      fordjupat_prov: Prova relevant webbattack i testmiljö och verifiera falska positiva samt ägarskap för regelundantag.
+      bedomningsnotering: Skyddsnivå bestäms av exponering och risk; WAF/API-skydd kan inte ersätta applikationens
+        autentisering och auktorisation.
+    G3:
+      funktionellt_stod: Självbetjänad WAF/API-skyddsprofil, central policy, automatiska testregler och versionsstyrda
+        undantag.
+      funktionsprioritet_i_tillampligt_fall: Kritisk vid extern exponering
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Deklarativ självbetjäning inom policy och versionsstyrda undantag
+      verifieringsprov: Ny extern tjänst får godkänt L7-skydd som standard före exponering.
+      fordjupat_prov: Prova relevant webbattack i testmiljö och verifiera falska positiva samt ägarskap för regelundantag.
+      bedomningsnotering: Skyddsnivå bestäms av exponering och risk; WAF/API-skydd kan inte ersätta applikationens
+        autentisering och auktorisation.
+    G4:
+      funktionellt_stod: Riskanpassade kontroller för AI-/agentgränssnitt, automatisering och omfattande verktygsanrop,
+        med möjlighet till snabb spärr.
+      funktionsprioritet_i_tillampligt_fall: Kritisk vid extern exponering
+      gemensam_plattform_i_tillampligt_fall: Viktig vid återkommande behov; annars situationsberoende
+      leveransform: Riskstyrd maskinkonsumtion, begränsade mandat och automatisk avveckling
+      verifieringsprov: Missbruk via agentflöde upptäcks, begränsas och härleds till tjänst.
+      fordjupat_prov: Prova relevant webbattack i testmiljö och verifiera falska positiva samt ägarskap för regelundantag.
+      bedomningsnotering: Skyddsnivå bestäms av exponering och risk; WAF/API-skydd kan inte ersätta applikationens
+        autentisering och auktorisation.
+  varningssignal: WAF-funktion används som substitut för autentisering och säker applikationskod.
+  beroenden:
+  - CAP-IT-06
+  - CAP-IT-07
+  - CAP-IT-12
+tolkningsregler:
+- Funktionsprioritet gäller endast där tjänstens användningsfall finns.
+- En kritisk funktion innebär inte att en central produkt är obligatorisk.
+- G1/G2/G3/G4 är arkitektur- och leveransmönster, inte produktgenerationer.
+- 'Byte av produkt föregås av orsaksanalys: teknik, implementation, ansvar eller behov.'
+- Nätanslutbarhet är inte auktorisation; API-kontrakt och informationsägarskap ligger utanför förmågan.
+- Kritikalitet för funktion får inte användas som automatisk prioritet för en gemensam eller egenägd plattform.
+- Nätkontroller begränsar teknisk anslutbarhet men kan inte ensamma bevisa mottagaridentitet, verksamhetsbehörighet
+  eller att data inte lämnar organisationen.
+- Automationsmognad bedöms för skapa, ändra, felsöka, återställa och avveckla; separat undantagsflöde kan vara motiverat
+  för högriskanslutningar.
+bedomningsprov:
+- Kartlägg ett verksamhetskritiskt trafikflöde från källa till mål inklusive DNS och nätpolicy.
+- Testa ett avsett och ett otillåtet flöde.
+- Prova bortfall av relevant nätkomponent och mät konsekvens.
+- Skapa, ändra och avveckla en standardanslutning och följ faktisk manuell insats.
+- Kontrollera ett stickprov av utgångna regler och namnposter.
+- id: TEST-013-06
+  namn: Skapa och avveckla normalfall
+  beskrivning: Följ ett återkommande nätbehov från begäran till verifierad avveckling; mät väntetid, manuellt arbete
+    och kvarvarande resurser.
+- id: TEST-013-07
+  namn: Policyändring och återhämtning
+  beskrivning: Prova en felaktig nätpolicy i säker testmiljö, bedöm detektion, konsekvensbegränsning och kontrollerat
+    återställande.

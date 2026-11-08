@@ -1,0 +1,465 @@
+schema_version: '2.1'
+id: CAP-IT-09
+namn: Driftbarhet och motståndskraft
+status: faktaboksunderlag v3 – kritiskt granskat
+datum: '2026-11-07'
+bokprofil: factbook
+definition: Göra system begripliga under drift, upptäcka och begränsa degradering och fel samt återställa tjänster
+  och information i proportion till verksamhetens behov.
+avgransning: Ej själva runtimeexekveringen eller programvaruleveranspipelinen.
+sammanfattning: Förmåga att upptäcka, förstå, begränsa och återställa tekniska störningar i proportion till
+  verksamhetens konsekvenser.
+bedomningsprinciper:
+  indikatorstyper:
+  - behov
+  - funktion
+  - kvarvarande_generationsarv
+  - teknik_och_plattformsval
+  - forandring
+  - beredskap
+  separera:
+  - funktionskritikalitet
+  - behov_av_gemensam_plattformstjanst
+  - automationsbehov
+  utan_universella_trosklar: true
+  teknikbeslut:
+  - behall
+  - komplettera
+  - andra_anvandning_och_ansvar
+  - ersatt
+generationer:
+  G1:
+    namn: Sammanhållen systemdrift
+    relevans:
+    - Verksamhetskritiska sammanhållna system
+    - Information som inte får gå förlorad
+    - Avbrott med tydlig ekonomisk eller operativ konsekvens
+    stod:
+    - Grundläggande loggar och övervakning av system och jobb
+    - Backup och praktiskt prövad återställning
+    - Ansvarig mottagare för kritiska larm
+    - Kontinuitetsplan om konsekvensen kräver det
+    leverans: Kan vara manuell och systemnära, med dokumenterade rutiner.
+    ansvar: Drift utför; verksamhets-/systemägare anger avbrottstolerans och informationsvärde.
+    fallgropar:
+    - Gröna backupjobb men aldrig verifierad återställning
+    - Oskrivna, personberoende återstartsprocedurer
+    - Resursmätvärden utan koppling till faktisk tjänstefunktion
+    funktionsindikatorer:
+    - Representativ återläsning uppfyller verksamhetens mål
+    - Teknisk incident har namngiven mottagare och åtgärdsväg
+    - Fel i enskilt system kan förklaras med relevant driftinformation
+    olamplig_teknik_och_plattform:
+    - kategori: funktion
+      indikator: Systemnära verktyg utan användbar export eller loggkorrelation när systemet blivit distribuerat
+      status: arkitekturbedomning
+    - kategori: livscykel
+      indikator: Produkt utan säkert underhåll eller support
+      status: arkitekturbedomning
+    - kategori: aterstallning
+      indikator: Backup utan förmåga att visa konsekvent återställning
+      status: arkitekturbedomning
+  G2:
+    namn: Distribuerade IT-stöd
+    relevans:
+    - Flera självständiga tjänster ingår i samma verksamhetsflöde
+    - Delade köer, databaser och API:er skapar komplexa felkedjor
+    stod:
+    - Korrelation av loggar, mått och spår över tjänstegränser
+    - Mätning av slut-till-slut-flöden och felkvoter
+    - Samordnade incident- och återställningsövningar
+    - Konsistensprövning av återlästa data och processlägen
+    leverans: Gemensamma format och verktyg kan kombineras med teamägd instrumentering.
+    ansvar: Tjänsteteamen äger sina signaler; någon äger användarflödets helhet.
+    fallgropar:
+    - Alla komponenter är gröna trots trasigt verksamhetsflöde
+    - Otydligt tvärteamansvar
+    - Inkonsekvent återstart av databaser, meddelanden och index
+    funktionsindikatorer:
+    - Ett användarfel kan spåras över flera tjänster
+    - Larm når rätt helhetsansvarig vid beroendefel
+    - Återställningsövning visar konsistens i hela flödet
+    olamplig_teknik_och_plattform:
+    - kategori: interoperabilitet
+      indikator: Komponentövervakning kan inte förklara fel i end-to-end-flöden
+      status: arkitekturbedomning
+    - kategori: aterstallning
+      indikator: Saknar prövad samordnad återställning av databaser, köer och beroenden
+      status: arkitekturbedomning
+    - kategori: sakerhet
+      indikator: Logginsamling kräver osäkra undantag eller bristande dataminimering
+      status: arkitekturbedomning
+    - kategori: kostnad
+      indikator: Kostnader stiger oproportionerligt med antal tjänster
+      status: arkitekturbedomning
+    - kategori: leverantorsberoende
+      indikator: Ingen rimlig export eller migrationsväg
+      status: arkitekturbedomning
+    kvarvarande_arv_g1_g2:
+    - Ofullständig spårning över tjänstegränser
+    - Otydligt helhetsansvar vid incident
+    - Ej prövad konsistent återställning över beroenden
+    forbattringsspar:
+      A_stabilisera_G2:
+      - Korrelation och användarflödesmått
+      - Tjänsteöverskridande incidentansvar
+      - Samordnade återställningsövningar
+      B_mot_G3:
+      - Standardiserade profiler
+      - Automatiserad tilldelning och livscykel
+      - Självbetjänad konsumtion för återkommande behov
+  G3:
+    namn: Plattformsorienterad IT
+    relevans:
+    - Många team återupprepar samma driftbeställningar
+    - Det finns tillräcklig efterfrågan på standardiserade driftprofiler
+    stod:
+    - Automatisk standardinstrumentering
+    - Självbetjänade och riskklassade backup-/larmprofiler
+    - SLI/SLO med åtgärdbara larm
+    - Verifierade återställningsprov och plattformens egen robusthet
+    leverans: Plattformstjänster med API/mallar, dokumenterad livscykel och produktansvar.
+    ansvar: Plattformteamet äger mekanismerna; produktteamet mätbara applikationsresultat.
+    fallgropar:
+    - Självbetjäningsportal som bara skapar manuella beställningar
+    - Otydliga ansvar vid återställning
+    - Standardprofiler är oproportionerliga för små tjänster
+    funktionsindikatorer:
+    - Ny tjänst får relevant stöd utan specialbeställning
+    - Restoreprov genomförs enligt beslutad profil
+    - Tjänsteägare ser kvalitetsmått och larmväg
+    olamplig_teknik_och_plattform:
+    - kategori: automatiserbarhet
+      indikator: API eller deklarativa gränssnitt saknas för normalfall
+      status: arkitekturbedomning
+    - kategori: sjalvbetjaning
+      indikator: Portal skapar endast manuella ärenden
+      status: arkitekturbedomning
+    - kategori: anvandbarhet
+      indikator: Team behöver omfattande specialiststöd för standardprofiler
+      status: arkitekturbedomning
+    - kategori: motstandskraft
+      indikator: Gemensam plattform skapar oprövat centralt felområde
+      status: arkitekturbedomning
+    - kategori: livscykel_och_kostnad
+      indikator: Profiler saknar versionering och konsumentuppföljning
+      status: arkitekturbedomning
+  G4:
+    namn: Verksamhetsnära och AI-stödd utveckling
+    relevans:
+    - Fler verksamhetsaktörer skapar egna digitala flöden
+    - AI-agenter och externa modellberoenden påverkar operativa processer
+    stod:
+    - Automatisk tilldelning av skydd efter riskklass
+    - Ägare, version, kostnads- och kvalitetsmått för lösningar
+    - Spårbarhet, stopp och rollback för riskfyllda agenthandlingar
+    - Skyddad livscykel och avveckling av data, integrationer och behörigheter
+    leverans: Säker utvecklingsväg ger stöd automatiskt; riskfyllda undantag granskas särskilt.
+    ansvar: Verksamheten äger konsekvens och tillåtet handlingsutrymme; IT ger tekniska skyddsvägar.
+    fallgropar:
+    - Skugg-IT saknar ägare och återställningsväg
+    - Lagring av känsliga prompts eller data i loggar
+    - Tekniskt välfungerande AI-flöde ger felaktiga verksamhetsutfall
+    funktionsindikatorer:
+    - Aktiva lösningar har ägare och riskklass
+    - Avvikande AI-/agentbeteende kan upptäckas och stoppas
+    - Version och data kan återställas eller lösningen säkert avvecklas
+    osakerhet: Framåtblickande scenario; krav behöver justeras efter risk och regelverk
+    olamplig_teknik_och_plattform:
+    - kategori: tackning
+      indikator: Verksamhetsbyggda lösningar och godkända agentflöden saknar stöd
+      status: framtidsscenario
+    - kategori: kontroller
+      indikator: Kan inte begränsa eller stoppa riskfyllda aktiviteter
+      status: framtidsscenario
+    - kategori: integritet
+      indikator: Spårbarhet kräver okontrollerad loggning av känsliga data
+      status: framtidsscenario
+    - kategori: livscykel
+      indikator: Ägare och återställningsväg kan inte följas
+      status: framtidsscenario
+    - kategori: externa_beroenden
+      indikator: Saknar reservväg för kritisk modell eller API
+      status: framtidsscenario
+overgangar:
+  G1_G2:
+    signaler:
+    - Incidents orsaker går över systemgränser
+    - Felsökning bygger på manuell korrelation
+    - Återställning av en tjänst skapar inkonsistens
+    forandring:
+    - Mät hela verksamhetsflöden
+    - Inför spårbarhet och korrelation tvärs tjänster
+    - Öva beroendeordnad återhämtning
+    beredskap:
+    - Kritiska flöden och beroenden är dokumenterade
+    - Team kan enas om korrelationsformat
+    - Uttalat helhetsansvar finns
+    alternativ_till_fullt_skifte: Förbättra observability i ett kritiskt flöde före generell utrullning.
+    tolkning: Historiskt och ofta ofullständigt arv, inte en förutsättning som antas vara uppfylld i G2
+  G2_G3:
+    signaler:
+    - Många repetitiva manuella driftbeställningar
+    - Likartade skript och larmregler dupliceras
+    - Nya tjänster får skydd med stor försening
+    forandring:
+    - Gör standardprofiler till versionerade plattformsprodukter
+    - Automatisera provisionering, livscykel och verifiering
+    - Skapa självbetjäning med tydliga kvalitetsmål
+    beredskap:
+    - Tillräckligt många gemensamma användningsfall finns
+    - Produktansvarigt plattformsteam och supportväg finns
+    - Automationsgränssnitt kan tillhandahållas
+    alternativ_till_fullt_skifte: Standardisera några få profiler innan komplett självbetjäning byggs.
+    skilj_fran_kvarvarande_arv: true
+  G3_G4:
+    signaler:
+    - Verksamhetsutvecklade lösningar saknar tydliga ägare
+    - Agentflöden har oklar kostnad och tillåten åtkomst
+    - Lösningar kan inte stoppas eller avvecklas kontrollerat
+    forandring:
+    - Gör skydd och driftstöd automatiska i godkända utvecklingsvägar
+    - Inför riskklassning, ägarregistrering och begränsningar för AI-agenter
+    - Utveckla säkra stopp- och återställningsvägar
+    beredskap:
+    - Riskklassning och ägarskap kan tillämpas
+    - Identiteter, integrationer och ändringar kan begränsas tekniskt
+    - Mänskliga eskaleringsvägar finns
+    alternativ_till_fullt_skifte: Starta med låg-risk-lösningar under tydliga begränsningar.
+    framtidsscenario: true
+plattformstjanster:
+- id: PLS-037
+  namn: Backup och återställning
+  plattform_id: PLT-029
+  funktion: Bevara eller återskapa information med acceptabel dataförlust. En tagen backup är inte likvärdig
+    med verifierad återställning.
+  generationsbedomningar:
+    G1:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Situationsberoende
+      kort_krav: Fastställda datamängder och ägare; schemalagda skyddskopior, åtkomstskydd, separata kopior
+        och dokumenterad manuell restore.
+      verifieringsprov: Återställ ett representativt objekt och en hel datamängd; dokumentera återställningstid
+        och faktisk dataförlust.
+    G2:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Applikations- och datakonsistenta kopior tvärs databaser, köer och beroenden; säkrade kopior,
+        versions- och schemahantering samt återställningsordning.
+      verifieringsprov: Genomför felövning med flera beroenden; visa att det återställda användarflödet har
+        konsistenta data.
+    G3:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Katalogiserade, policybaserade backup-profiler; automatisk anslutning, retention, kryptering,
+        isolering och självbetjänad restore i behörig omfattning; automatiserade restoreprov.
+      verifieringsprov: Nytt system väljer profil via API/mall; automatiserat test verifierar återskapande
+        och dokumenterad RPO.
+    G4:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Automatiskt skydd även för verksamhetsbyggda appar, konfiguration, AI-arbetsflödens tillstånd,
+        kunskapsindex och relevanta externa beroenden; klassningsstyrd återläsning, export och avslut.
+      verifieringsprov: Testa avveckling/återställning av en verksamhetsbyggd lösning med data, konfiguration
+        och dokumenterad spårbarhet.
+  kallstatus: basdefinition och koppling primarkalla, generationer och prioritet arkitekturbedomning
+- id: PLS-038
+  namn: Disaster Recovery och återställningsorkestrering
+  plattform_id: PLT-029
+  funktion: Återskapa hela verksamhetsflöden efter större störningar, inte enbart enskilda maskiner.
+  generationsbedomningar:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      behov_av_gemensam_tjanst: Situationsberoende
+      kort_krav: 'För kritiska IT-stöd: BIA, åtgärdsplan, beroendelista, alternativa miljöer och dokumenterad
+        återstart; enkla system kan ha manuell plan.'
+      verifieringsprov: Bordsövning och praktisk återstartsövning mot överenskommen tidsgräns.
+    G2:
+      funktionskritikalitet: Kritisk för verksamhetskritiska kedjor
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Karta över beroenden och felområden; sekvenserad återstart av API:er, data, meddelandeköer,
+        identitet och nätverk; fallback vid partiell degradering.
+      verifieringsprov: Simulera bortfall av en kritisk beroendetjänst och återställ hela användarflödet, inte
+        bara komponenthälsa.
+    G3:
+      funktionskritikalitet: Kritisk för verksamhetskritiska kedjor
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Förvaltade återställningsprofiler, deklarativa beroenden, automatiserad miljöåterskapning,
+        regelbundna övningar och mätning av faktisk RTO/RPO.
+      verifieringsprov: Felscenariot körs i isolerad övningsmiljö; resultat och återstående manuella steg publiceras.
+    G4:
+      funktionskritikalitet: Kritisk för verksamhetskritiska kedjor
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Riskklassad kontinuitet för många små lösningar och AI-kedjor; snabbt stopp/isolering, återstart
+        i känd version, beroende på externa modellleverantörer, manuell reservväg.
+      verifieringsprov: Genomför övning där modell- eller API-leverantör faller bort och en kritisk process
+        kan fortsätta säkert.
+  kallstatus: basdefinition och koppling primarkalla, generationer och prioritet arkitekturbedomning
+- id: PLS-035
+  namn: Central observability
+  plattform_id: PLT-008
+  funktion: Göra felens orsaker och konsekvenser begripliga tvärs tjänster; skilj insamling från larmregler.
+  generationsbedomningar:
+    G1:
+      funktionskritikalitet: Viktig
+      behov_av_gemensam_tjanst: Bra att ha
+      kort_krav: System- och infrastrukturloggar, grundläggande mätvärden och tidskorrelation; central lagring
+        där flera system behöver gemensam felsökning.
+      verifieringsprov: Gå från användarrapporterat fel till motsvarande server- och applikationslogg.
+    G2:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Gemensamma korrelations-ID, fördelade traces, mätvärden per tjänst och applikationsflöde,
+        strukturerade loggar, servicekarta och riktad dataskyddsfiltrering.
+      verifieringsprov: Följ ett fel genom flera tjänster till den beroendekomponent som orsakat felet.
+    G3:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Kritisk
+      kort_krav: Standardinstrumentering som ingår i utvecklingsmallar och runtime; självbetjänad åtkomst,
+        multi-tenancy, datakvalitet, kostnadskontroll, retention och korrelationsstandard.
+      verifieringsprov: Nytt team får loggar, metrics och traces utan specialbeställning; mät kvot, fördröjning
+        och täckning.
+    G4:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Kritisk
+      kort_krav: 'Automatisk instrumentering även för AI/agentkedjor: versions-ID, modell- och promptkonfiguration,
+        tool calls, latens, token-/kostnadssignaler och kvalitetsutfall utan röjande av känsligt innehåll.'
+      verifieringsprov: Spåra en misslyckad AI-process till komponent och version utan att persondata eller
+        hemligheter läcker.
+  kallstatus: basdefinition och koppling primarkalla, generationer och prioritet arkitekturbedomning
+- id: PLS-070
+  namn: Central teknisk audit trail
+  plattform_id: PLT-008
+  funktion: Tillhandahålla tillförlitlig teknisk händelsekedja för ansvar, felsökning och granskning; endast
+    där detta behövs.
+  generationsbedomningar:
+    G1:
+      funktionskritikalitet: Situationsberoende
+      behov_av_gemensam_tjanst: Situationsberoende
+      kort_krav: 'För system med skydds- eller spårbarhetskrav: skyddad registrering av administration, säkerhetskritiska
+        ändringar och återläsning.'
+      verifieringsprov: Visa vem som ändrade en kritisk teknisk inställning och att spåret inte kan ändras
+        obemärkt.
+    G2:
+      funktionskritikalitet: Viktig för reglerade/kritiska kedjor
+      behov_av_gemensam_tjanst: Situationsberoende
+      kort_krav: Gemensamma händelseidentifierare och identitetsreferenser över tjänstegränser; tidsstämplar
+        och skydd mot efterhandsändring.
+      verifieringsprov: Korrekta aktörs- och systemreferenser kan bindas ihop vid ett tvärtjänsteingrepp.
+    G3:
+      funktionskritikalitet: Viktig för reglerade/kritiska kedjor
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Gemensamt erbjudande för inkoppling, händelseschema, integritetsskydd, åtkomstkontroller,
+        retention och verifierbar export; tydlig skillnad mot felsökningsloggar.
+      verifieringsprov: Kör kontroll av händelseintegritet, behörighetsstyrd sökning och fullständig export.
+    G4:
+      funktionskritikalitet: Viktig för reglerade/kritiska kedjor
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: Spårbara delegerade åtgärder från appar och AI-agenter med användare, agent-/workloadidentitet,
+        verktygsanrop, beslutspunkt och stopp/återkallande; dataminimering.
+      verifieringsprov: Rekonstruera en agentutförd åtgärd inklusive mandat, bakomliggande system och återkallande.
+  kallstatus: basdefinition och koppling primarkalla, generationer och prioritet arkitekturbedomning
+- id: PLS-036
+  namn: Övervakning och larm
+  plattform_id: PLT-008
+  funktion: Upptäcka användarpåverkan och få rätt person eller automation att agera; larm ska ha ägare och
+    åtgärd.
+  generationsbedomningar:
+    G1:
+      funktionskritikalitet: Kritisk för kritiska IT-stöd
+      behov_av_gemensam_tjanst: Situationsberoende
+      kort_krav: Grundläggande tillgänglighet, resursutnyttjande, backupjobb och batchflöden, med larmmottagare
+        och jourväg enligt verksamhetskritikalitet.
+      verifieringsprov: 'Simulera tjänstestopp: larm når rätt funktion och leder till avhjälpning.'
+    G2:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Viktig
+      kort_krav: End-to-end-hälsokontroller, felkvoter, latens och beroendestatus; mindre brus, tydlig jourkedja,
+        deduplicering och larm på symptom.
+      verifieringsprov: Fel i en underliggande tjänst fångas som användarpåverkan med ansvarig mottagare.
+    G3:
+      funktionskritikalitet: Kritisk
+      behov_av_gemensam_tjanst: Kritisk
+      kort_krav: Standardiserad SLO-/larmhantering som del av plattformsprodukt; larmregler i kod, tjänstekatalog,
+        runbooks, underhållsfönster och mätning av larmkvalitet.
+      verifieringsprov: Nytt team får fungerande larmmallar; falsklarm, åtgärdbarhet och svarstid mäts.
+    G4:
+      funktionskritikalitet: Kritisk för kritiska flöden
+      behov_av_gemensam_tjanst: Kritisk
+      kort_krav: Riskklassade larm för verksamhetslösningar, AI-kostnads- och kvalitetsavvikelser, plötsliga
+        felaktiga agentåtgärder, automatisk avstängning samt tydligt mänskligt ingripande.
+      verifieringsprov: Överskridet risk-/kostnadsvärde utlöser korrekt notis och vid behov skyddsstopp med
+        revisionsspår.
+  kallstatus: basdefinition och koppling primarkalla, generationer och prioritet arkitekturbedomning
+plattformar:
+  PLT-008:
+  - PLS-035
+  - PLS-036
+  - PLS-070
+  PLT-029:
+  - PLS-037
+  - PLS-038
+kallor:
+- id: SRC-01
+  typ: primarkalla
+  titel: Från systemdrift till digital självständighet
+  avsnitt: Kap 1–11, särskilt 3, 5–10
+- id: SRC-02
+  typ: primarkalla
+  titel: Förmågeöversikt – tekniska IT-förmågor v1.1
+  avsnitt: CAP-IT-09
+- id: SRC-03
+  typ: primarkalla
+  titel: Plattformsöversikt – konceptuella plattformar v1.1
+  avsnitt: PLT-008 och PLT-029
+- id: SRC-04
+  typ: analytiskt_mellanunderlag
+  titel: CAP-IT-09-fördjupningsanalys v1.0
+- id: EXT-01
+  typ: extern_referens
+  titel: Google SRE – Monitoring Distributed Systems
+  url: https://sre.google/sre-book/monitoring-distributed-systems/
+- id: EXT-02
+  typ: extern_referens
+  titel: Google SRE – Alerting on SLOs
+  url: https://sre.google/workbook/alerting-on-slos/
+- id: EXT-03
+  typ: extern_referens
+  titel: DORA – Monitoring and observability
+  url: https://dora.dev/capabilities/monitoring-and-observability/
+- id: EXT-04
+  typ: extern_referens
+  titel: OpenTelemetry – Semantic Conventions
+  url: https://opentelemetry.io/docs/concepts/semantic-conventions/
+- id: EXT-05
+  typ: extern_referens
+  titel: NIST SP 800-34 Rev.1
+  url: https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final
+- id: EXT-06
+  typ: extern_referens
+  titel: NIST SP 800-61 Rev.3
+  url: https://csrc.nist.gov/pubs/sp/800/61/r3/final
+kalltolkning:
+  definition_plattformskoppling: primarkalla
+  generationskrav_indikatorer: arkitekturbedomning och syntes
+  G4: framtidsscenario
+redaktionellt_perspektiv:
+  utgangslage: Generation 2; distribuerade tjänster finns men G1→G2 kan vara ofullständigt
+  generation_1: kort historiskt sammanhang
+  generation_2: huvuddiagnos
+  generation_3: möjlig plattformsorienterad målbild
+  generation_4: framtidsscenario, riskanpassat
+kallprincip_komplettering:
+  basdefinitioner_och_pls_platser: primarkalla
+  generationsbeskrivningar_och_teknikindikatorer: arkitekturbedomning
+  G4: framtidsscenario
+  organisationens_faktiska_nulage: ej_studerat
+redaktionell_granskning:
+  datum: '2026-11-07'
+  princip: G2 är läsarens situation, inte en garanterad mognadsnivå
+  förtydliganden:
+  - Skilj grundläggande felkedjeproblem från skalningsbehov
+  - RPO och RTO definieras utifrån verksamhetsbehov
+  - Återställning av data är inte automatisk ångring av externa effekter
+  - Audit trail är skild från driftloggar och säkerhetsdetektion
+  - Teknikindikatorer kräver verifierad orsak innan produktbyte
