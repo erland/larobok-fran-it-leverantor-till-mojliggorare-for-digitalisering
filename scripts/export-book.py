@@ -85,6 +85,39 @@ def image_transform_for(fmt, workdir):
         return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)',replace,text)
     return transform
 
+def add_export_chapter_numbers(merged_text, chapters):
+    """Number exported H1 chapter titles from filenames; do not modify source Markdown.
+
+    The intro (00) and sources (99) remain unnumbered. This is deliberately
+    independent of subordinate headings and preserves manuscript text.
+    """
+    chunks = []
+    for path in chapters:
+        title_line = path.read_text(encoding='utf-8').splitlines()
+        if not title_line or not title_line[0].startswith('# '):
+            raise ValueError(f'Saknar H1 som första rad: {path.name}')
+        match = re.match(r'^(\d{2})-', path.name)
+        if match and 1 <= int(match.group(1)) <= 98:
+            number = int(match.group(1))
+            # Restrict replacement to the first H1 in this source, not headings in prose.
+            chunks.append((title_line[0], f'# {number}. {title_line[0][2:]}'))
+        else:
+            chunks.append((title_line[0], title_line[0]))
+    # Each chapter is an independently prepared segment; perform replacements in
+    # book order, once per H1, to avoid accidental title collisions.
+    lines = merged_text.splitlines(keepends=True)
+    i = 0
+    for n, line in enumerate(lines):
+        if line.startswith('# ') and i < len(chunks):
+            old, new = chunks[i]
+            if line.rstrip('\r\n') != old:
+                raise ValueError(f'Oväntad kapitelordning: {line.strip()} (väntade {old})')
+            lines[n] = new + ('\n' if line.endswith('\n') else '')
+            i += 1
+    if i != len(chunks):
+        raise ValueError(f'Fel antal H1: {i}, förväntade {len(chunks)}')
+    return ''.join(lines)
+
 def run(cmd): print('+',' '.join(map(str,cmd))); subprocess.run(cmd,cwd=ROOT,check=True)
 def find_font_dir():
     for base in (Path('/usr/share/fonts'),Path('/usr/local/share/fonts')):
@@ -126,7 +159,7 @@ def main()->int:
         merged=td/'book.md'
         common=['pandoc',str(merged),'--from=markdown+pipe_tables+fenced_code_blocks+fenced_divs-implicit_figures','--standalone','--metadata-file',str(metadata_path)]
         if args.format in ('epub','all'):
-            merged.write_text(prepare(chapters,image_transform=image_transform_for('epub',td)),encoding='utf-8')
+            merged.write_text(add_export_chapter_numbers(prepare(chapters,image_transform=image_transform_for('epub',td)), chapters),encoding='utf-8')
             epub=out/f'{slug}.epub'
             cmd=['pandoc',str(merged),'--from=markdown+pipe_tables+fenced_code_blocks+fenced_divs-implicit_figures','--to=epub3','--standalone','--toc','--toc-depth=1','--metadata-file',str(metadata_path),'--css',str(ROOT/'publishing/epub.css')]
             cover=meta['cover_image'];
@@ -136,7 +169,7 @@ def main()->int:
                 cmd += ['--epub-cover-image',str(cp)]
             run(cmd+['--output',str(epub)]); run([sys.executable,str(ROOT/'publishing/fix-epub-after-pandoc.py'),str(epub)])
         if args.format in ('pdf','all'):
-            merged.write_text(prepare(chapters,image_transform=image_transform_for('pdf',td)),encoding='utf-8')
+            merged.write_text(add_export_chapter_numbers(prepare(chapters,image_transform=image_transform_for('pdf',td)), chapters),encoding='utf-8')
             if not shutil.which('xelatex'): raise SystemExit('XeLaTeX saknas för PDF-export')
             width,height=pdf_size(meta)
             pdf=out/f'{slug}.pdf'; cmd=common+['--variable',f'bookpaperwidth={width}','--variable',f'bookpaperheight={height}','--top-level-division=chapter','--pdf-engine=xelatex','--template',str(ROOT/'publishing/pdf-template.tex'),'--lua-filter',str(ROOT/'publishing/pdf-filter.lua')]

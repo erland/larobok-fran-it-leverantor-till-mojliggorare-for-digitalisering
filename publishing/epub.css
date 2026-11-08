@@ -11,3 +11,8 @@ pre { white-space: pre-wrap; padding: 0.7em; }
 html, body { color: inherit; background: transparent; }
 h1 { break-before: auto; page-break-before: auto; }
 figure { margin: 1em 0; }
+
+/* Chapter opening: number and title on separate, centered lines. */
+h1 { text-align: center; margin: 1.5em 0 1em; }
+h1 .chapter-number { display: block; font-size: 0.72em; font-weight: normal; margin-bottom: 0.45em; }
+h1 .chapter-title { display: block; font-size: 1em; font-weight: bold; }
