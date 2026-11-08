@@ -21,7 +21,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends texlive-xetex texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended lmodern fonts-texgyre poppler-utils
           fc-cache -f
-          find /usr/share/fonts -iname 'texgyrepagella-regular.otf' -print -quit | grep .
+          command -v xelatex
+          fc-match -f '%{family}\n' 'TeX Gyre Pagella' | tee /tmp/book-font-match.txt
+          grep -iq 'TeX Gyre Pagella' /tmp/book-font-match.txt
       - name: Build EPUB and PDF
         run: python3 scripts/build_book.py --output-dir "${RUNNER_TEMP}/book-dist"
       - name: Upload preview package
