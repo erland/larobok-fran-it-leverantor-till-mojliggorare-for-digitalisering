@@ -64,3 +64,4 @@
 | 60 | 2026-11-08T11:51:02Z | Angav Erland Lindmark som författare i bokmetadata | `book.yaml` | `fran-it-leverantor-till-mojliggorare-r0060-projekt.zip` |
 | 61 | 2026-11-08T11:55:15Z | Införde godkänt omslag och kopplade till PDF- och EPUB-export | `assets/cover/README.md`, `assets/cover/omslag.png`, `book.yaml`, `project-index.md` | `fran-it-leverantor-till-mojliggorare-r0061-projekt.zip` |
 | 62 | 2026-11-08T12:16:25Z | Korrigerade teckensnittskontroll i GitHub Actions release | `.github/workflows/03-release.yml` | `fran-it-leverantor-till-mojliggorare-r0062-projekt.zip` |
+| 63 | 2026-11-08T12:45:03Z | Rättade PDF-fontnamn och Preview-workflow för TeX Gyre Pagella | `.github/workflows/02-build-preview.yml`, `publishing/pdf-template.tex` | `fran-it-leverantor-till-mojliggorare-r0063-projekt.zip` |
