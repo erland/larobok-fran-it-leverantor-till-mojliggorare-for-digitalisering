@@ -1,5 +1,5 @@
 {
-  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0061-projekt.zip",
+  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0062-projekt.zip",
   "chapters": {
     "count": 18,
     "hashes": {
@@ -26,19 +26,16 @@
   },
   "created_at": "2026-11-07T16:40:51Z",
   "last_operation": {
+    "operation": "Korrigerade teckensnittskontroll i GitHub Actions release",
+    "source_revision": 61,
     "changed_files": [
-      "assets/cover/README.md",
-      "assets/cover/omslag.png",
-      "book.yaml",
-      "project-index.md"
-    ],
-    "operation": "Införde godkänt omslag och kopplade till PDF- och EPUB-export",
-    "source_revision": 60
+      ".github/workflows/03-release.yml"
+    ]
   },
-  "parent_revision": 60,
+  "parent_revision": 61,
   "project_id": "53325f2b-cd60-482e-8a13-eca9c53e79ec",
   "project_slug": "fran-it-leverantor-till-mojliggorare",
-  "revision": 61,
+  "revision": 62,
   "schema_version": 1,
   "template": false,
   "tracked_files": {
@@ -51,8 +48,8 @@
       "sha256": "e88aaffff011c8cde3a28299a22064a8ead0606ee966fde0c45ce613673e0047"
     },
     ".github/workflows/03-release.yml": {
-      "bytes": 1699,
-      "sha256": "16f1070e5823afacd170e026de6b297354526066a42639c70cd26362408903d3"
+      "sha256": "3e651deaa0500b650f51c4888e770d2275f881c2ff6cb3898c5da0c2099ca414",
+      "bytes": 1874
     },
     "README.md": {
       "bytes": 1010,
@@ -675,8 +672,8 @@
       "sha256": "4fe482d302430c7962bc619147bf8d388e4466171e988db61fcf4664456241ec"
     },
     "revision-log.md": {
-      "bytes": 25351,
-      "sha256": "02e9e0ee243967bf20a6c78ecb31186b12abc4c416ecb0dd52fde05e399e796d"
+      "sha256": "e5aacdda3d5039bfa5044198a2b59da7c3e26b43578efa357dabcd14e7225ffd",
+      "bytes": 25537
     },
     "scripts/book_references.py": {
       "bytes": 4622,
@@ -715,5 +712,5 @@
       "sha256": "7bfc4efda9947a855c979019864423f80d47e531d92855d02f64643a0887208a"
     }
   },
-  "updated_at": "2026-11-08T11:55:15Z"
+  "updated_at": "2026-11-08T12:16:25Z"
 }
