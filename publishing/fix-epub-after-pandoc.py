@@ -13,12 +13,12 @@ def rootfile(base: Path) -> Path:
     return Path(node.attrib['full-path'])
 
 def split_headings(base: Path)->int:
-    count=0; pat=re.compile(r'^\\s*(\\d+)\\.\\s+(.+?)\\s*$')
+    count=0; pat=re.compile(r'^\s*(\d+)\.\s+(.+?)\s*$')
     for path in base.rglob('*.xhtml'):
         tree=ET.parse(path); changed=False
         for h1 in tree.getroot().findall('.//x:h1',NS):
             text=''.join(h1.itertext()).strip()
-            m=pat.match(text) or re.match(r'^\\s*Kapitel\\s+(\\d+):\\s*(.+?)\\s*$',text,re.I)
+            m=pat.match(text) or re.match(r'^\s*Kapitel\s+(\d+):\s*(.+?)\s*$',text,re.I)
             if not m: continue
             ident=h1.attrib.get('id'); h1.clear()
             if ident: h1.set('id',ident)

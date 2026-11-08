@@ -1,5 +1,5 @@
 {
-  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0063-projekt.zip",
+  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0064-projekt.zip",
   "chapters": {
     "count": 18,
     "hashes": {
@@ -26,17 +26,19 @@
   },
   "created_at": "2026-11-07T16:40:51Z",
   "last_operation": {
-    "operation": "Rättade PDF-fontnamn och Preview-workflow för TeX Gyre Pagella",
-    "source_revision": 62,
     "changed_files": [
-      ".github/workflows/02-build-preview.yml",
-      "publishing/pdf-template.tex"
-    ]
+      "publishing/epub.css",
+      "publishing/fix-epub-after-pandoc.py",
+      "publishing/pdf-template.tex",
+      "scripts/export-book.py"
+    ],
+    "operation": "Enhetlig kapitelnumrering och innehållsförteckning i PDF och EPUB",
+    "source_revision": 63
   },
-  "parent_revision": 62,
+  "parent_revision": 63,
   "project_id": "53325f2b-cd60-482e-8a13-eca9c53e79ec",
   "project_slug": "fran-it-leverantor-till-mojliggorare",
-  "revision": 63,
+  "revision": 64,
   "schema_version": 1,
   "template": false,
   "tracked_files": {
@@ -45,12 +47,12 @@
       "sha256": "56c504376f59ec4a5a7ab59ab29be43784f636f832af5c6e98f14b694c15afb7"
     },
     ".github/workflows/02-build-preview.yml": {
-      "sha256": "e11e4b30b1a3890bd3ff9a673047d75d81df8ff03f76a509afe0fa56aacf08b7",
-      "bytes": 1284
+      "bytes": 1284,
+      "sha256": "e11e4b30b1a3890bd3ff9a673047d75d81df8ff03f76a509afe0fa56aacf08b7"
     },
     ".github/workflows/03-release.yml": {
-      "sha256": "3e651deaa0500b650f51c4888e770d2275f881c2ff6cb3898c5da0c2099ca414",
-      "bytes": 1874
+      "bytes": 1874,
+      "sha256": "3e651deaa0500b650f51c4888e770d2275f881c2ff6cb3898c5da0c2099ca414"
     },
     "README.md": {
       "bytes": 1010,
@@ -657,24 +659,24 @@
       "sha256": "41ea9b200a768f1f55a5fd86ee6a278907f994274ca548cf742225579e50202c"
     },
     "publishing/epub.css": {
-      "bytes": 569,
-      "sha256": "aee9b81d1a7fab1d266527b0cfd80675ff5b7bd8bca83ddae2c98bb86d2badef"
+      "bytes": 862,
+      "sha256": "c02d14d999198e11331eb9f40c295d4d63648ff1eeb12407e18de2484a0a46b8"
     },
     "publishing/fix-epub-after-pandoc.py": {
-      "bytes": 4105,
-      "sha256": "ccd52f3320b809eccc24d0e314893f7ec70681e145c4bfd94d3b23424451b0b3"
+      "bytes": 4095,
+      "sha256": "f5eceedd521ec860b305ca6f0586d2895b0ddaa8fc8a71cae5273f4fa39831ce"
     },
     "publishing/pdf-filter.lua": {
       "bytes": 2187,
       "sha256": "d1386495705a3f519f872f9e355869341e78b5bc0d47b6ed6137f86cc6229a65"
     },
     "publishing/pdf-template.tex": {
-      "sha256": "ff07f75081c333f80643d2c8075cb78755a816509e2e2948cf6267b67a647429",
-      "bytes": 3269
+      "bytes": 3297,
+      "sha256": "6faccf63397e162427f32a0fefbfe925d77bc1ac2a1dd5ffdfc3bc3a1e164a1b"
     },
     "revision-log.md": {
-      "sha256": "d62e0afd39bd0f246109b1e161a827567e05e30aa4c16c0cc4b5b6fd54649619",
-      "bytes": 25767
+      "bytes": 26046,
+      "sha256": "a124db75bcc22e5fd53146dc5be38f214ef3f9981a7d561dbdb1d09d13bd1d3d"
     },
     "scripts/book_references.py": {
       "bytes": 4622,
@@ -689,8 +691,8 @@
       "sha256": "418e285884f0a8ea4a5c31aa2619a2b402a740e680fe4c8a96bab6347602e5d3"
     },
     "scripts/export-book.py": {
-      "bytes": 9202,
-      "sha256": "b3fce47d4a715f664bae465fe769761009e44596751abba941492c474a8c5497"
+      "bytes": 10892,
+      "sha256": "29f80f6780f47661d739882e1dbad7a7c8e39a00b823d80d627d243e0f33a06c"
     },
     "scripts/export-book.sh": {
       "bytes": 89,
@@ -713,5 +715,5 @@
       "sha256": "7bfc4efda9947a855c979019864423f80d47e531d92855d02f64643a0887208a"
     }
   },
-  "updated_at": "2026-11-08T12:45:03Z"
+  "updated_at": "2026-11-08T14:59:36Z"
 }
