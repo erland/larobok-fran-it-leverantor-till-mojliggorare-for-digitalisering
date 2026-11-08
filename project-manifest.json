@@ -1,5 +1,5 @@
 {
-  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0062-projekt.zip",
+  "canonical_zip_name": "fran-it-leverantor-till-mojliggorare-r0063-projekt.zip",
   "chapters": {
     "count": 18,
     "hashes": {
@@ -26,16 +26,17 @@
   },
   "created_at": "2026-11-07T16:40:51Z",
   "last_operation": {
-    "operation": "Korrigerade teckensnittskontroll i GitHub Actions release",
-    "source_revision": 61,
+    "operation": "Rättade PDF-fontnamn och Preview-workflow för TeX Gyre Pagella",
+    "source_revision": 62,
     "changed_files": [
-      ".github/workflows/03-release.yml"
+      ".github/workflows/02-build-preview.yml",
+      "publishing/pdf-template.tex"
     ]
   },
-  "parent_revision": 61,
+  "parent_revision": 62,
   "project_id": "53325f2b-cd60-482e-8a13-eca9c53e79ec",
   "project_slug": "fran-it-leverantor-till-mojliggorare",
-  "revision": 62,
+  "revision": 63,
   "schema_version": 1,
   "template": false,
   "tracked_files": {
@@ -44,8 +45,8 @@
       "sha256": "56c504376f59ec4a5a7ab59ab29be43784f636f832af5c6e98f14b694c15afb7"
     },
     ".github/workflows/02-build-preview.yml": {
-      "bytes": 1196,
-      "sha256": "e88aaffff011c8cde3a28299a22064a8ead0606ee966fde0c45ce613673e0047"
+      "sha256": "e11e4b30b1a3890bd3ff9a673047d75d81df8ff03f76a509afe0fa56aacf08b7",
+      "bytes": 1284
     },
     ".github/workflows/03-release.yml": {
       "sha256": "3e651deaa0500b650f51c4888e770d2275f881c2ff6cb3898c5da0c2099ca414",
@@ -668,12 +669,12 @@
       "sha256": "d1386495705a3f519f872f9e355869341e78b5bc0d47b6ed6137f86cc6229a65"
     },
     "publishing/pdf-template.tex": {
-      "bytes": 3006,
-      "sha256": "4fe482d302430c7962bc619147bf8d388e4466171e988db61fcf4664456241ec"
+      "sha256": "ff07f75081c333f80643d2c8075cb78755a816509e2e2948cf6267b67a647429",
+      "bytes": 3269
     },
     "revision-log.md": {
-      "sha256": "e5aacdda3d5039bfa5044198a2b59da7c3e26b43578efa357dabcd14e7225ffd",
-      "bytes": 25537
+      "sha256": "d62e0afd39bd0f246109b1e161a827567e05e30aa4c16c0cc4b5b6fd54649619",
+      "bytes": 25767
     },
     "scripts/book_references.py": {
       "bytes": 4622,
@@ -712,5 +713,5 @@
       "sha256": "7bfc4efda9947a855c979019864423f80d47e531d92855d02f64643a0887208a"
     }
   },
-  "updated_at": "2026-11-08T12:16:25Z"
+  "updated_at": "2026-11-08T12:45:03Z"
 }
